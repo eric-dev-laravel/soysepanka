@@ -161,6 +161,7 @@ return [
     'onlyactiveusers'         => 'Empleados Activos',
     'newemployee'             => 'Nuevo Empleado',
     'editemployee'            => 'Editar Empleado',
+    'createemployee'          => 'Crear Empleado',
     'generalinfo'             => 'Información General',
     'personnelinfo'           => 'Información Personal',
     'personnelinfo_extra'           => 'Información Extra',
@@ -179,6 +180,8 @@ return [
         'back'           => 'Regresar',
         'cancel'         => 'Cancelar',
         'close'          => 'Cerrar',
+        'create'         => 'Crear',
+        'save'           => 'Guardar',
     ],
 
     /*
@@ -190,7 +193,8 @@ return [
         'alert'           => 'Alerta!',
         'alert_message'   => 'Algo ocurrio durante la actualización revisa el contenido del formulario e intenta nuevamente.',
         'moreinfo'        => 'Más información...',
-        'success_message' => 'La actualización de datos se realizó de manera correcta.',
+        'success_message' => 'El proceso se realizó de manera correcta.',
+        'successupdate_message' => 'La actualización de datos se realizó de manera correcta.',
     ],
 
     /*

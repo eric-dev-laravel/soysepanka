@@ -137,6 +137,6 @@ class Employee extends Model
      * @var array
      */
     protected $fillable = ['idempleado', 'nombre', 'paterno', 'materno', 'fuente', 'rfc', 'curp', 'nss', 'correoempresa', 'correopersonal', 'nacimiento', 'sexo', 'civil', 'telefono', 'extension', 'celular', 'ingreso', 'fechapuesto', 'jefe', 'direccion', 'department', 'seccion', 'job_position_id', 'grado', 'region', 'sucursal', 'enterprise_id', 'division', 'marca', 'centro', 'checador', 'turno', 'tiponomina', 'clavenomina', 'nombrenomina', 'generalista', 'relacion', 'contrato', 'horario', 'jornada', 'calculo', 'vacaciones', 'flotante', 'base', 'rol', 'password', 'extra1', 'extra2', 'extra3', 'extra4', 'extra5', 'fecha', 'version'];
-    protected $dates = ['deleted_at'];
+    protected $dates = ['created_at, updated_at, deleted_at'];
 
 }

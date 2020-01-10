@@ -34,9 +34,26 @@ class AdminEmployees extends Controller
         return view('administracion.employees.index', compact(['users_data']));
     }
 
-    public function create(){}
+    public function create(){
+        return view('administracion.employees.create');
+    }
 
-    public function store(){}
+    public function store(Request $request){
+        $data = request()->except(['_token', '_method']);
+        try {
+            DB::beginTransaction();
+                Employee::create($data);
+            DB::commit();
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            $errorsMessage = [
+                'fullMessage' => $e->getMessage(),
+            ];
+
+            return Redirect::back()->withErrors($errorsMessage);
+        }
+        return redirect('admin-employees/create')->with('success','Ok');
+    }
 
     public function show($id){}
 
@@ -57,7 +74,7 @@ class AdminEmployees extends Controller
             $errorsMessage = [
                 'fullMessage' => $e->getMessage(),
             ];
-            
+
             return Redirect::back()->withErrors($errorsMessage);
         }
         return redirect('admin-employees/'.$id.'/edit')->with('success','Ok');

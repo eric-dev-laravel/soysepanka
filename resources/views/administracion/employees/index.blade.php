@@ -62,25 +62,25 @@
 								<i class="fa fa-times"></i></button>
 						</div>
                     </div>
-                    
+
 					<div class="box-body">
-                        
+
                         <div class="row col-md-12">
                             <div class="form-group">
                                 <div class="box box-success box-solid">
-                                    
+
                                     <div class="box-header with-border">
                                         <h3 class="box-title"><i class="fa fa-download"></i> {{ trans('message.import') }}</h3>
                                     </div>
-    
+
                                     <div class="box-body">
                                         <div class="row col-ms-10 col-sm-10 col-md-offset-1">
                                             <label for="exampleInputFile">{{ trans('message.fromfile') }}</label>
                                             <input type="file" id="exampleInputFile">
-                        
+
                                             <p class="help-block">{{ trans('message.fromfile2') }}</p>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -89,11 +89,11 @@
                         <div class="row col-md-12">
                             <div class="form-group">
                                 <div class="box box-primary box-solid">
-                                    
+
                                     <div class="box-header with-border">
                                         <h3 class="box-title"><i class="fa fa-upload"></i> {{ trans('message.export') }}</h3>
                                     </div>
-    
+
                                     <div class="box-body">
                                         <div class="row col-md-3 col-sm-12 col-md-offset-1">
                                             <button type="button" class="btn btn-block btn-primary"><i class="fa fa-file"></i> {{ trans('message.onlytemplate') }}</button>
@@ -105,7 +105,7 @@
                                             <button type="button" class="btn btn-block btn-primary"><i class="fa fa-user"></i> {{ trans('message.onlyactiveusers') }}</button>
                                         </div>
                                     </div>
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -113,17 +113,17 @@
                         <div class="row col-md-12">
                             <div class="form-group">
                                 <div class="box box-info box-solid">
-                                    
+
                                     <div class="box-header with-border">
                                         <h3 class="box-title"><i class="fa fa-pencil-square-o"></i> {{ trans('message.manual') }}</h3>
                                     </div>
-    
+
                                     <div class="box-body">
                                         <div class="row col-md-3 col-sm-12 col-md-offset-1">
-                                            <button type="button" class="btn btn-block btn-info"><i class="fa fa-user-plus"></i> {{ trans('message.newemployee') }}</button>
+                                            <button type="button" onclick="window.location.href = '{{ url('admin-employees/create') }}';" class="btn btn-block btn-info"><i class="fa fa-user-plus"></i> {{ trans('message.newemployee') }}</button>
                                         </div>
                                     </div>
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -282,7 +282,7 @@
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
                 },
                 columnDefs: [
-                    { 
+                    {
                         "width": "170px", "targets": [2, 3, 5, 6, 7, 8, 16, 32, 33, 34, 45, 46, 47, 48, 49],
                     }
                 ],
