@@ -18,11 +18,11 @@
     <div class="col-md-6 col-md-offset-3">
         <div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            
+
             <h4><i class="icon fa fa-ban"></i> {{ trans('message.modals.alert') }}</h4>
             {{ trans('message.modals.alert_message') }}
-            
-            <a href="#" class="small-box-footer" data-toggle="modal" data-target="#modal-danger">{{ trans('message.modals.moreinfo') }} <i class="fa fa-arrow-circle-right"></i></a>
+
+            <a href="#" class="small-box-footer pull-right" data-toggle="modal" data-target="#modal-danger">{{ trans('message.modals.moreinfo') }}</i></a>
         </div>
 
     </div>
@@ -32,18 +32,17 @@
     <div class="col-md-6 col-md-offset-3">
         <div class="alert alert-success alert-dismissible" id="success-alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            
+
             <h4><i class="icon fa fa-check"></i> {{ trans('message.modals.alert') }}</h4>
             {{ trans('message.modals.success_message') }}
         </div>
     </div>
-</div>   
+</div>
 @endif
 
 <div class="row">
     <div class="col-md-12">
 
-        <!-- Default box -->
         <div class="box">
 
             <div class="box-header with-border">
@@ -64,21 +63,21 @@
                         {!! csrf_field() !!}
 
                         <div class="box box-primary">
-                            
+
                             <div class="box-header with-border">
                                 <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.generalinfo') }}</h3>
                             </div>
-                            
+
                             <div class="box-body">
-                                    
+
                                 <div class="form-group col-md-4">
                                     <label for="nombre">{{ trans('message.datatables_headers.name') }}</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $info_employee[0]->nombre }}" placeholder="{!! trans('message.form_employee_holder.name') !!}">
+                                    <input type="text" required class="form-control" id="nombre" name="nombre" value="{{ $info_employee[0]->nombre }}" placeholder="{!! trans('message.form_employee_holder.name') !!}">
                                 </div>
-                                
+
                                 <div class="form-group col-md-4">
                                     <label for="paterno">{{ trans('message.datatables_headers.paterno') }}</label>
-                                    <input type="text" class="form-control" id="paterno" name="paterno" value="{{ $info_employee[0]->paterno }}" placeholder="{!! trans('message.form_employee_holder.paterno') !!}">
+                                    <input type="text" required class="form-control" id="paterno" name="paterno" value="{{ $info_employee[0]->paterno }}" placeholder="{!! trans('message.form_employee_holder.paterno') !!}">
                                 </div>
 
                                 <div class="form-group col-md-4">
@@ -88,14 +87,14 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="rfc">{{ trans('message.datatables_headers.rfc') }}</label>
-                                    <input type="text" class="form-control" id="rfc" name="rfc" value="{{ $info_employee[0]->rfc }}" placeholder="{!! trans('message.form_employee_holder.rfc') !!}">
+                                    <input type="text" required class="form-control" id="rfc" name="rfc" value="{{ $info_employee[0]->rfc }}" placeholder="{!! trans('message.form_employee_holder.rfc') !!}">
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="curp">{{ trans('message.datatables_headers.curp') }}</label>
                                     <input type="text" class="form-control" id="curp" name="curp" value="{{ $info_employee[0]->curp }}" placeholder="{!! trans('message.form_employee_holder.curp') !!}">
                                 </div>
-                                
+
                                 <div class="form-group col-md-4">
                                     <label for="nss">{{ trans('message.datatables_headers.nss') }}</label>
                                     <input type="text" class="form-control" id="nss" name="nss" value="{{ $info_employee[0]->nss }}" placeholder="{!! trans('message.form_employee_holder.nss') !!}">
@@ -110,27 +109,32 @@
                                     <label for="nacimiento">{{ trans('message.datatables_headers.birth') }}</label>
                                     <input type="text" class="form-control" id="nacimiento" name="nacimiento" value="{{ $info_employee[0]->nacimiento }}" placeholder="{!! trans('message.form_employee_holder.birth') !!}">
                                 </div>
-                                
+
                                 <div class="form-group col-md-4">
                                     <label for="sexo">{{ trans('message.datatables_headers.gender') }}</label>
                                     <input type="text" class="form-control" id="sexo" name="sexo" value="{{ $info_employee[0]->sexo }}" placeholder="{!! trans('message.form_employee_holder.gender') !!}">
                                 </div>
-                                    
+
                             </div>
-                            
+
                         </div>
 
                         <div class="box box-warning">
-                            
+
                             <div class="box-header with-border">
                                 <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.personnelinfo') }}</h3>
                             </div>
-                            
+
                             <div class="box-body">
-                                    
+
+                                <div class="form-group col-md-4">
+                                    <label for="idempleado">{{ trans('message.datatables_headers.idemployee') }}</label>
+                                    <input type="text" required class="form-control" id="idempleado" name="idempleado" value="{{ $info_employee[0]->idempleado }}" placeholder="{!! trans('message.form_employee_holder.idemployee') !!}">
+                                </div>
+
                                 <div class="form-group col-md-4">
                                     <label for="fuente">{{ trans('message.datatables_headers.origin') }}</label>
-                                    <input type="text" class="form-control" id="fuente" name="fuente" value="{{ $info_employee[0]->fuente }}" placeholder="{!! trans('message.form_employee_holder.origin') !!}">
+                                    <input type="text" required class="form-control" id="fuente" name="fuente" value="{{ $info_employee[0]->fuente }}" placeholder="{!! trans('message.form_employee_holder.origin') !!}">
                                 </div>
 
                                 <div class="form-group col-md-4">
@@ -307,19 +311,19 @@
                                     <label for="rol">{{ trans('message.datatables_headers.role') }}</label>
                                     <input type="text" class="form-control" id="rol" name="rol" value="{{ $info_employee[0]->rol }}" placeholder="{!! trans('message.form_employee_holder.role') !!}">
                                 </div>
-                                    
+
                             </div>
-                            
+
                         </div>
 
                         <div class="box box-danger">
-                            
+
                             <div class="box-header with-border">
                                 <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.personnelinfo_extra') }}</h3>
                             </div>
-                            
+
                             <div class="box-body">
-                                    
+
                                 <div class="form-group col-md-4">
                                     <label for="extra1">{{ trans('message.datatables_headers.extra1') }}</label>
                                     <input type="text" class="form-control" id="extra1" name="extra1" value="{{ $info_employee[0]->extra1 }}" placeholder="{!! trans('message.form_employee_holder.extra1') !!}">
@@ -344,9 +348,9 @@
                                     <label for="extra5">{{ trans('message.datatables_headers.extra5') }}</label>
                                     <input type="text" class="form-control" id="extra5" name="extra5" value="{{ $info_employee[0]->extra5 }}" placeholder="{!! trans('message.form_employee_holder.extra5') !!}">
                                 </div>
-                                    
+
                             </div>
-                
+
                             <div class="box-footer">
                                 <div class="row col-md-1 col-sm-12">
                                     <button type="button" onclick="window.location.href = '{{ url('admin-employees') }}';" class="btn btn-primary"><i class="fa fa-arrow-left"></i> {{ trans('message.buttons.back') }}</button>
@@ -358,7 +362,7 @@
                                     <button type="button" onclick="window.location.href = '{{ url('admin-employees') }}';" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.buttons.cancel') }}</button>
                                 </div>
                             </div>
-                            
+
                         </div>
 
                     </form>
@@ -371,7 +375,7 @@
     <div class="modal modal-danger fade" id="modal-danger" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
-                
+
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span></button>

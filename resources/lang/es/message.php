@@ -164,8 +164,8 @@ return [
     'generalinfo'             => 'Información General',
     'personnelinfo'           => 'Información Personal',
     'personnelinfo_extra'           => 'Información Extra',
-    
-    
+
+
 
     /*
      * |------------------------
@@ -189,7 +189,7 @@ return [
     'modals' => [
         'alert'           => 'Alerta!',
         'alert_message'   => 'Algo ocurrio durante la actualización revisa el contenido del formulario e intenta nuevamente.',
-        'moreinfo'        => 'Más información.',
+        'moreinfo'        => 'Más información...',
         'success_message' => 'La actualización de datos se realizó de manera correcta.',
     ],
 
