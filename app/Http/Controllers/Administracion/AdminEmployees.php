@@ -18,7 +18,7 @@ class AdminEmployees extends Controller
 	 */
 	public function __construct()
 	{
-		//$this->middleware('auth');
+		$this->middleware('auth');
     }
 
     public function index() {
@@ -58,7 +58,7 @@ class AdminEmployees extends Controller
     public function show($id){}
 
     public function edit($id){
-        $info_employee = Employee::where('id', '=', $id)->get();
+        $info_employee = Employee::withTrashed()->where('id', '=', $id)->get();
 
         return view('administracion.employees.edit', compact(['info_employee']));
     }
@@ -67,7 +67,7 @@ class AdminEmployees extends Controller
         $data = request()->except(['_token', '_method']);
         try {
             DB::beginTransaction();
-                Employee::whereId($id)->update($data);
+                Employee::withTrashed()->whereId($id)->update($data);
             DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
@@ -80,7 +80,22 @@ class AdminEmployees extends Controller
         return redirect('admin-employees/'.$id.'/edit')->with('success','Ok');
     }
 
-    public function destroy($id){}
+    public function destroy($id){
+        try {
+            DB::beginTransaction();
+                $employee = Employee::find($id);
+                $employee->delete();
+            DB::commit();
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            $errorsMessage = [
+                'fullMessage' => $e->getMessage(),
+            ];
+
+            return Redirect::back()->withErrors($errorsMessage);
+        }
+        return redirect('admin-employees/'.$id.'/edit')->with('success','Ok');
+    }
 
     public function listEmployees(Request $request){
         if ($request->ajax()) {
@@ -92,16 +107,32 @@ class AdminEmployees extends Controller
                     })
                     ->addColumn('action', function($row){
                         if(empty($row->deleted_at))
-                           $btn = '<a href="admin-employees/'.$row->id.'/edit" class="edit btn btn-success btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';
+                            $btn = '<a href="admin-employees/'.$row->id.'/edit" class="edit btn btn-success btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';
                         else
-                            $btn = '<a href="admin-employees/'.$row->id.'/edit" class="edit btn btn-danger btn-sm"> <i class="fa fa-check"></i> '.trans('message.buttons.active').'</a>';
+                            $btn = '<a href="admin-employees/'.$row->id.'/edit" class="edit btn btn-danger btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';
 
-                            return $btn;
+                        return $btn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
         }
 
         return view('administracion.employees.index');
+    }
+
+    public function activeEmployee($id){
+        try {
+            DB::beginTransaction();
+                Employee::onlyTrashed()->find($id)->restore(); //Recupera el usuario borrado
+            DB::commit();
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            $errorsMessage = [
+                'fullMessage' => $e->getMessage(),
+            ];
+
+            return Redirect::back()->withErrors($errorsMessage);
+        }
+        return redirect('admin-employees/'.$id.'/edit')->with('success','Ok');
     }
 }

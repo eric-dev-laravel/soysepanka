@@ -40,8 +40,38 @@
         </div>
     </div>
     @endif
+    <div class="row">
+        <div class="col-md-12">
+        
+                <div class="box box-primary box-solid">
+
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-hand-o-up"></i> {{ trans('message.options') }}</h3>
+                    </div>
+
+                    <div class="box-body">
+                        
+                        <div class="row col-md-3 col-sm-12 col-md-offset-2">
+                            <button type="button" class="btn btn-block btn-primary"><i class="fa fa-key"></i> {{ trans('message.buttons.makeaccess') }}</button>
+                        </div>
+                        
+                        <div class="row col-md-3 col-sm-12 col-md-offset-2">
+                            @if($info_employee[0]->deleted_at)
+                                <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-active-employee"><i class="fa fa-check-square"></i> {{ trans('message.buttons.active') }}</button>
+                            @else
+                                <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal-unactive-employee"><i class="fa fa-minus-square"></i> {{ trans('message.buttons.unactive') }}</button>
+                            @endif
+                        </div>
+                    
+                    </div>
+
+                </div>
+
+        </div>
+    </div>
 
     <div class="row">
+
         <div class="col-md-12">
 
             <div class="box">
@@ -103,7 +133,8 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="correopersonal">{{ trans('message.datatables_headers.personnel_mail') }}</label>
-                                        <input type="text" class="form-control" id="correopersonal" name="correopersonal" value="{{ $info_employee[0]->correopersonal }}" placeholder="{!! trans('message.form_employee_holder.personnel_mail') !!}">
+                                        <input type="email" required class="form-control" id="correopersonal" name="correopersonal" value="{{ $info_employee[0]->correopersonal }}" placeholder="{!! trans('message.form_employee_holder.personnel_mail') !!}"
+                                        class="form-control @error('email') is-invalid @enderror" autocomplete="email">
                                     </div>
 
                                     <div class="form-group col-md-4">
@@ -145,7 +176,8 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="correoempresa">{{ trans('message.datatables_headers.enterprise_mail') }}</label>
-                                        <input type="text" class="form-control" id="correoempresa" name="correoempresa" value="{{ $info_employee[0]->correoempresa }}" placeholder="{!! trans('message.form_employee_holder.enterprise_mail') !!}">
+                                        <input type="email" required class="form-control" id="correoempresa" name="correoempresa" value="{{ $info_employee[0]->correoempresa }}" placeholder="{!! trans('message.form_employee_holder.enterprise_mail') !!}"
+                                        class="form-control @error('email') is-invalid @enderror" autocomplete="email">
                                     </div>
 
                                     <div class="form-group col-md-4">
@@ -413,6 +445,56 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="modal modal-danger fade" id="modal-unactive-employee" style="display: none;">
+            <form class="form" action="{{ route('admin-employees.destroy' , $info_employee[0]->id)}}" method="POST">
+                {!! method_field('DELETE') !!}
+                {!! csrf_field() !!}
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">{{ trans('message.modals.alert') }}</h4>
+                        </div>
+
+                        <div class="modal-body">                                
+                            {{ trans('message.modals.dangermessageemployee') }}
+                            {{ trans('message.modals.questioncontinue') }}
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">{{ trans('message.buttons.close') }}</button>
+                            <button type="submit" class="btn btn-outline">{{ trans('message.buttons.unactive') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal modal-success fade" id="modal-active-employee" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">{{ trans('message.modals.alert') }}</h4>
+                        </div>
+
+                        <div class="modal-body">                                
+                            {{ trans('message.modals.warningmessageemployee') }}
+                            {{ trans('message.modals.questioncontinue') }}
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">{{ trans('message.buttons.close') }}</button>
+                            <button type="button" onclick="window.location.href = '{{ url('active-employee/'.$info_employee[0]->id.'') }}';" class="btn btn-outline">{{ trans('message.buttons.active') }}</button>
+                        </div>
+                    </div>
+                </div>
         </div>
 
     </div>

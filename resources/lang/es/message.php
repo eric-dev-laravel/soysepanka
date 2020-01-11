@@ -164,7 +164,8 @@ return [
     'createemployee'          => 'Crear Empleado',
     'generalinfo'             => 'Información General',
     'personnelinfo'           => 'Información Personal',
-    'personnelinfo_extra'           => 'Información Extra',
+    'personnelinfo_extra'     => 'Información Extra',
+    'options'                 => 'Opciones',
 
 
 
@@ -182,6 +183,8 @@ return [
         'close'          => 'Cerrar',
         'create'         => 'Crear',
         'save'           => 'Guardar',
+        'makeaccess'     => 'Crear Acceso',
+        'unactive'       => 'Desactivar',
     ],
 
     /*
@@ -195,6 +198,9 @@ return [
         'moreinfo'        => 'Más información...',
         'success_message' => 'El proceso se realizó de manera correcta.',
         'successupdate_message' => 'La actualización de datos se realizó de manera correcta.',
+        'dangermessageemployee' => 'Estas a punto de desactivar este empleado, si continuas dejarás de ver la información de este empleado en los módulos.',
+        'warningmessageemployee'=> 'Estas a punto de activar este empleado, si continuas la información de este empleado se verá reflejada en los módulos.',
+        'questioncontinue'      => '¿Continuar?',
     ],
 
     /*

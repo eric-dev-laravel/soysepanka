@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('id_role')->default(\App\Models\Administracion\Role::TEST);
             $table->foreign('id_role')->references('id')->on('roles');
+            $table->integer('id_employee')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

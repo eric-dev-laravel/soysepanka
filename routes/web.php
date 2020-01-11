@@ -18,12 +18,21 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
     /*
     |--------------------------------------------------------------------------
-    | Admin Routes
+    | Admin Employee Routes
     |--------------------------------------------------------------------------
     */
     Route::resource('admin-employees', 'Administracion\AdminEmployees');
     Route::get('users', ['uses'=>'Administracion\AdminEmployees@listEmployees', 'as'=>'employees.list']);
+    Route::get('active-employee/{id}', ['uses'=>'Administracion\AdminEmployees@activeEmployee', 'as'=>'active.employee']);
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Users Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('admin-users', 'Administracion\AdminUsers');
+    //Route::get('users', ['uses'=>'Administracion\AdminEmployees@listEmployees', 'as'=>'employees.list']);
+    //Route::get('active-employee/{id}', ['uses'=>'Administracion\AdminEmployees@activeEmployee', 'as'=>'active.employee']);
 
     /*
     |--------------------------------------------------------------------------

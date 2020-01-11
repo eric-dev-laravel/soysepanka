@@ -88,4 +88,8 @@ class RegisterController extends Controller
         }
         return User::create($fields);
     }
+
+    public function makeUserFromEmployee($id) {
+        dd($id);
+    }
 }

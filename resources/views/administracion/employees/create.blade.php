@@ -103,7 +103,8 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="correopersonal">{{ trans('message.datatables_headers.personnel_mail') }}</label>
-                                        <input type="text" class="form-control" id="correopersonal" name="correopersonal" placeholder="{!! trans('message.form_employee_holder.personnel_mail') !!}">
+                                        <input type="email" required class="form-control" id="correopersonal" name="correopersonal" placeholder="{!! trans('message.form_employee_holder.personnel_mail') !!}"
+                                        class="form-control @error('email') is-invalid @enderror" autocomplete="email">
                                     </div>
 
                                     <div class="form-group col-md-4">
@@ -145,7 +146,8 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="correoempresa">{{ trans('message.datatables_headers.enterprise_mail') }}</label>
-                                        <input type="text" class="form-control" id="correoempresa" name="correoempresa" placeholder="{!! trans('message.form_employee_holder.enterprise_mail') !!}">
+                                        <input type="email" class="form-control" id="correoempresa" name="correoempresa" placeholder="{!! trans('message.form_employee_holder.enterprise_mail') !!}"
+                                        class="form-control @error('email') is-invalid @enderror" autocomplete="email">
                                     </div>
 
                                     <div class="form-group col-md-4">
