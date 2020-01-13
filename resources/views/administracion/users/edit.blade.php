@@ -52,7 +52,7 @@
                     <div class="box-body">
                         
                         <div class="row col-md-3 col-sm-12 col-md-offset-2">
-                            <button type="button" class="btn btn-block btn-primary" onclick="window.location.href = '{{ url('create-user-from-employee/'.$info_employee[0]->id.'') }}';"><i class="fa fa-key"></i> {{ trans('message.buttons.makeaccess') }}</button>
+                            <button type="button" class="btn btn-block btn-primary" onclick="window.location.href = '{{ url('admin-users/create') }}';"><i class="fa fa-key"></i> {{ trans('message.buttons.makeaccess') }}</button>
                         </div>
                         
                         <div class="row col-md-3 col-sm-12 col-md-offset-2">

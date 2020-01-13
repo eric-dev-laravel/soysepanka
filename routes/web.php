@@ -22,7 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('admin-employees', 'Administracion\AdminEmployees');
-    Route::get('users', ['uses'=>'Administracion\AdminEmployees@listEmployees', 'as'=>'employees.list']);
+    Route::get('employees', ['uses'=>'Administracion\AdminEmployees@listEmployees', 'as'=>'employees.list']);
     Route::get('active-employee/{id}', ['uses'=>'Administracion\AdminEmployees@activeEmployee', 'as'=>'active.employee']);
 
     /*
@@ -31,7 +31,8 @@ Route::group(['middleware' => 'auth'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('admin-users', 'Administracion\AdminUsers');
-    //Route::get('users', ['uses'=>'Administracion\AdminEmployees@listEmployees', 'as'=>'employees.list']);
+    Route::get('create-user-from-employee/{id}', ['uses'=>'Administracion\AdminUsers@createFromEmployee', 'as'=>'create.fromemployee']);
+    Route::get('users', ['uses'=>'Administracion\AdminUsers@listUsers', 'as'=>'users.list']);
     //Route::get('active-employee/{id}', ['uses'=>'Administracion\AdminEmployees@activeEmployee', 'as'=>'active.employee']);
 
     /*

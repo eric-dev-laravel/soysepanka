@@ -157,14 +157,19 @@ return [
     'fromfile'                => 'Desde Archivo',
     'fromfile2'               => 'Selecciona un archivo compatible o descargalo en la opción siguiente.',
     'onlytemplate'            => 'Solo Plantilla',
-    'allusers'                => 'Todos los Empleados',
-    'onlyactiveusers'         => 'Empleados Activos',
+    'allusers'                => 'Todos los Usuarios',
+    'onlyactiveusers'         => 'Usuarios Activos',
+    'allemployees'            => 'Todos los Empleados',
+    'onlyactiveemployees'     => 'Empleados Activos',
     'newemployee'             => 'Nuevo Empleado',
+    'newuser'                 => 'Nuevo Usuario',
     'editemployee'            => 'Editar Empleado',
     'createemployee'          => 'Crear Empleado',
+    'createuser'              => 'Crear Usuario',
     'generalinfo'             => 'Información General',
     'personnelinfo'           => 'Información Personal',
     'personnelinfo_extra'     => 'Información Extra',
+    'info_createusers'        => 'Información de Acceso',
     'options'                 => 'Opciones',
 
 
@@ -195,6 +200,7 @@ return [
     'modals' => [
         'alert'           => 'Alerta!',
         'alert_message'   => 'Algo ocurrio durante la actualización revisa el contenido del formulario e intenta nuevamente.',
+        'alert_message_createuser'   => 'Algo ocurrio durante el guardado de información, revisa el contenido del formulario e intenta nuevamente.',
         'moreinfo'        => 'Más información...',
         'success_message' => 'El proceso se realizó de manera correcta.',
         'successupdate_message' => 'La actualización de datos se realizó de manera correcta.',
@@ -256,12 +262,15 @@ return [
         'float'            => 'Flotante',
         'base'             => 'Base',
         'role'             => 'Rol',
+        'password'         => 'Contraseña',
         'extra1'           => 'Extra 1',
         'extra2'           => 'Extra 2',
         'extra3'           => 'Extra 3',
         'extra4'           => 'Extra 4',
         'extra5'           => 'Extra 5',
         'actions'          => 'Acciones',
+
+        'username'         => 'Nombre de Usuario',
     ],
 
     /*
@@ -317,11 +326,15 @@ return [
         'float'            => 'Ingrese su Flotante',
         'base'             => 'Ingrese su Base',
         'role'             => 'Ingrese su Rol',
+        'password'         => 'Ingrese su Contraseña',
         'extra1'           => 'Ingrese su Extra 1',
         'extra2'           => 'Ingrese su Extra 2',
         'extra3'           => 'Ingrese su Extra 3',
         'extra4'           => 'Ingrese su Extra 4',
         'extra5'           => 'Ingrese su Extra 5',
+
+        'username'         => 'Ingrese su Nombre de Usuario',
+        'retrypassword'    => 'Confirme su Contraseña',
     ],
 
     /*
@@ -339,10 +352,16 @@ return [
         'employees'           => 'Empleados',
 
         'admin_employee_title'     => 'Administración de Empleados',
-        'admin_list_employee'      => 'Administración de Empleados',
+        'admin_list_employee'      => 'Lista de Empleados',
         'admin_all_employee'       => 'Total de Empleados',
         'admin_active_employee'    => 'Empleados Activos',
         'admin_inactive_employee'  => 'Empleados Inactivos',
+
+        'admin_users_title'     => 'Administración de Usuarios',
+        'admin_list_users'      => 'Lista de Usuarios',
+        'admin_all_users'       => 'Total de Usuarios',
+        'admin_active_users'    => 'Usuarios Activos',
+        'admin_inactive_users'  => 'Usuarios Inactivos',
     ],
 
     /*

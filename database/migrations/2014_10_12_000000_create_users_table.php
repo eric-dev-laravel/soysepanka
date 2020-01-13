@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name')->comment('Nombre del rol del usuario');
             $table->string('description');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('users', function (Blueprint $table) {
@@ -33,6 +34,7 @@ class CreateUsersTable extends Migration
             $table->integer('active')->default(1);
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

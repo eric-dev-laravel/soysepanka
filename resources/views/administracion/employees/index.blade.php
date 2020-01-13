@@ -99,10 +99,10 @@
                                             <button type="button" class="btn btn-block btn-primary"><i class="fa fa-file"></i> {{ trans('message.onlytemplate') }}</button>
                                         </div>
                                         <div class="row col-md-3 col-sm-12 col-md-offset-1">
-                                            <button type="button" class="btn btn-block btn-primary"><i class="fa fa-users"></i> {{ trans('message.allusers') }}</button>
+                                            <button type="button" class="btn btn-block btn-primary"><i class="fa fa-users"></i> {{ trans('message.allemployees') }}</button>
                                         </div>
                                         <div class="row col-md-3 col-sm-12 col-md-offset-1">
-                                            <button type="button" class="btn btn-block btn-primary"><i class="fa fa-user"></i> {{ trans('message.onlyactiveusers') }}</button>
+                                            <button type="button" class="btn btn-block btn-primary"><i class="fa fa-user"></i> {{ trans('message.onlyactiveemployees') }}</button>
                                         </div>
                                     </div>
 

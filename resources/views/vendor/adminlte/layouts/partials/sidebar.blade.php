@@ -40,7 +40,7 @@
             <li class="treeview">
                 <a href="#"><i class='fa fa-cog'></i> <span>{{ trans('message.module0') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class='fa fa-user-plus'></i> {{ trans('message.ma.users') }}</a></li>
+                    <li><a href="{{ url('admin-users') }}"><i class='fa fa-user-plus'></i> {{ trans('message.ma.users') }}</a></li>
                     <li><a href="#"><i class='fa fa-university'></i> {{ trans('message.ma.company') }}</a></li>
                     <li><a href="#"><i class='fa fa-arrows'></i> {{ trans('message.ma.direction') }}</a></li>
                     <li><a href="#"><i class='fa fa-briefcase'></i> {{ trans('message.ma.department') }}</a></li>
