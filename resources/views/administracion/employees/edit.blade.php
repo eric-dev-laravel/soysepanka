@@ -52,7 +52,11 @@
                     <div class="box-body">
                         
                         <div class="row col-md-3 col-sm-12 col-md-offset-2">
-                            <button type="button" class="btn btn-block btn-primary" onclick="window.location.href = '{{ url('create-user-from-employee/'.$info_employee[0]->id.'') }}';"><i class="fa fa-key"></i> {{ trans('message.buttons.makeaccess') }}</button>
+                            @if($info_employee[0]->isUser)
+                                <button type="button" disabled class="btn btn-block btn-primary" onclick="window.location.href = '{{ url('create-user-from-employee/'.$info_employee[0]->id.'') }}';"><i class="fa fa-key"></i> {{ trans('message.buttons.makeaccess') }}</button>
+                            @else
+                                <button type="button" class="btn btn-block btn-primary" onclick="window.location.href = '{{ url('create-user-from-employee/'.$info_employee[0]->id.'') }}';"><i class="fa fa-key"></i> {{ trans('message.buttons.makeaccess') }}</button>
+                            @endif
                         </div>
                         
                         <div class="row col-md-3 col-sm-12 col-md-offset-2">

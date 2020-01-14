@@ -13,8 +13,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Storage::deleteDirectory('users');
-
         Storage::makeDirectory('users');
+
+        Storage::deleteDirectory('manual_layouts');
+        Storage::makeDirectory('manual_layouts');
 
         factory(\App\Models\Administracion\Role::class, 1)->create(['name' => 'admin']);
         factory(\App\Models\Administracion\Role::class, 1)->create(['name' => 'user']);
@@ -27,6 +29,6 @@ class DatabaseSeeder extends Seeder
             'id_role' => \App\Models\Administracion\Role::ADMIN
         ]);
 
-        factory(\App\Models\Administracion\Employee::class, 30)->create();
+        factory(\App\Models\Administracion\Employee::class, 5)->create();
     }
 }

@@ -171,8 +171,7 @@ return [
     'personnelinfo_extra'     => 'Información Extra',
     'info_createusers'        => 'Información de Acceso',
     'options'                 => 'Opciones',
-
-
+    'employee_importation'    => 'Importación de Empleados',
 
     /*
      * |------------------------
@@ -190,6 +189,7 @@ return [
         'save'           => 'Guardar',
         'makeaccess'     => 'Crear Acceso',
         'unactive'       => 'Desactivar',
+        'start'          => 'Comenzar',
     ],
 
     /*
@@ -350,12 +350,23 @@ return [
         'users'               => 'Usuarios',
         'company'             => 'Empresas',
         'employees'           => 'Empleados',
+        'only_users'          => 'Solo Usuarios',
+        'users_employees'     => 'Usuarios y Empleados',
+        'only_employees'      => 'Solo Empleados',
+        'only_users_msg'      => 'Usuarios sin información de empleado',
+        'users_employees_msg' => 'Usuarios con información de empleado',
+        'only_employees_msg'  => 'Empleados sin accesos',
+        'startimportation'    => 'Comenzar Importación',
 
         'admin_employee_title'     => 'Administración de Empleados',
         'admin_list_employee'      => 'Lista de Empleados',
         'admin_all_employee'       => 'Total de Empleados',
         'admin_active_employee'    => 'Empleados Activos',
         'admin_inactive_employee'  => 'Empleados Inactivos',
+
+        'newemployees'              => 'Empleados Nuevos',
+        'updatedemployees'          => 'Empleados Actualizados',
+        'deletedemployees'          => 'Empleados Eliminados',
 
         'admin_users_title'     => 'Administración de Usuarios',
         'admin_list_users'      => 'Lista de Usuarios',

@@ -73,15 +73,31 @@
                                         <h3 class="box-title"><i class="fa fa-download"></i> {{ trans('message.import') }}</h3>
                                     </div>
 
+                                    <form role="form" method="POST" action="{{ url('employees-file-layout') }}" id="importLayout" enctype="multipart/form-data">
+                                    {!! method_field('POST') !!}
+                                    {!! csrf_field() !!}
                                     <div class="box-body">
                                         <div class="row col-ms-10 col-sm-10 col-md-offset-1">
                                             <label for="exampleInputFile">{{ trans('message.fromfile') }}</label>
-                                            <input type="file" id="exampleInputFile">
-
+                                            <div class="input-group">
+                                                <label class="input-group-btn">
+                                                    <span class="btn btn-success">
+                                                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Examinar
+                                                    <input type="file" name="filesImport[]" id="filesImport" style="display: none;">
+                                                    </span>
+                                                </label>
+                                                <input type="text" class="form-control" readonly>
+                                            </div>
+                                            <!--<input type="file" id="exampleInputFile">-->
                                             <p class="help-block">{{ trans('message.fromfile2') }}</p>
                                         </div>
 
+                                        <div class="col-md-3 col-md-offset-1">
+                                            <button type="submit" class="btn btn-block btn-success"><i class="fa fa-file"></i> {{ trans('message.ma.startimportation') }}</button>
+                                        </div>
+
                                     </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -96,13 +112,13 @@
 
                                     <div class="box-body">
                                         <div class="row col-md-3 col-sm-12 col-md-offset-1">
-                                            <button type="button" class="btn btn-block btn-primary"><i class="fa fa-file"></i> {{ trans('message.onlytemplate') }}</button>
+                                            <button type="button" onclick="window.location.href = '{{ url('download-employees/3') }}';" class="btn btn-block btn-primary"><i class="fa fa-file"></i> {{ trans('message.onlytemplate') }}</button>
                                         </div>
                                         <div class="row col-md-3 col-sm-12 col-md-offset-1">
-                                            <button type="button" class="btn btn-block btn-primary"><i class="fa fa-users"></i> {{ trans('message.allemployees') }}</button>
+                                            <button type="button" onclick="window.location.href = '{{ url('download-employees/1') }}';" class="btn btn-block btn-primary"><i class="fa fa-users"></i> {{ trans('message.allemployees') }}</button>
                                         </div>
                                         <div class="row col-md-3 col-sm-12 col-md-offset-1">
-                                            <button type="button" class="btn btn-block btn-primary"><i class="fa fa-user"></i> {{ trans('message.onlyactiveemployees') }}</button>
+                                            <button type="button" onclick="window.location.href = '{{ url('download-employees/2') }}';" class="btn btn-block btn-primary"><i class="fa fa-user"></i> {{ trans('message.onlyactiveemployees') }}</button>
                                         </div>
                                     </div>
 
@@ -292,5 +308,28 @@
                 }
             });
         });
+
+        $(document).on('change', ':file', function() {
+    			var input = $(this),
+        		numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        		label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    			input.trigger('fileselect', [numFiles, label]);
+ 			});
+
+        $(document).ready( function() {
+        $(':file').on('fileselect', function(event, numFiles, label) {
+
+            var input = $(this).parents('.input-group').find(':text'),
+                log = numFiles > 1 ? numFiles + ' Archivos Seleccionados' : label;
+
+            if( input.length ) {
+                input.val(log);
+            } else {
+                if( log ) alert(log);
+            }
+
+            });
+        });
+
     </script>
   @endsection

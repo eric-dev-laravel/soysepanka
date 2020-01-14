@@ -9,6 +9,7 @@ use App\Models\Administracion\Employee;
 use Yajra\Datatables\Datatables;
 use DB;
 use Redirect;
+use App\Exports\UsersExport;
 
 class AdminUsers extends Controller
 {
@@ -26,13 +27,16 @@ class AdminUsers extends Controller
         $all_users = User::withTrashed()->count();
         $inactive_users = User::onlyTrashed()->count();
         $only_users = User::withTrashed()->where('id_employee', '=', null)->count();
+        $users_employees = $all_users - $only_users;
+        $all_employees = Employee::withTrashed()->count();
 
         $users_data = [
             'all_users' => $all_users,
             'active_users' => $all_users - $inactive_users,
             'inactive_users' => $inactive_users,
             'only_users' => $only_users,
-            'users_employees' => $all_users - $only_users,
+            'users_employees' => $users_employees,
+            'only_employees' => $all_employees - $users_employees,
         ];
 
         return view('administracion.users.index', compact(['users_data']));
@@ -159,5 +163,11 @@ class AdminUsers extends Controller
         $info_employee = Employee::where('id', '=', $id)->get();
 
         return view('administracion.users.createFromEmployee', compact(['info_employee']));
+    }
+
+    public function downloadUsers($id){
+        $usersExport = new UsersExport;
+
+        return $usersExport->exportUsers($id)->download('users.xlsx');
     }
 }

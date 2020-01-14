@@ -43,8 +43,8 @@
                     <li><a href="{{ url('admin-users') }}"><i class='fa fa-user-plus'></i> {{ trans('message.ma.users') }}</a></li>
                     <li><a href="#"><i class='fa fa-university'></i> {{ trans('message.ma.company') }}</a></li>
                     <li><a href="#"><i class='fa fa-arrows'></i> {{ trans('message.ma.direction') }}</a></li>
-                    <li><a href="#"><i class='fa fa-briefcase'></i> {{ trans('message.ma.department') }}</a></li>
                     <li><a href="#"><i class='fa fa-pie-chart'></i> {{ trans('message.ma.area') }}</a></li>
+                    <li><a href="#"><i class='fa fa-briefcase'></i> {{ trans('message.ma.department') }}</a></li>
                     <li><a href="#"><i class='fa fa-grav'></i> {{ trans('message.ma.jobposition') }}</a></li>
                     <li><a href="{{ url('admin-employees') }}"><i class='fa fa-user-plus'></i> {{ trans('message.ma.employees') }}</a></li>
                 </ul>

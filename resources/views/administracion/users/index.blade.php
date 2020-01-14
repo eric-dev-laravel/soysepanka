@@ -75,13 +75,10 @@
 
                                     <div class="box-body">
                                         <div class="row col-md-3 col-sm-12 col-md-offset-1">
-                                            <button type="button" class="btn btn-block btn-primary"><i class="fa fa-file"></i> {{ trans('message.onlytemplate') }}</button>
+                                            <button type="button" onclick="window.location.href = '{{ url('download-users/1') }}';" class="btn btn-block btn-primary"><i class="fa fa-users"></i> {{ trans('message.allusers') }}</button>
                                         </div>
                                         <div class="row col-md-3 col-sm-12 col-md-offset-1">
-                                            <button type="button" class="btn btn-block btn-primary"><i class="fa fa-users"></i> {{ trans('message.allusers') }}</button>
-                                        </div>
-                                        <div class="row col-md-3 col-sm-12 col-md-offset-1">
-                                            <button type="button" class="btn btn-block btn-primary"><i class="fa fa-user"></i> {{ trans('message.onlyactiveusers') }}</button>
+                                            <button type="button" onclick="window.location.href = '{{ url('download-users/2') }}';" class="btn btn-block btn-primary"><i class="fa fa-user"></i> {{ trans('message.onlyactiveusers') }}</button>
                                         </div>
                                     </div>
 
@@ -150,14 +147,14 @@
                     <span class="info-box-icon"><i class="fa fa-user"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Solo Usuarios</span>
+                        <span class="info-box-text">{{ trans('message.ma.only_users') }}</span>
                     <span class="info-box-number">{{ $users_data['only_users'] }}</span>
 
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
                     <span class="progress-description">
-                            Usuarios sin información de empleado
+                            {{ trans('message.ma.only_users_msg') }}
                         </span>
                     </div>
                     <!-- /.info-box-content -->
@@ -167,15 +164,32 @@
                     <span class="info-box-icon"><i class="fa fa-users"></i></span>
 
                     <div class="info-box-content">
-                    <span class="info-box-text">Usuarios y Empleados</span>
+                    <span class="info-box-text">{{ trans('message.ma.users_employees') }}</span>
                     <span class="info-box-number">{{ $users_data['users_employees'] }}</span>
 
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
                     <span class="progress-description">
-                        Usuarios con información de empleado    
+                        {{ trans('message.ma.users_employees_msg') }}   
                     </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+                <div class="info-box bg-aqua">
+                    <span class="info-box-icon"><i class="fa fa-user"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">{{ trans('message.ma.only_employees') }}</span>
+                        <span class="info-box-number">{{ $users_data['only_employees'] }}</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 100%"></div>
+                        </div>
+                        <span class="progress-description">
+                            {{ trans('message.ma.only_employees_msg') }}  
+                        </span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
