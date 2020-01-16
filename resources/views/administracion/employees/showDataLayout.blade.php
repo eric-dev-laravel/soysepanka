@@ -66,7 +66,7 @@
                 <div class="box-body">
 
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        
+
                         <div class="panel panel-success">
                             <div class="panel-heading" role="tab" id="headingOne">
                                 <h4 class="panel-title" align="center">
@@ -87,10 +87,10 @@
                                                             if($i == 0) {
                                                         ?>
                                                         @foreach (array_keys($employee) as $header)
-                                                            <th>{{ $header }}</th>  
+                                                            <th>{{ $header }}</th>
                                                         @endforeach
                                                         <?php
-                                                            $i++; 
+                                                            $i++;
                                                             }
                                                         ?>
                                                     @endforeach
@@ -100,17 +100,17 @@
                                                 @foreach ($data['employees']['insertados'] as $employee)
                                                     <tr>
                                                         @foreach (array_keys($employee) as $header)
-                                                            <td>{{ $employee[$header] }}</td>  
+                                                            <td>{{ $employee[$header] }}</td>
                                                         @endforeach
                                                     </tr>
                                                 @endforeach
                                             </tbody>
                                         @endif
-                                    </table> 
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="panel panel-warning">
                             <div class="panel-heading" role="tab" id="headingTwo">
                                 <h4 class="panel-title" align="center">
@@ -131,10 +131,10 @@
                                                             if($i == 0) {
                                                         ?>
                                                         @foreach (array_keys($employee) as $header)
-                                                            <th>{{ $header }}</th>  
+                                                            <th>{{ $header }}</th>
                                                         @endforeach
                                                         <?php
-                                                            $i++; 
+                                                            $i++;
                                                             }
                                                         ?>
                                                     @endforeach
@@ -144,7 +144,7 @@
                                                 @foreach ($data['employees']['actualizados'] as $employee)
                                                     <tr>
                                                         @foreach (array_keys($employee) as $header)
-                                                            <td>{{ $employee[$header] }}</td>  
+                                                            <td>{{ $employee[$header] }}</td>
                                                         @endforeach
                                                     </tr>
                                                 @endforeach
@@ -154,7 +154,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="panel panel-danger">
                             <div class="panel-heading" role="tab" id="headingThree">
                                 <h4 class="panel-title" align="center">
@@ -175,11 +175,11 @@
                                                             if($i == 0) {
                                                         ?>
                                                         @foreach (array_keys($employee->getAttributes()) as $header)
-                                                            <th>{{ $header }}</th>  
+                                                            <th>{{ $header }}</th>
                                                         @endforeach
 
                                                         <?php
-                                                            $i++; 
+                                                            $i++;
                                                             }
                                                         ?>
                                                     @endforeach
@@ -189,13 +189,13 @@
                                                 @foreach ($data['employees']['eliminados'] as $employee)
                                                     <tr>
                                                         @foreach (array_keys($employee->getAttributes()) as $header)
-                                                            <td>{{ $employee[$header] }}</td>  
+                                                            <td>{{ $employee[$header] }}</td>
                                                         @endforeach
                                                     </tr>
                                                 @endforeach
                                             </tbody>
                                         @endif
-                                    </table> 
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -204,7 +204,7 @@
 
                     <div class="row" style="margin-bottom: 30px">
                         <div class="col-md-offset-9">
-                            <a class="btn btn-success" href="{{ url('importManual') }}">{{ trans('message.buttons.start') }}</a>
+                            <a class="btn btn-success" href="{{ url('employees-import-layout/' . $data['id_file']) }}">{{ trans('message.buttons.start') }}</a>
                             <a class="btn btn-danger" href="{{ url('admin-employees') }}">{{ trans('message.buttons.cancel') }}</a>
                         </div>
                     </div>
@@ -229,11 +229,10 @@
                 },
             });
 
-            var table2 = $('#tableActualizar').DataTable({
+            var table2 = $('.table-data').DataTable({
                 processing: true,
                 serverSide: false,
                 responsive: true,
-                autoWidth: true,
                 scrollX: true,
                 language: {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
@@ -244,13 +243,12 @@
                 processing: true,
                 serverSide: false,
                 responsive: true,
-                autoWidth: true,
                 scrollX: true,
                 language: {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
                 },
             });
         });
-        
+
     </script>
   @endsection

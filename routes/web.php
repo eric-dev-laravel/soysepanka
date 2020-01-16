@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('active-employee/{id}', ['uses'=>'Administracion\AdminEmployees@activeEmployee', 'as'=>'active.employee']);
     Route::get('download-employees/{id}', ['uses'=>'Administracion\AdminEmployees@downloadEmployees', 'as'=>'download.employees']);
     Route::post('employees-file-layout', ['uses'=>'Administracion\AdminEmployees@employeesImportLayout', 'as'=>'employees.importLayout']);
+    Route::get('employees-import-layout/{id}', ['uses'=>'Administracion\AdminEmployees@employeesStartImportLayout', 'as'=>'active.startImportLayout']);
 
     /*
     |--------------------------------------------------------------------------

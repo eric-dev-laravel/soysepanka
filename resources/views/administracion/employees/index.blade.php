@@ -13,6 +13,32 @@
 @endsection
 
 @section('main-content')
+    @if($errors->any())
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+
+                <h4><i class="icon fa fa-ban"></i> {{ trans('message.modals.alert') }}</h4>
+                {{ trans('message.modals.alert_message') }}
+
+                <a href="#" class="small-box-footer pull-right" data-toggle="modal" data-target="#modal-danger">{{ trans('message.modals.moreinfo') }}</i></a>
+            </div>
+
+        </div>
+    </div>
+    @elseif(session()->has('success'))
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="alert alert-success alert-dismissible" id="success-alert">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+
+                <h4><i class="icon fa fa-check"></i> {{ trans('message.modals.alert') }}</h4>
+                {{ trans('message.modals.successupdate_message') }}
+            </div>
+        </div>
+    </div>
+    @endif
 	<div class="container-fluid spark-screen">
 
         <div class="row">
@@ -88,7 +114,6 @@
                                                 </label>
                                                 <input type="text" class="form-control" readonly>
                                             </div>
-                                            <!--<input type="file" id="exampleInputFile">-->
                                             <p class="help-block">{{ trans('message.fromfile2') }}</p>
                                         </div>
 
@@ -229,11 +254,42 @@
 			</div>
         </div>
 
+        <div class="modal modal-danger fade" id="modal-danger" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">{{ trans('message.modals.alert') }}</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        @if($errors->any())
+                            <ul>
+                                @foreach ($errors->all() as $message)
+                                    <li>{{ $message }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">{{ trans('message.buttons.close') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
 
 @section('main-script')
     <script type="text/javascript">
+        setTimeout(function() {
+            $('#success-alert').fadeOut('fast');
+        }, 5000); // <-- time in milliseconds
+
         $(function () {
             var table = $('.data-table').DataTable({
                 processing: true,
