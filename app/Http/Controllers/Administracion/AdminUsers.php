@@ -43,24 +43,97 @@ class AdminUsers extends Controller
     }
 
     public function create(){
-        /*return view('administracion.users.create');*/
+        return view('administracion.users.create');
     }
 
     public function store(Request $request){
         $data = request()->except(['_token', '_method']);
-        $idemployee = (int)$data['idemployee'];
-        $name = $data['nombre'] . ' ' . $data['paterno'] . ' ' . $data['materno'];
-        $email = $data['email'];
+        if($data['type'] == 1){
+            $idemployee = null;
+            if(!empty($data['id_employee'])){
+                $idemployee = (int)$data['id_employee'];
+            }
+            $password = $data['password'];
+            $retrypassword = $data['password_confirmation'];
+            if($password === $retrypassword){
+                try {
+                    DB::beginTransaction();
+                        User::create(array(
+                            'id_employee' => $idemployee,
+                            'name'        => $data['name'],
+                            'email'       => $data['email'],
+                            'password'    => bcrypt($password),
+                        ));
+                    DB::commit();
+                } catch (\PDOException $e) {
+                    DB::rollBack();
+                    $errorsMessage = [
+                        'fullMessage' => $e->getMessage(),
+                    ];
+
+                    return Redirect::back()->withErrors($errorsMessage);
+                }
+            } else {
+                $errorsMessage = [
+                    'fullMessage' => 'Las contraseñas no coinciden, intenta nuevamente.',
+                ];
+
+                return Redirect::back()->withErrors($errorsMessage);
+            }
+        } else if($data['type'] == 2){
+            $idemployee = (int)$data['idemployee'];
+            $name = $data['nombre'] . ' ' . $data['paterno'] . ' ' . $data['materno'];
+            $email = $data['email'];
+            $password = $data['password'];
+            $retrypassword = $data['password_confirmation'];
+            if($password === $retrypassword){
+                try {
+                    DB::beginTransaction();
+                        User::create(array(
+                            'id_employee' => $idemployee,
+                            'name'        => $name,
+                            'email'       => $email,
+                            'password'    => bcrypt($password),
+                        ));
+                    DB::commit();
+                } catch (\PDOException $e) {
+                    DB::rollBack();
+                    $errorsMessage = [
+                        'fullMessage' => $e->getMessage(),
+                    ];
+
+                    return Redirect::back()->withErrors($errorsMessage);
+                }
+            } else {
+                $errorsMessage = [
+                    'fullMessage' => 'Las contraseñas no coinciden, intenta nuevamente.',
+                ];
+
+                return Redirect::back()->withErrors($errorsMessage);
+            }
+        }
+
+        return redirect('create-user-from-employee/'.$idemployee)->with('success','Ok');
+    }
+
+    public function show($id){}
+
+    public function edit($id){
+        $info_employee = User::withTrashed()->where('id', '=', $id)->get();
+
+        return view('administracion.users.edit', compact(['info_employee']));
+    }
+
+    public function update(Request $request, $id){
+        $data = request()->except(['_token', '_method']);
         $password = $data['password'];
         $retrypassword = $data['password_confirmation'];
-        if($password === $retrypassword){
+        if(empty($password) and empty($retrypassword)) {
             try {
                 DB::beginTransaction();
-                    User::create(array(
-                        'id_employee' => $idemployee,
-                        'name'        => $name,
-                        'email'       => $email,
-                        'password'    => bcrypt($password),
+                    User::withTrashed()->whereId($id)->update(array(
+                        'name' => $data['name'],
+                        'email' => $data['email']
                     ));
                 DB::commit();
             } catch (\PDOException $e) {
@@ -68,48 +141,43 @@ class AdminUsers extends Controller
                 $errorsMessage = [
                     'fullMessage' => $e->getMessage(),
                 ];
-    
+
                 return Redirect::back()->withErrors($errorsMessage);
             }
         } else {
-            $errorsMessage = [
-                'fullMessage' => 'Las contraseñas no coinciden, intenta nuevamente.',
-            ];
+            if($password === $retrypassword){
+                try {
+                    DB::beginTransaction();
+                        User::withTrashed()->whereId($id)->update(array(
+                            'name' => $data['name'],
+                            'email' => $data['email'],
+                            'password' => bcrypt($data['password'])
+                        ));
+                    DB::commit();
+                } catch (\PDOException $e) {
+                    DB::rollBack();
+                    $errorsMessage = [
+                        'fullMessage' => $e->getMessage(),
+                    ];
 
-            return Redirect::back()->withErrors($errorsMessage);
+                    return Redirect::back()->withErrors($errorsMessage);
+                }
+            } else {
+                $errorsMessage = [
+                    'fullMessage' => 'Las contraseñas no coinciden, intenta nuevamente.',
+                ];
+
+                return Redirect::back()->withErrors($errorsMessage);
+            }
         }
-        return redirect('create-user-from-employee/'.$idemployee)->with('success','Ok');
-    }
 
-    public function show($id){}
-
-    public function edit($id){
-        /*$info_employee = Employee::withTrashed()->where('id', '=', $id)->get();
-
-        return view('administracion.employees.edit', compact(['info_employee']));*/
-    }
-
-    public function update(Request $request, $id){
-        /*$data = request()->except(['_token', '_method']);
-        try {
-            DB::beginTransaction();
-                Employee::withTrashed()->whereId($id)->update($data);
-            DB::commit();
-        } catch (\PDOException $e) {
-            DB::rollBack();
-            $errorsMessage = [
-                'fullMessage' => $e->getMessage(),
-            ];
-
-            return Redirect::back()->withErrors($errorsMessage);
-        }
-        return redirect('admin-employees/'.$id.'/edit')->with('success','Ok');*/
+        return redirect('admin-users/'.$id.'/edit')->with('success','Ok');
     }
 
     public function destroy($id){
-        /*try {
+        try {
             DB::beginTransaction();
-                $employee = Employee::find($id);
+                $employee = User::find($id);
                 $employee->delete();
             DB::commit();
         } catch (\PDOException $e) {
@@ -120,7 +188,7 @@ class AdminUsers extends Controller
 
             return Redirect::back()->withErrors($errorsMessage);
         }
-        return redirect('admin-employees/'.$id.'/edit')->with('success','Ok');*/
+        return redirect('admin-users/'.$id.'/edit')->with('success','Ok');
     }
 
     public function listUsers(Request $request){
@@ -130,9 +198,9 @@ class AdminUsers extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
                         if(empty($row->deleted_at))
-                            $btn = '<a href="#" class="edit btn btn-success btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';
+                            $btn = '<a href="admin-users/'.$row->id.'/edit" class="edit btn btn-success btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';
                         else
-                            $btn = '<a href="#" class="edit btn btn-danger btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';
+                            $btn = '<a href="admin-users/'.$row->id.'/edit" class="edit btn btn-danger btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';
 
                         return $btn;
                     })
@@ -143,10 +211,10 @@ class AdminUsers extends Controller
         return view('administracion.users.index');
     }
 
-    public function activeEmployee($id){
-        /*try {
+    public function activeUser($id){
+        try {
             DB::beginTransaction();
-                Employee::onlyTrashed()->find($id)->restore(); //Recupera el usuario borrado
+                User::onlyTrashed()->find($id)->restore(); //Recupera el usuario borrado
             DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
@@ -156,13 +224,31 @@ class AdminUsers extends Controller
 
             return Redirect::back()->withErrors($errorsMessage);
         }
-        return redirect('admin-employees/'.$id.'/edit')->with('success','Ok');*/
+        return redirect('admin-users/'.$id.'/edit')->with('success','Ok');
     }
 
     public function createFromEmployee($id){
         $info_employee = Employee::where('id', '=', $id)->get();
 
         return view('administracion.users.createFromEmployee', compact(['info_employee']));
+    }
+
+    public function unlinkFromEmployee($id){
+        try {
+            DB::beginTransaction();
+                User::withTrashed()->whereId($id)->update(array(
+                    'id_employee' => null,
+                ));
+            DB::commit();
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            $errorsMessage = [
+                'fullMessage' => $e->getMessage(),
+            ];
+
+            return Redirect::back()->withErrors($errorsMessage);
+        }
+        return redirect('admin-users/'.$id.'/edit')->with('success','Ok');
     }
 
     public function downloadUsers($id){

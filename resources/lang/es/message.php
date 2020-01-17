@@ -161,15 +161,37 @@ return [
     'onlyactiveusers'         => 'Usuarios Activos',
     'allemployees'            => 'Todos los Empleados',
     'onlyactiveemployees'     => 'Empleados Activos',
+
     'newemployee'             => 'Nuevo Empleado',
     'newuser'                 => 'Nuevo Usuario',
-    'editemployee'            => 'Editar Empleado',
+    'newenterprise'           => 'Nueva Empresa',
+    'newdirection'            => 'Nueva Dirección',
+    'newarea'                 => 'Nueva Área',
+    'newdepartment'           => 'Nuevo Departamento',
+
     'createemployee'          => 'Crear Empleado',
     'createuser'              => 'Crear Usuario',
+    'createenterprise'        => 'Crear Empresa',
+    'createdirection'         => 'Crear Dirección',
+    'createarea'              => 'Crear Área',
+    'createdepartment'        => 'Nuevo Departamento',
+
+    'editemployee'            => 'Editar Empleado',
+    'edituser'                => 'Editar Usuario',
+    'editenterprise'          => 'Editar Empresa',
+    'editdirection'           => 'Editar Dirección',
+    'editarea'                => 'Editar Área',
+    'editdepartment'          => 'Editar Departamento',
+
     'generalinfo'             => 'Información General',
     'personnelinfo'           => 'Información Personal',
     'personnelinfo_extra'     => 'Información Extra',
     'info_createusers'        => 'Información de Acceso',
+    'info_createenterprises'  => 'Información de la Empresa',
+    'info_createdirections'   => 'Información de la Dirección',
+    'info_createarea'         => 'Información del Área',
+    'info_createdepartment'   => 'Información del Departamento',
+
     'options'                 => 'Opciones',
     'employee_importation'    => 'Importación de Empleados',
 
@@ -190,6 +212,7 @@ return [
         'makeaccess'     => 'Crear Acceso',
         'unactive'       => 'Desactivar',
         'start'          => 'Comenzar',
+        'unlinkEmployee' => 'Desvincular de Empleado',
     ],
 
     /*
@@ -198,14 +221,14 @@ return [
      * |-----------------------
      */
     'modals' => [
-        'alert'           => 'Alerta!',
+        'alert'           => 'Aviso:',
         'alert_message'   => 'Algo ocurrio durante la actualización revisa el contenido del formulario e intenta nuevamente.',
         'alert_message_createuser'   => 'Algo ocurrio durante el guardado de información, revisa el contenido del formulario e intenta nuevamente.',
         'moreinfo'        => 'Más información...',
         'success_message' => 'El proceso se realizó de manera correcta.',
         'successupdate_message' => 'La actualización de datos se realizó de manera correcta.',
-        'dangermessageemployee' => 'Estas a punto de desactivar este empleado, si continuas dejarás de ver la información de este empleado en los módulos.',
-        'warningmessageemployee'=> 'Estas a punto de activar este empleado, si continuas la información de este empleado se verá reflejada en los módulos.',
+        'dangermessageemployee' => 'Estas a punto de desactivar este elemento, si continuas dejarás de ver la información de este elemento en los módulos.',
+        'warningmessageemployee'=> 'Estas a punto de activar este elemento, si continuas la información de este elemento se verá reflejada en los módulos.',
         'questioncontinue'      => '¿Continuar?',
     ],
 
@@ -270,7 +293,10 @@ return [
         'extra5'           => 'Extra 5',
         'actions'          => 'Acciones',
 
-        'username'         => 'Nombre de Usuario',
+        'username'         => 'Nombre de Usuario/Email',
+        'picture'          => 'Imagen',
+        'description'      => 'Descripción',
+        'area'             => 'Área',
     ],
 
     /*
@@ -335,6 +361,12 @@ return [
 
         'username'         => 'Ingrese su Nombre de Usuario',
         'retrypassword'    => 'Confirme su Contraseña',
+        'picture'          => 'Seleccione una imagen a mostrar',
+        'area'             => 'Ingrese su Área',
+
+        'info_enterprise'  => '(Opcional) Ingrese una descripcion de su Empresa',
+        'info_direction'   => '(Opcional) Ingrese una descripcion de su Dirección',
+        'info_area'        => '(Opcional) Ingrese una descripcion de su Área',
     ],
 
     /*
@@ -373,6 +405,30 @@ return [
         'admin_all_users'       => 'Total de Usuarios',
         'admin_active_users'    => 'Usuarios Activos',
         'admin_inactive_users'  => 'Usuarios Inactivos',
+
+        'admin_enterprises_title'     => 'Administración de Empresas',
+        'admin_list_enterprises'      => 'Lista de Empresas',
+        'admin_all_enterprises'       => 'Total de Empresas',
+        'admin_active_enterprises'    => 'Empresas Activas',
+        'admin_inactive_enterprises'  => 'Empresas Inactivas',
+
+        'admin_directions_title'     => 'Administración de Direcciones',
+        'admin_list_directions'      => 'Lista de Direcciones',
+        'admin_all_directions'       => 'Total de Direcciones',
+        'admin_active_directions'    => 'Direcciones Activas',
+        'admin_inactive_directions'  => 'Direcciones Inactivas',
+
+        'admin_areas_title'     => 'Administración de Áreas',
+        'admin_list_areas'      => 'Lista de Áreas',
+        'admin_all_areas'       => 'Total de Áreas',
+        'admin_active_areas'    => 'Áreas Activas',
+        'admin_inactive_areas'  => 'Áreas Inactivas',
+
+        'admin_departments_title'     => 'Administración de Departamanetos',
+        'admin_list_departments'      => 'Lista de Departamanetos',
+        'admin_all_departments'       => 'Total de Departamanetos',
+        'admin_active_departments'    => 'Departamanetos Activas',
+        'admin_inactive_departments'  => 'Departamanetos Inactivas',
     ],
 
     /*

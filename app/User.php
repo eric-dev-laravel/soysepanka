@@ -7,6 +7,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Models\Administracion\Employee;
+
 /**
  * App\User
  *
@@ -70,4 +72,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isEmployee(){
+        return $this->belongsTo(Employee::class, 'id_employee', 'id');
+    }
 }

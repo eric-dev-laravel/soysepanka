@@ -96,7 +96,7 @@
 
                                     <div class="box-body">
                                         <div class="row col-md-3 col-sm-12 col-md-offset-1">
-                                            <button type="button" onclick="window.location.href = '{{ url('admin-users/create') }}';" class="btn btn-block btn-info"><i class="fa fa-user-plus"></i> {{ trans('message.newuser') }}</button>
+                                            <button type="button" onclick="window.location.href = '{{ url('admin-employees/create') }}';" class="btn btn-block btn-info"><i class="fa fa-user-plus"></i> {{ trans('message.newuser') }}</button>
                                         </div>
                                     </div>
 
@@ -171,7 +171,7 @@
                         <div class="progress-bar" style="width: 100%"></div>
                     </div>
                     <span class="progress-description">
-                        {{ trans('message.ma.users_employees_msg') }}
+                        {{ trans('message.ma.users_employees_msg') }}   
                     </span>
                     </div>
                     <!-- /.info-box-content -->
@@ -188,7 +188,7 @@
                             <div class="progress-bar" style="width: 100%"></div>
                         </div>
                         <span class="progress-description">
-                            {{ trans('message.ma.only_employees_msg') }}
+                            {{ trans('message.ma.only_employees_msg') }}  
                         </span>
                     </div>
                     <!-- /.info-box-content -->

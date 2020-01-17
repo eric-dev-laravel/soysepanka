@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Administracion;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\User;
 use App\Models\Administracion\Employee;
 use App\Models\Administracion\ProcessedFiles;
 use Yajra\Datatables\Datatables;
 use DB;
 use Redirect;
 use App\Exports\EmployeesExport;
+use Illuminate\Support\Facades\File;
 
 class AdminEmployees extends Controller
 {
@@ -21,8 +23,8 @@ class AdminEmployees extends Controller
 	public function __construct()
 	{
         $this->middleware('auth');
-        $this->pathLayout = '/manual_layouts';
-        $this->folderProcessedFiles = '/processed_files';
+        $this->pathLayout = 'manual_layouts';
+        $this->folderProcessedFiles = 'processed_files';
         $this->separator = env('KEY_SEPARATOR');
         $this->headers = array();
         $this->dataFromFile = array();
@@ -156,7 +158,6 @@ class AdminEmployees extends Controller
     public function employeesImportLayout(Request $request){
         // getting all of the post data
         $files = $request->file('filesImport');
-        $destinationPath = $this->pathLayout;
         $fileSave = 0;
 
         if(empty($files)){
@@ -168,7 +169,7 @@ class AdminEmployees extends Controller
              // recorremos cada archivo y lo subimos individualmente
             foreach($files as $file) {
                 $filename = $file->getClientOriginalName();
-                if($upload_success = $file->storeAs($destinationPath, $filename)){
+                if($upload_success = $file->storeAs($this->pathLayout, $filename)){
                     try {
                         DB::beginTransaction();
                             $fileSave = ProcessedFiles::create([
@@ -270,6 +271,10 @@ class AdminEmployees extends Controller
                     DB::beginTransaction();
                         $employee = Employee::find($empleado->id);
                         $employee->delete();
+                        if(User::where('id_employee', $empleado->id)->exists()){
+                            $user = User::where('id_employee', $empleado->id);
+                            $user->delete();
+                        }
                         $deleted++;
                     DB::commit();
                 } catch (\PDOException $e) {
@@ -285,14 +290,22 @@ class AdminEmployees extends Controller
         }
 
         $message_file = "Se crearon: " . $created . " usuarios - Se modificaron: " . $updated . " usuarios - Se borraron: " . $deleted . " usuarios ";
+        $extension = explode(".", $file->file_name);
+        $extension = end($extension);
         try {
             DB::beginTransaction();
+                $date = date('Y_m_d H_m_s');
+                $n = explode(".", $file->file_name);
+                $newFileName = $n[0] . '-' . $date. '.' . $extension;
+
                 $info_file = [
                     'file_state' => 'Procesado',
-                    'file_comments' => $message_file
+                    'file_comments' => $message_file,
+                    'file_newName' => $newFileName,
                 ];
-                $file->update($info_file);
 
+                $file->update($info_file);
+                File::copy($this->path . $file->file_name, $this->pathProcessedFiles . $newFileName);
             DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();

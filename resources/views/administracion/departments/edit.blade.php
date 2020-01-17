@@ -5,22 +5,21 @@
 @endsection
 
 @section('contentheader_title')
-	{{ trans('message.ma.admin_users_title') }}
+	{{ trans('message.ma.admin_areas_title') }}
 @endsection
 
 @section('contentheader_level_here')
-	{{ trans('message.ma.admin_users_title') }}
+	{{ trans('message.ma.admin_areas_title') }}
 @endsection
 
 @section('main-content')
-
     @if($errors->any())
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 
-                <h4><i class="icon fa fa-ban"></i> {{ trans('message.modals.alert') }}</h4>
+                <h4><i class="icon fa fa-arrows"></i> {{ trans('message.modals.alert') }}</h4>
                 {{ trans('message.modals.alert_message_createuser') }}
 
                 <a href="#" class="small-box-footer pull-right" data-toggle="modal" data-target="#modal-danger">{{ trans('message.modals.moreinfo') }}</i></a>
@@ -44,34 +43,25 @@
     <div class="row">
         <div class="col-md-12">
 
-                <div class="box box-primary box-solid">
+            <div class="box box-primary box-solid">
 
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><i class="fa fa-hand-o-up"></i> {{ trans('message.options') }}</h3>
-                    </div>
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-hand-o-up"></i> {{ trans('message.options') }}</h3>
+                </div>
 
-                    <div class="box-body">
+                <div class="box-body">
 
-                        <div class="row col-md-3 col-sm-12 col-md-offset-2">
-                            @if($info_employee[0]->isEmployee)
-                                <button type="button" class="btn btn-block btn-primary" onclick="window.location.href = '{{ url('unlink-user-from-employee/'.$info_employee[0]->id.'') }}';"><i class="fa fa-chain-broken"></i> {{ trans('message.buttons.unlinkEmployee') }}</button>
-                            @else
-                                <button type="button" disabled class="btn btn-block btn-primary" onclick="window.location.href = '{{ url('unlink-user-from-employee/'.$info_employee[0]->id.'') }}';"><i class="fa fa-chain-broken"></i> {{ trans('message.buttons.unlinkEmployee') }}</button>
-                            @endif
-                        </div>
-
-                        <div class="row col-md-3 col-sm-12 col-md-offset-2">
-                            @if($info_employee[0]->deleted_at)
-                                <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-active-employee"><i class="fa fa-check-square"></i> {{ trans('message.buttons.active') }}</button>
-                            @else
-                                <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal-unactive-employee"><i class="fa fa-minus-square"></i> {{ trans('message.buttons.unactive') }}</button>
-                            @endif
-                        </div>
-
+                    <div class="row col-md-3 col-sm-12 col-md-offset-1">
+                        @if($info_direction['area'][0]->deleted_at)
+                            <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-active-employee"><i class="fa fa-check-square"></i> {{ trans('message.buttons.active') }}</button>
+                        @else
+                            <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal-unactive-employee"><i class="fa fa-minus-square"></i> {{ trans('message.buttons.unactive') }}</button>
+                        @endif
                     </div>
 
                 </div>
 
+            </div>
         </div>
     </div>
 
@@ -81,7 +71,7 @@
             <div class="box">
 
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-user"></i> {{ trans('message.edituser') }}</h3>
+                    <h3 class="box-title"><i class="fa fa-arrows"></i> {{ trans('message.editarea') }}</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -93,54 +83,67 @@
 
                 <div class="box-body">
                     <div class="row col-md-12">
-                        <form role="form" method="POST" action="{{ route('admin-users.update',$info_employee[0]->id) }}" id="update">
+                        <form role="form" method="POST" action="{{ route('admin-areas.update',$info_direction['area'][0]->id) }}" id="update">
                             {!! method_field('PUT') !!}
                             {!! csrf_field() !!}
 
                             <div class="box box-primary">
 
                                 <div class="box-header with-border">
-                                    <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.info_createusers') }}</h3>
+                                    <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.info_createarea') }}</h3>
                                 </div>
 
                                 <div class="box-body">
 
-                                    <div class="form-group col-md-4" style="display: none;">
-                                        <label for="nombre">{{ trans('message.datatables_headers.name') }}</label>
-                                        <input type="text" required class="form-control" id="id_employee" name="id_employee" value="{{ $info_employee[0]->id_employee }}" placeholder="{!! trans('message.form_employee_holder.name') !!}">
+                                    <div class="form-group col-md-6">
+                                        <label for="id_enterprise">{{ trans('message.datatables_headers.enterprise') }}</label>
+                                        <select class="form-control" id="id_enterprise" name="id_enterprise">
+                                            <option value="">Sin empresa</option>
+                                            @foreach ($info_direction['enterprises'] as $enterprises)
+                                                @if($enterprises->id == $info_direction['area'][0]->id_enterprise)
+                                                    <option selected value="{{ $enterprises->id }}">{{  $enterprises->name   }}</option>
+                                                @else
+                                                    <option value="{{ $enterprises->id }}">{{  $enterprises->name   }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
                                     </div>
 
-                                    <div class="form-group col-md-4">
-                                        <label for="nombre">{{ trans('message.datatables_headers.name') }}</label>
-                                        <input type="text" required class="form-control" id="name" name="name" value="{{ $info_employee[0]->name }}" placeholder="{!! trans('message.form_employee_holder.name') !!}">
+                                    <div class="form-group col-md-6">
+                                        <label for="id_enterprise">{{ trans('message.datatables_headers.direction') }}</label>
+                                        <select class="form-control" id="id_direction" name="id_direction">
+                                            <option value="">Sin Dirección</option>
+                                            @foreach ($info_direction['directions'] as $area)
+                                                @if($area->id == $info_direction['area'][0]->id_direction)
+                                                    <option selected value="{{ $area->id }}">{{  $area->name   }}</option>
+                                                @else
+                                                    <option value="{{ $area->id }}">{{  $area->name   }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
                                     </div>
 
-                                    <div class="form-group col-md-4">
-                                        <label for="email">{{ trans('message.datatables_headers.username') }}</label>
-                                        <input type="email" required class="form-control" id="email" name="email" value="{{ $info_employee[0]->email }}" placeholder="{!! trans('message.form_employee_holder.username') !!}"
-                                        class="form-control @error('email') is-invalid @enderror" autocomplete="email">
+                                    <div class="form-group col-md-6">
+                                        <label for="nombre">{{ trans('message.datatables_headers.direction') }}</label>
+                                        <input type="text" required class="form-control" id="name" name="name" value="{{ $info_direction['area'][0]->name }}" placeholder="{{ trans('message.form_employee_holder.direction') }}">
                                     </div>
 
-                                    <div class="form-group has-feedback col-md-4">
-                                        <label for="password">{{ trans('message.datatables_headers.password') }}</label>
-                                        <input type="password" class="form-control" placeholder="{{ trans('message.form_employee_holder.password') }}" name="password"/>
-                                    </div>
-                                    <div class="form-group has-feedback col-md-4">
-                                        <label for="password">{{ trans('message.datatables_headers.password') }}</label>
-                                        <input type="password" class="form-control" placeholder="{{ trans('message.form_employee_holder.retrypassword') }}" name="password_confirmation"/>
+                                    <div class="form-group col-md-12">
+                                        <label for="nombre">{{ trans('message.datatables_headers.enterprise') }}</label>
+                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_direction') }}"> {{ $info_direction['area'][0]->description }} </textarea>
                                     </div>
 
                                 </div>
 
                                 <div class="box-footer">
                                     <div class="row col-md-1 col-sm-12">
-                                        <button type="button" onclick="window.location.href = '{{ url('admin-users') }}';" class="btn btn-primary"><i class="fa fa-arrow-left"></i> {{ trans('message.buttons.back') }}</button>
+                                        <button type="button" onclick="window.location.href = '{{ url('admin-areas') }}';" class="btn btn-primary"><i class="fa fa-arrow-left"></i> {{ trans('message.buttons.back') }}</button>
                                     </div>
                                     <div class="row col-md-1 col-sm-12 col-md-offset-8">
                                         <button type="submit" class="btn btn-success"><i class="fa fa-refresh"></i> {{ trans('message.buttons.edit') }}</button>
                                     </div>
                                     <div class="row col-md-1 col-sm-12 col-md-offset-1">
-                                        <button type="button" onclick="window.location.href = '{{ url('admin-users') }}';" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.buttons.cancel') }}</button>
+                                        <button type="button" onclick="window.location.href = '{{ url('admin-areas') }}';" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.buttons.cancel') }}</button>
                                     </div>
                                 </div>
 
@@ -181,7 +184,7 @@
         </div>
 
         <div class="modal modal-danger fade" id="modal-unactive-employee" style="display: none;">
-            <form class="form" action="{{ route('admin-users.destroy' , $info_employee[0]->id)}}" method="POST">
+            <form class="form" action="{{ route('admin-areas.destroy' , $info_direction['area'][0]->id)}}" method="POST">
                 {!! method_field('DELETE') !!}
                 {!! csrf_field() !!}
                 <div class="modal-dialog">
@@ -224,7 +227,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">{{ trans('message.buttons.close') }}</button>
-                            <button type="button" onclick="window.location.href = '{{ url('active-user/'.$info_employee[0]->id.'') }}';" class="btn btn-outline">{{ trans('message.buttons.active') }}</button>
+                            <button type="button" onclick="window.location.href = '{{ url('active-area/'.$info_direction['area'][0]->id.'') }}';" class="btn btn-outline">{{ trans('message.buttons.active') }}</button>
                         </div>
                     </div>
                 </div>

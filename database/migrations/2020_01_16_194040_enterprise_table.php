@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ProcessedFileTable extends Migration
+class EnterpriseTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class ProcessedFileTable extends Migration
      */
     public function up()
     {
-        Schema::create('processed_files', function (Blueprint $table) {
+        Schema::create('enterprises', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('file_name');
-            $table->string('file_state')->nullable();
-            $table->string('file_comments')->nullable();
-            $table->string('file_newName')->nullable();
-            $table->string('file_path')->nullable();
+            $table->string('id_enterprise')->nullable();
+            $table->string('name')->unique();
+            $table->string('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -31,6 +30,6 @@ class ProcessedFileTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('processed_files');
+        Schema::dropIfExists('enterprises');
     }
 }

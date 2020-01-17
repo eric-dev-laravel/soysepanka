@@ -5,15 +5,14 @@
 @endsection
 
 @section('contentheader_title')
-	{{ trans('message.ma.admin_users_title') }}
+	{{ trans('message.ma.admin_enterprises_title') }}
 @endsection
 
 @section('contentheader_level_here')
-	{{ trans('message.ma.admin_users_title') }}
+	{{ trans('message.ma.admin_enterprises_title') }}
 @endsection
 
 @section('main-content')
-
     @if($errors->any())
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -47,7 +46,7 @@
             <div class="box">
 
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-user"></i> {{ trans('message.createuser') }}</h3>
+                    <h3 class="box-title"><i class="fa fa-bank"></i> {{ trans('message.createenterprise') }}</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -59,59 +58,44 @@
 
                 <div class="box-body">
                     <div class="row col-md-12">
-                        <form role="form" method="POST" action="{{ route('admin-users.store') }}" id="create">
+                        <form role="form" method="POST" action="{{ route('admin-enterprises.store') }}" id="create">
                             {!! method_field('POST') !!}
                             {!! csrf_field() !!}
 
                             <div class="box box-primary">
 
                                 <div class="box-header with-border">
-                                    <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.info_createusers') }}</h3>
+                                    <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.info_createenterprises') }}</h3>
                                 </div>
 
                                 <div class="box-body">
 
-                                    <div class="form-group col-md-4" style="display: none">
-                                        <label for="nombre">{{ trans('message.datatables_headers.name') }}</label>
-                                        <input type="text" class="form-control" id="type" name="type" value="1">
+                                    <div class="form-group col-md-2">
+                                        <label for="nombre">{{ trans('message.datatables_headers.enterprise_id') }}</label>
+                                        <input type="text" class="form-control" id="id_enterprise" name="id_enterprise" placeholder="{{ trans('message.form_employee_holder.enterprise_id') }}">
                                     </div>
 
-                                    <div class="form-group col-md-4">
-                                        <label for="id_employee">{{ trans('message.datatables_headers.idemployee') }}</label>
-                                        <input type="text" class="form-control" id="id_employee" name="id_employee" placeholder="{!! trans('message.form_employee_holder.idemployee') !!}">
+                                    <div class="form-group col-md-10">
+                                        <label for="nombre">{{ trans('message.datatables_headers.enterprise') }}</label>
+                                        <input type="text" required class="form-control" id="name" name="name" placeholder="{{ trans('message.form_employee_holder.enterprise') }}">
                                     </div>
 
-                                    <div class="form-group col-md-4">
-                                        <label for="nombre">{{ trans('message.datatables_headers.name') }}</label>
-                                        <input type="text" required class="form-control" id="name" name="name" placeholder="{!! trans('message.form_employee_holder.name') !!}">
-                                    </div>
-
-                                    <div class="form-group col-md-4">
-                                        <label for="email">{{ trans('message.datatables_headers.username') }}</label>
-                                        <input type="email" required class="form-control" id="email" name="email" placeholder="{!! trans('message.form_employee_holder.username') !!}"
-                                        class="form-control @error('email') is-invalid @enderror" autocomplete="email">
-                                    </div>
-
-                                    <div class="form-group has-feedback col-md-4">
-                                        <label for="password">{{ trans('message.datatables_headers.password') }}</label>
-                                        <input type="password" required class="form-control" placeholder="{{ trans('message.form_employee_holder.password') }}" name="password"/>
-                                    </div>
-                                    <div class="form-group has-feedback col-md-4">
-                                        <label for="password">{{ trans('message.datatables_headers.password') }}</label>
-                                        <input type="password" required class="form-control" placeholder="{{ trans('message.form_employee_holder.retrypassword') }}" name="password_confirmation"/>
+                                    <div class="form-group col-md-12">
+                                        <label for="nombre">{{ trans('message.datatables_headers.enterprise') }}</label>
+                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_enterprise') }}"></textarea>
                                     </div>
 
                                 </div>
 
                                 <div class="box-footer">
                                     <div class="row col-md-1 col-sm-12">
-                                        <button type="button" onclick="window.location.href = '{{ url('admin-users') }}';" class="btn btn-primary"><i class="fa fa-arrow-left"></i> {{ trans('message.buttons.back') }}</button>
+                                        <button type="button" onclick="window.location.href = '{{ url('admin-enterprises') }}';" class="btn btn-primary"><i class="fa fa-arrow-left"></i> {{ trans('message.buttons.back') }}</button>
                                     </div>
                                     <div class="row col-md-1 col-sm-12 col-md-offset-8">
                                         <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> {{ trans('message.buttons.create') }}</button>
                                     </div>
                                     <div class="row col-md-1 col-sm-12 col-md-offset-1">
-                                        <button type="button" onclick="window.location.href = '{{ url('admin-users') }}';" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.buttons.cancel') }}</button>
+                                        <button type="button" onclick="window.location.href = '{{ url('admin-enterprises') }}';" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.buttons.cancel') }}</button>
                                     </div>
                                 </div>
 

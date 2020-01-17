@@ -35,9 +35,36 @@ Route::group(['middleware' => 'auth'], function () {
     */
     Route::resource('admin-users', 'Administracion\AdminUsers');
     Route::get('create-user-from-employee/{id}', ['uses'=>'Administracion\AdminUsers@createFromEmployee', 'as'=>'create.fromemployee']);
+    Route::get('unlink-user-from-employee/{id}', ['uses'=>'Administracion\AdminUsers@unlinkFromEmployee', 'as'=>'unlink.fromemployee']);
     Route::get('users', ['uses'=>'Administracion\AdminUsers@listUsers', 'as'=>'users.list']);
     Route::get('download-users/{id}', ['uses'=>'Administracion\AdminUsers@downloadUsers', 'as'=>'download.users']);
-    //Route::get('active-employee/{id}', ['uses'=>'Administracion\AdminEmployees@activeEmployee', 'as'=>'active.employee']);
+    Route::get('active-user/{id}', ['uses'=>'Administracion\AdminUsers@activeUser', 'as'=>'active.user']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Structure Routes
+    |--------------------------------------------------------------------------
+    */
+    //Enterprises
+    Route::resource('admin-enterprises', 'Administracion\AdminEnterprises');
+    Route::get('enterprises', ['uses'=>'Administracion\AdminEnterprises@listEnterprises', 'as'=>'enterprises.list']);
+    Route::get('active-enterprise/{id}', ['uses'=>'Administracion\AdminEnterprises@activeEnterprise', 'as'=>'active.enterprise']);
+    //Directions
+    Route::resource('admin-directions', 'Administracion\AdminDirections');
+    Route::get('directions', ['uses'=>'Administracion\AdminDirections@listDirections', 'as'=>'directions.list']);
+    Route::get('active-direction/{id}', ['uses'=>'Administracion\AdminDirections@activeDirection', 'as'=>'active.directions']);
+    //Areas
+    Route::resource('admin-areas', 'Administracion\AdminAreas');
+    Route::get('areas', ['uses'=>'Administracion\AdminAreas@listAreas', 'as'=>'areas.list']);
+    Route::get('active-area/{id}', ['uses'=>'Administracion\AdminAreas@activeArea', 'as'=>'active.area']);
+    //Departments
+    Route::resource('admin-departments', 'Administracion\AdminDepartments');
+    Route::get('departments', ['uses'=>'Administracion\AdminDepartments@listDepartments', 'as'=>'departments.list']);
+    Route::get('active-department/{id}', ['uses'=>'Administracion\AdminDepartments@activeDepartment', 'as'=>'active.department']);
+    //JobPositions
+    Route::resource('admin-jobpositions', 'Administracion\AdminJobPositions');
+    Route::get('jobpositions', ['uses'=>'Administracion\AdminJobPositions@listJobPositions', 'as'=>'jobpositions.list']);
+    Route::get('active-jobposition/{id}', ['uses'=>'Administracion\AdminJobPositions@activeJobPosition', 'as'=>'active.jobposition']);
 
     /*
     |--------------------------------------------------------------------------
