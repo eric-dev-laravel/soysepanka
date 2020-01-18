@@ -39,20 +39,22 @@ class AdminDepartments extends Controller
     }
 
     public function create(){
-        /*$enterprises = Enterprise::withTrashed()->get();
+        $enterprises = Enterprise::withTrashed()->get();
         $directions = Direction::withTrashed()->get();
+        $areas = Area::withTrashed()->get();
         $data = [
             'enterprises' => $enterprises,
             'directions' => $directions,
+            'areas' => $areas,
         ];
-        return view('administracion.areas.create', compact(['data']));*/
+        return view('administracion.departments.create', compact(['data']));
     }
 
     public function store(Request $request){
-        /*$data = request()->except(['_token', '_method']);
+        $data = request()->except(['_token', '_method']);
         try {
             DB::beginTransaction();
-                Area::create($data);
+                Department::create($data);
             DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
@@ -63,31 +65,33 @@ class AdminDepartments extends Controller
             return Redirect::back()->withErrors($errorsMessage);
         }
 
-        return redirect('admin-areas/create')->with('success','Ok');*/
+        return redirect('admin-departments/create')->with('success','Ok');
     }
 
     public function show($id){}
 
     public function edit($id){
-        /*$enterprises = Enterprise::withTrashed()->get();
+        $enterprises = Enterprise::withTrashed()->get();
         $directions = Direction::withTrashed()->get();
-        $area = Area::withTrashed()->where('id', '=', $id)->get();
+        $areas = Area::withTrashed()->get();
+        $department = Department::withTrashed()->where('id', '=', $id)->get();
 
         $info_direction = [
             'enterprises' => $enterprises,
             'directions' => $directions,
-            'area' => $area,
+            'areas' => $areas,
+            'department' => $department,
         ];
 
-        return view('administracion.areas.edit', compact(['info_direction']));*/
+        return view('administracion.departments.edit', compact(['info_direction']));
     }
 
     public function update(Request $request, $id){
-        /*$data = request()->except(['_token', '_method']);
+        $data = request()->except(['_token', '_method']);
 
         try {
              DB::beginTransaction();
-                Area::withTrashed()->whereId($id)->update($data);
+                Department::withTrashed()->whereId($id)->update($data);
              DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
@@ -98,13 +102,13 @@ class AdminDepartments extends Controller
             return Redirect::back()->withErrors($errorsMessage);
         }
 
-        return redirect('admin-areas/'.$id.'/edit')->with('success','Ok');*/
+        return redirect('admin-departments/'.$id.'/edit')->with('success','Ok');
     }
 
     public function destroy($id){
-        /*try {
+        try {
             DB::beginTransaction();
-                $employee = Area::find($id);
+                $employee = Department::find($id);
                 $employee->delete();
             DB::commit();
         } catch (\PDOException $e) {
@@ -115,13 +119,13 @@ class AdminDepartments extends Controller
 
             return Redirect::back()->withErrors($errorsMessage);
         }
-        return redirect('admin-areas/'.$id.'/edit')->with('success','Ok');*/
+        return redirect('admin-departments/'.$id.'/edit')->with('success','Ok');
     }
 
-    public function activeArea($id){
-        /*try {
+    public function activeDepartment($id){
+        try {
             DB::beginTransaction();
-            Area::onlyTrashed()->find($id)->restore(); //Recupera el usuario borrado
+            Department::onlyTrashed()->find($id)->restore(); //Recupera el usuario borrado
             DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
@@ -131,7 +135,7 @@ class AdminDepartments extends Controller
 
             return Redirect::back()->withErrors($errorsMessage);
         }
-        return redirect('admin-areas/'.$id.'/edit')->with('success','Ok');*/
+        return redirect('admin-departments/'.$id.'/edit')->with('success','Ok');
     }
 
     public function listDepartments(Request $request){
@@ -141,9 +145,9 @@ class AdminDepartments extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
                         if(empty($row->deleted_at))
-                            $btn = '<a href="admin-areas/'.$row->id.'/edit" class="edit btn btn-success btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';
+                            $btn = '<a href="admin-departments/'.$row->id.'/edit" class="edit btn btn-success btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';
                         else
-                            $btn = '<a href="admin-areas/'.$row->id.'/edit" class="edit btn btn-danger btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';
+                            $btn = '<a href="admin-departments/'.$row->id.'/edit" class="edit btn btn-danger btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';
 
                         return $btn;
                     })

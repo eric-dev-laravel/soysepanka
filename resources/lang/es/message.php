@@ -424,11 +424,11 @@ return [
         'admin_active_areas'    => 'Áreas Activas',
         'admin_inactive_areas'  => 'Áreas Inactivas',
 
-        'admin_departments_title'     => 'Administración de Departamanetos',
-        'admin_list_departments'      => 'Lista de Departamanetos',
-        'admin_all_departments'       => 'Total de Departamanetos',
-        'admin_active_departments'    => 'Departamanetos Activas',
-        'admin_inactive_departments'  => 'Departamanetos Inactivas',
+        'admin_departments_title'     => 'Administración de Departamentos',
+        'admin_list_departments'      => 'Lista de Departamentos',
+        'admin_all_departments'       => 'Total de Departamentos',
+        'admin_active_departments'    => 'Departamentos Activas',
+        'admin_inactive_departments'  => 'Departamentos Inactivas',
     ],
 
     /*
