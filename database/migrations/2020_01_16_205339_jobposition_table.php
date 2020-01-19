@@ -13,7 +13,17 @@ class JobpositionTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('job_positions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('id_enterprise')->nullable();
+            $table->integer('id_direction')->nullable();
+            $table->integer('id_area')->nullable();
+            $table->integer('id_department')->nullable();
+            $table->string('name')->unique();
+            $table->string('description')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -23,6 +33,6 @@ class JobpositionTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('job_positions');
     }
 }

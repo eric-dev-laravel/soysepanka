@@ -71,7 +71,7 @@
             <div class="box">
 
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-arrows"></i> {{ trans('message.editarea') }}</h3>
+                    <h3 class="box-title"><i class="fa fa-pie-chart"></i> {{ trans('message.editarea') }}</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -125,12 +125,12 @@
 
                                     <div class="form-group col-md-6">
                                         <label for="nombre">{{ trans('message.datatables_headers.direction') }}</label>
-                                        <input type="text" required class="form-control" id="name" name="name" value="{{ $info_direction['area'][0]->name }}" placeholder="{{ trans('message.form_employee_holder.direction') }}">
+                                        <input type="text" required class="form-control" id="name" name="name" value="{{ $info_direction['area'][0]->name }}" placeholder="{{ trans('message.form_employee_holder.area') }}">
                                     </div>
 
                                     <div class="form-group col-md-12">
-                                        <label for="nombre">{{ trans('message.datatables_headers.enterprise') }}</label>
-                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_direction') }}"> {{ $info_direction['area'][0]->description }} </textarea>
+                                        <label for="nombre">{{ trans('message.datatables_headers.description') }}</label>
+                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_area') }}"> {{ $info_direction['area'][0]->description }} </textarea>
                                     </div>
 
                                 </div>

@@ -168,6 +168,7 @@ return [
     'newdirection'            => 'Nueva Dirección',
     'newarea'                 => 'Nueva Área',
     'newdepartment'           => 'Nuevo Departamento',
+    'newjobposition'        => 'Nuevo Puesto',
 
     'createemployee'          => 'Crear Empleado',
     'createuser'              => 'Crear Usuario',
@@ -175,6 +176,7 @@ return [
     'createdirection'         => 'Crear Dirección',
     'createarea'              => 'Crear Área',
     'createdepartment'        => 'Nuevo Departamento',
+    'createjobposition'       => 'Nuevo Puesto',
 
     'editemployee'            => 'Editar Empleado',
     'edituser'                => 'Editar Usuario',
@@ -182,6 +184,7 @@ return [
     'editdirection'           => 'Editar Dirección',
     'editarea'                => 'Editar Área',
     'editdepartment'          => 'Editar Departamento',
+    'editjobposition'         => 'Editar Puesto',
 
     'generalinfo'             => 'Información General',
     'personnelinfo'           => 'Información Personal',
@@ -191,6 +194,7 @@ return [
     'info_createdirections'   => 'Información de la Dirección',
     'info_createarea'         => 'Información del Área',
     'info_createdepartment'   => 'Información del Departamento',
+    'info_createjobposition'  => 'Información del Puesto',
 
     'options'                 => 'Opciones',
     'employee_importation'    => 'Importación de Empleados',
@@ -364,9 +368,11 @@ return [
         'picture'          => 'Seleccione una imagen a mostrar',
         'area'             => 'Ingrese su Área',
 
-        'info_enterprise'  => '(Opcional) Ingrese una descripcion de su Empresa',
-        'info_direction'   => '(Opcional) Ingrese una descripcion de su Dirección',
-        'info_area'        => '(Opcional) Ingrese una descripcion de su Área',
+        'info_enterprise'  => '(Opcional) Ingrese una descripción de su Empresa',
+        'info_direction'   => '(Opcional) Ingrese una descripción de su Dirección',
+        'info_area'        => '(Opcional) Ingrese una descripción de su Área',
+        'info_department'  => '(Opcional) Ingrese una descripción de su Departamento',
+        'info_jobposition' => '(Opcional) Ingrese una descripción de su Puesto',
     ],
 
     /*
@@ -427,8 +433,14 @@ return [
         'admin_departments_title'     => 'Administración de Departamentos',
         'admin_list_departments'      => 'Lista de Departamentos',
         'admin_all_departments'       => 'Total de Departamentos',
-        'admin_active_departments'    => 'Departamentos Activas',
-        'admin_inactive_departments'  => 'Departamentos Inactivas',
+        'admin_active_departments'    => 'Departamentos Activos',
+        'admin_inactive_departments'  => 'Departamentos Inactivos',
+
+        'admin_jobpositions_title'     => 'Administración de Puestos',
+        'admin_list_jobpositions'      => 'Lista de Puestos',
+        'admin_all_jobpositions'       => 'Total de Puestos',
+        'admin_active_jobpositions'    => 'Puestos Activos',
+        'admin_inactive_jobpositions'  => 'Puestos Inactivos',
     ],
 
     /*
@@ -439,7 +451,7 @@ return [
     'ci' => [
         'birthday'            => 'Cumpleaños',
         'newrevenue'          => 'Nuevos Ingresos',
-        'movementofpersonnel'          => 'Movimientos de Personal',
+        'movementofpersonnel' => 'Movimientos de Personal',
         'aboutus'             => 'Quienes somos',
         'organizationchart'   => 'Organigrama',
         'regulations'         => 'Políticas y Reglamentos',

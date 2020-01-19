@@ -5,11 +5,11 @@
 @endsection
 
 @section('contentheader_title')
-	{{ trans('message.ma.admin_users_title') }}
+	{{ trans('message.ma.admin_jobpositions_title') }}
 @endsection
 
 @section('contentheader_level_here')
-	{{ trans('message.ma.admin_users_title') }}
+	{{ trans('message.ma.admin_jobpositions_title') }}
 @endsection
 
 @section('main-content')
@@ -18,30 +18,30 @@
         <div class="row">
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="info-box">
-                    <span class="info-box-icon bg-aqua"><i class="ion ion-ios-people-outline"></i></span>
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-grav"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ trans('message.ma.admin_all_users') }}</span>
-                        <span class="info-box-number">{{ $users_data['all_users'] }}</span>
+                        <span class="info-box-text">{{ trans('message.ma.admin_all_jobpositions') }}</span>
+                        <span class="info-box-number">{{ $jobpositions_data['all_jobpositions'] }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="info-box">
-                    <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
+                    <span class="info-box-icon bg-green"><i class="fa fa-grav"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ trans('message.ma.admin_active_users') }}</span>
-                        <span class="info-box-number">{{ $users_data['active_users'] }}</span>
+                        <span class="info-box-text">{{ trans('message.ma.admin_active_jobpositions') }}</span>
+                        <span class="info-box-number">{{ $jobpositions_data['active_jobpositions'] }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="info-box">
-                    <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+                    <span class="info-box-icon bg-yellow"><i class="fa fa-grav"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ trans('message.ma.admin_inactive_users') }}</span>
-                        <span class="info-box-number">{{ $users_data['inactive_users'] }}</span>
+                        <span class="info-box-text">{{ trans('message.ma.admin_inactive_jobpositions') }}</span>
+                        <span class="info-box-number">{{ $jobpositions_data['inactive_jobpositions'] }}</span>
                     </div>
                 </div>
             </div>
@@ -67,27 +67,6 @@
 
                         <div class="row col-md-12">
                             <div class="form-group">
-                                <div class="box box-primary box-solid">
-
-                                    <div class="box-header with-border">
-                                        <h3 class="box-title"><i class="fa fa-upload"></i> {{ trans('message.export') }}</h3>
-                                    </div>
-
-                                    <div class="box-body">
-                                        <div class="row col-md-3 col-sm-12 col-md-offset-1">
-                                            <button type="button" onclick="window.location.href = '{{ url('download-users/1') }}';" class="btn btn-block btn-primary"><i class="fa fa-users"></i> {{ trans('message.allusers') }}</button>
-                                        </div>
-                                        <div class="row col-md-3 col-sm-12 col-md-offset-1">
-                                            <button type="button" onclick="window.location.href = '{{ url('download-users/2') }}';" class="btn btn-block btn-primary"><i class="fa fa-user"></i> {{ trans('message.onlyactiveusers') }}</button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row col-md-12">
-                            <div class="form-group">
                                 <div class="box box-info box-solid">
 
                                     <div class="box-header with-border">
@@ -96,7 +75,7 @@
 
                                     <div class="box-body">
                                         <div class="row col-md-3 col-sm-12 col-md-offset-1">
-                                            <button type="button" onclick="window.location.href = '{{ url('admin-employees/create') }}';" class="btn btn-block btn-info"><i class="fa fa-user-plus"></i> {{ trans('message.newuser') }}</button>
+                                            <button type="button" onclick="window.location.href = '{{ url('admin-jobpositions/create') }}';" class="btn btn-block btn-info"><i class="fa fa-grav"></i> {{ trans('message.newjobposition') }}</button>
                                         </div>
                                     </div>
 
@@ -110,11 +89,11 @@
 		</div>
 
         <div class="row">
-			<div class="col-md-7">
+			<div class="col-md-12">
 
 				<div class="box">
 					<div class="box-header with-border">
-						<h3 class="box-title"><i class="fa fa-users"></i> {{ trans('message.ma.admin_list_users') }}</h3>
+						<h3 class="box-title"><i class="fa fa-grav"></i> {{ trans('message.ma.admin_list_jobpositions') }}</h3>
 
 						<div class="box-tools pull-right">
 							<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -129,8 +108,12 @@
                             <thead>
                                 <tr style="background-color: #7A75B5; color: white; text-align: center; font-size: 14px;">
                                     <th>{{ trans('message.datatables_headers.number') }}</th>
+                                    <th>{{ trans('message.datatables_headers.enterprise') }}</th>
+                                    <th>{{ trans('message.datatables_headers.direction') }}</th>
+                                    <th>{{ trans('message.datatables_headers.area') }}</th>
+                                    <th>{{ trans('message.datatables_headers.department') }}</th>
                                     <th>{{ trans('message.datatables_headers.name') }}</th>
-                                    <th>{{ trans('message.datatables_headers.username') }}</th>
+                                    <th>{{ trans('message.datatables_headers.description') }}</th>
                                     <th>{{ trans('message.datatables_headers.actions') }}</th>
                                 </tr>
                             </thead>
@@ -140,61 +123,6 @@
 					</div>
 				</div>
 			</div>
-
-            <div class="col-md-5">
-                <!-- Info Boxes Style 2 -->
-                <div class="info-box bg-yellow">
-                    <span class="info-box-icon"><i class="fa fa-user"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">{{ trans('message.ma.only_users') }}</span>
-                    <span class="info-box-number">{{ $users_data['only_users'] }}</span>
-
-                    <div class="progress">
-                        <div class="progress-bar" style="width: 100%"></div>
-                    </div>
-                    <span class="progress-description">
-                            {{ trans('message.ma.only_users_msg') }}
-                        </span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-                <div class="info-box bg-green">
-                    <span class="info-box-icon"><i class="fa fa-users"></i></span>
-
-                    <div class="info-box-content">
-                    <span class="info-box-text">{{ trans('message.ma.users_employees') }}</span>
-                    <span class="info-box-number">{{ $users_data['users_employees'] }}</span>
-
-                    <div class="progress">
-                        <div class="progress-bar" style="width: 100%"></div>
-                    </div>
-                    <span class="progress-description">
-                        {{ trans('message.ma.users_employees_msg') }}   
-                    </span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-                <div class="info-box bg-aqua">
-                    <span class="info-box-icon"><i class="fa fa-user"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">{{ trans('message.ma.only_employees') }}</span>
-                        <span class="info-box-number">{{ $users_data['only_employees'] }}</span>
-
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 100%"></div>
-                        </div>
-                        <span class="progress-description">
-                            {{ trans('message.ma.only_employees_msg') }}  
-                        </span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-            </div>
-
         </div>
 
     </div>
@@ -208,11 +136,15 @@
                 serverSide: true,
                 responsive: true,
                 scrollX: true,
-                ajax: "{{ route('users.list') }}",
+                ajax: "{{ route('jobpositions.list') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'id_enterprise', name: 'id_enterprise'},
+                    {data: 'id_direction', name: 'id_direction'},
+                    {data: 'id_area', name: 'id_area'},
+                    {data: 'id_department', name: 'id_department'},
                     {data: 'name', name: 'name'},
-                    {data: 'email', name: 'email'},
+                    {data: 'description', name: 'description'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 language: {
@@ -220,7 +152,7 @@
                 },
                 columnDefs: [
                     {
-                        "width": "210px", "targets": [1, 2],
+                        "width": "180px", "targets": [1, 2, 3, 4],
                     }
                 ],
                 fixedColumns:   {

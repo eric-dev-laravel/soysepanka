@@ -106,8 +106,8 @@
                                     </div>
 
                                     <div class="form-group col-md-12">
-                                        <label for="nombre">{{ trans('message.datatables_headers.enterprise') }}</label>
-                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_area') }}"></textarea>
+                                        <label for="nombre">{{ trans('message.datatables_headers.description') }}</label>
+                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_department') }}"></textarea>
                                     </div>
 
                                 </div>

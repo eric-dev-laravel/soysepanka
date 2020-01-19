@@ -139,12 +139,12 @@
 
                                     <div class="form-group col-md-6">
                                         <label for="nombre">{{ trans('message.datatables_headers.department') }}</label>
-                                        <input type="text" required class="form-control" id="name" name="name" value="{{ $info_direction['department'][0]->name }}" placeholder="{{ trans('message.form_employee_holder.direction') }}">
+                                        <input type="text" required class="form-control" id="name" name="name" value="{{ $info_direction['department'][0]->name }}" placeholder="{{ trans('message.form_employee_holder.department') }}">
                                     </div>
 
                                     <div class="form-group col-md-12">
-                                        <label for="nombre">{{ trans('message.datatables_headers.enterprise') }}</label>
-                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_direction') }}"> {{ $info_direction['department'][0]->description }} </textarea>
+                                        <label for="nombre">{{ trans('message.datatables_headers.description') }}</label>
+                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_department') }}"> {{ $info_direction['department'][0]->description }} </textarea>
                                     </div>
 
                                 </div>
