@@ -89,7 +89,7 @@
 		</div>
 
         <div class="row">
-			<div class="col-md-8">
+			<div class="col-md-10">
 
 				<div class="box">
 					<div class="box-header with-border">
@@ -108,9 +108,9 @@
                             <thead>
                                 <tr style="background-color: #7A75B5; color: white; text-align: center; font-size: 14px;">
                                     <th>{{ trans('message.datatables_headers.number') }}</th>
-                                    <th>{{ trans('message.datatables_headers.enterprise_id') }}</th>
                                     <th>{{ trans('message.datatables_headers.name') }}</th>
                                     <th>{{ trans('message.datatables_headers.description') }}</th>
+                                    <th>{{ trans('message.datatables_headers.mark') }}</th>
                                     <th>{{ trans('message.datatables_headers.actions') }}</th>
                                 </tr>
                             </thead>
@@ -136,9 +136,9 @@
                 ajax: "{{ route('directions.list') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'id_enterprise', name: 'id_enterprise'},
                     {data: 'name', name: 'name'},
                     {data: 'description', name: 'description'},
+                    {data: 'id_mark', name: 'id_mark'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 language: {
@@ -146,11 +146,11 @@
                 },
                 columnDefs: [
                     {
-                        "width": "180px", "targets": [2,3],
+                        "width": "200px", "targets": [1, 2, 3],
                     }
                 ],
                 fixedColumns:   {
-                    leftColumns: 2,
+                    leftColumns: 3,
                     rightColumns: 1
                 }
             });

@@ -15,9 +15,10 @@ class DirectionTable extends Migration
     {
         Schema::create('directions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_enterprise')->nullable();
+            $table->integer('id_mark')->nullable();
             $table->string('name')->unique();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
+            $table->string('origin')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

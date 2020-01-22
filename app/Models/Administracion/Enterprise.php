@@ -14,6 +14,6 @@ class Enterprise extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_enterprise', 'name', 'description'];
+    protected $fillable = ['id_enterprise', 'name', 'description', 'origin'];
     protected $dates = ['created_at, updated_at, deleted_at'];
 }

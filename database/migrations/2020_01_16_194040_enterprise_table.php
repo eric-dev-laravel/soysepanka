@@ -17,7 +17,8 @@ class EnterpriseTable extends Migration
             $table->increments('id');
             $table->string('id_enterprise')->nullable();
             $table->string('name')->unique();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
+            $table->string('origin')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

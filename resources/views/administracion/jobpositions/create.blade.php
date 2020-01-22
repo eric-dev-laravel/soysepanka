@@ -111,6 +111,25 @@
                                     </div>
 
                                     <div class="form-group col-md-6">
+                                        <label for="id_direction">{{ trans('message.datatables_headers.level') }}</label>
+                                        <select class="form-control" id="id_level" name="id_level">
+                                            @foreach ($data['levels_positions'] as $level)
+                                                <option value="{{ $level->id }}">{{  'Nivel: '. $level->level. ' ' .$level->name  }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="id_direction">{{ trans('message.datatables_headers.boss') }}</label>
+                                        <select class="form-control" id="id_boss_position" name="id_boss_position">
+                                            <option value="">Sin Jefe</option>
+                                            @foreach ($data['list_jobpositions'] as $boss)
+                                                <option value="{{ $boss->id }}">{{  $boss->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
                                         <label for="nombre">{{ trans('message.datatables_headers.position') }}</label>
                                         <input type="text" required class="form-control" id="name" name="name" placeholder="{{ trans('message.form_employee_holder.position') }}">
                                     </div>

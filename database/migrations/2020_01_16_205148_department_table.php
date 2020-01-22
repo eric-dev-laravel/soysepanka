@@ -19,7 +19,8 @@ class DepartmentTable extends Migration
             $table->integer('id_direction')->nullable();
             $table->integer('id_area')->nullable();
             $table->string('name')->unique();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
+            $table->string('origin')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

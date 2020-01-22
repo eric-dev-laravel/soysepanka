@@ -9,6 +9,7 @@ use App\Models\Administracion\Direction;
 use App\Models\Administracion\Area;
 use App\Models\Administracion\Department;
 use App\Models\Administracion\JobPosition;
+use App\Models\Administracion\hierarchical_levels_positions;
 use Yajra\Datatables\Datatables;
 use DB;
 use Redirect;
@@ -44,11 +45,15 @@ class AdminJobPositions extends Controller
         $directions = Direction::withTrashed()->get();
         $areas = Area::withTrashed()->get();
         $departments = Department::withTrashed()->get();
+        $levels_positions = hierarchical_levels_positions::orderByRaw('level ASC')->get();
+        $list_jobpositions = JobPosition::withTrashed()->orderByRaw('id_level DESC')->get();
         $data = [
             'enterprises' => $enterprises,
             'directions' => $directions,
             'areas' => $areas,
             'departments' => $departments,
+            'levels_positions' => $levels_positions,
+            'list_jobpositions' => $list_jobpositions,
         ];
         return view('administracion.jobpositions.create', compact(['data']));
     }
@@ -77,8 +82,10 @@ class AdminJobPositions extends Controller
         $enterprises = Enterprise::withTrashed()->get();
         $directions = Direction::withTrashed()->get();
         $areas = Area::withTrashed()->get();
-        $departments = Area::withTrashed()->get();
+        $departments = Department::withTrashed()->get();
         $jobposition = JobPosition::withTrashed()->where('id', '=', $id)->get();
+        $levels_positions = hierarchical_levels_positions::orderByRaw('level ASC')->get();
+        $list_jobpositions = JobPosition::withTrashed()->where('id', '!=', $id)->orderByRaw('id_level DESC')->get();
 
         $info_direction = [
             'enterprises' => $enterprises,
@@ -86,6 +93,8 @@ class AdminJobPositions extends Controller
             'areas' => $areas,
             'departments' => $departments,
             'jobposition' => $jobposition,
+            'levels_positions' => $levels_positions,
+            'list_jobpositions' => $list_jobpositions,
         ];
 
         return view('administracion.jobpositions.edit', compact(['info_direction']));
@@ -148,6 +157,38 @@ class AdminJobPositions extends Controller
             $data = JobPosition::withTrashed()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
+                    ->editColumn('id_enterprise', function($row){
+                        if(!empty($row->id_enterprise))
+                            $content = $row->enterprise->name;
+                        else
+                            $content = 'N/A';
+
+                        return $content;
+                    })
+                    ->editColumn('id_direction', function($row){
+                        if(!empty($row->id_direction))
+                            $content = $row->direction->name;
+                        else
+                            $content = 'N/A';
+
+                        return $content;
+                    })
+                    ->editColumn('id_area', function($row){
+                        if(!empty($row->id_area))
+                            $content = $row->area->name;
+                        else
+                            $content = 'N/A';
+
+                        return $content;
+                    })
+                    ->editColumn('id_department', function($row){
+                        if(!empty($row->id_department))
+                            $content = $row->department->name;
+                        else
+                            $content = 'N/A';
+
+                        return $content;
+                    })
                     ->addColumn('action', function($row){
                         if(empty($row->deleted_at))
                             $btn = '<a href="admin-jobpositions/'.$row->id.'/edit" class="edit btn btn-success btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';

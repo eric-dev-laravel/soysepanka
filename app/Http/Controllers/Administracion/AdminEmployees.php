@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Models\Administracion\Employee;
+use App\Models\Administracion\Enterprise;
+use App\Models\Administracion\Mark;
+use App\Models\Administracion\Direction;
+use App\Models\Administracion\Area;
+use App\Models\Administracion\Department;
+use App\Models\Administracion\JobPosition;
+use App\Models\Administracion\JobPositionCatalog;
 use App\Models\Administracion\ProcessedFiles;
 use Yajra\Datatables\Datatables;
 use DB;
@@ -30,7 +37,28 @@ class AdminEmployees extends Controller
         $this->dataFromFile = array();
         $this->path = storage_path() . '/app/public/' . $this->pathLayout . '/';
         $this->pathProcessedFiles = storage_path() . '/app/public/' . $this->folderProcessedFiles . '/';
+
         $this->keyForEmployee = env('KEY_EMPLOYEE');
+        $this->keyForCreate = env('KEYFORCREATE');
+
+        $this->keyForIDEnterprise = env('KEYFORIDENTERPRISE');
+        $this->keyIDEnterprise = env('KEYIDENTERPRISE');
+        $this->keyForEnterprise = env('KEYFORENTERPRISE');
+        $this->keyForMark = env('KEYFORMARK');
+        $this->keyForDirection = env('KEYFORDIRECTION');
+        $this->keyForArea = env('KEYFORAREA');
+        $this->keyForDepartment = env('KEYFORDEPARTMENT');
+        $this->keyForJobPosition = env('KEYFORJOBPOSITION');
+
+        $this->keyForOrigin = env('KEYFORORIGIN');
+        $this->keyOrigin = env('KEYORIGIN');
+
+        $this->createEnterprise = env('KEY_ENTERPRISE');
+        $this->createMark = env('KEY_MARK');
+        $this->createDirection = env('KEY_DIRECTION');
+        $this->createArea = env('KEY_AREA');
+        $this->createDepartment = env('KEY_DEPARTMENT');
+        $this->createJobPosition = env('KEY_JOBPOSITION');
 
     }
 
@@ -48,7 +76,13 @@ class AdminEmployees extends Controller
     }
 
     public function create(){
-        return view('administracion.employees.create');
+        $list_employees = Employee::orderByRaw('nombre ASC')->get();
+        $list_jobpositions = JobPosition::orderByRaw('id_level DESC')->get();
+        $data = [
+            'list_employee' => $list_employees,
+            'list_jobpositions' => $list_jobpositions,
+        ];
+        return view('administracion.employees.create', compact(['data']));
     }
 
     public function store(Request $request){
@@ -58,6 +92,7 @@ class AdminEmployees extends Controller
                 Employee::create($data);
             DB::commit();
         } catch (\PDOException $e) {
+            dd($e);
             DB::rollBack();
             $errorsMessage = [
                 'fullMessage' => $e->getMessage(),
@@ -72,7 +107,6 @@ class AdminEmployees extends Controller
 
     public function edit($id){
         $info_employee = Employee::withTrashed()->where('id', '=', $id)->get();
-        //dd($info_employee[0]->isUser);
         return view('administracion.employees.edit', compact(['info_employee']));
     }
 
@@ -112,7 +146,7 @@ class AdminEmployees extends Controller
 
     public function listEmployees(Request $request){
         if ($request->ajax()) {
-            $data = Employee::withTrashed()->get();
+            $data = Employee::withTrashed()->orderByRaw('deleted_at ASC')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('nombre', function($row){
@@ -185,6 +219,7 @@ class AdminEmployees extends Controller
                         return redirect('admin-employees')->withErrors($errorsMessage);
                     }
                     $data = $this->readFile($filename);
+                    //dd($data);
                     $info = [
                         'employees' => $data,
                         'type' => 1,
@@ -204,7 +239,7 @@ class AdminEmployees extends Controller
     private function readFile($filename) {
         $data = $this->getCSVData($filename);//llamada a metodo interno
         $checkData = $this->checkData($data);//llamada a metodo interno
-        return $val = $checkData;//Aqui se declara el nombre de la tabla
+        return $checkData;
     }
 
     public function employeesStartImportLayout($id) {
@@ -224,10 +259,146 @@ class AdminEmployees extends Controller
                 if (! Employee::where($this->keyForEmployee, $new[$this->keyForEmployee])->exists()){
                     try {
                         DB::beginTransaction();
+                        //dd($new);
                             Employee::create($new);
                             $array_rfc = array_add($array_rfc, $i, $new[$this->keyForEmployee]);
                             $created++;
                         DB::commit();
+
+                        //Crear Empresas sino existen
+                        if($this->createEnterprise) {
+                            if (! Enterprise::where($this->keyForCreate, $new[$this->keyForEnterprise])->exists()){
+                                try {
+                                    DB::beginTransaction();
+                                        if(empty($new[$this->keyForIDEnterprise])){
+                                            Enterprise::create(array(
+                                                $this->keyForCreate => $new[$this->keyForEnterprise],
+                                                $this->keyOrigin => $new[$this->keyForOrigin],
+                                            ));
+                                        } else {
+                                            Enterprise::create(array(
+                                                $this->keyForCreate => $new[$this->keyForEnterprise],
+                                                $this->keyIDEnterprise => $new[$this->keyForIDEnterprise],
+                                                $this->keyOrigin => $new[$this->keyForOrigin],
+                                            ));
+                                        }
+                                    DB::commit();
+                                } catch (\PDOException $e) {
+                                    DB::rollBack();
+                                    $array_fail_info = [
+                                        'enterprise' => $new[$this->keyForEnterprise],
+                                        'msg'  => $e->getMessage(),
+                                    ];
+                                    $employees_fail = array_add($employees_fail, $i, $array_fail_info);
+                                }
+                            }
+                        }
+
+                        //Crear Marcas sino existen
+                        if($this->createMark) {
+                            if (! Mark::where($this->keyForCreate, $new[$this->keyForMark])->exists()){
+                                try {
+                                    DB::beginTransaction();
+                                    Mark::create(array(
+                                            $this->keyForCreate => $new[$this->keyForMark],
+                                            $this->keyOrigin => $new[$this->keyForOrigin],
+                                        ));
+                                    DB::commit();
+                                } catch (\PDOException $e) {
+                                    DB::rollBack();
+                                    $array_fail_info = [
+                                        'mark' => $new[$this->keyForDirection],
+                                        'msg'  => $e->getMessage(),
+                                    ];
+                                    $employees_fail = array_add($employees_fail, $i, $array_fail_info);
+                                }
+                            }
+                        }
+
+                        //Crear Direcciones sino existen
+                        if($this->createDirection) {
+                            if (! Direction::where($this->keyForCreate, $new[$this->keyForDirection])->exists()){
+                                try {
+                                    DB::beginTransaction();
+                                    Direction::create(array(
+                                            $this->keyForCreate => $new[$this->keyForDirection],
+                                            $this->keyOrigin => $new[$this->keyForOrigin],
+                                        ));
+                                    DB::commit();
+                                } catch (\PDOException $e) {
+                                    DB::rollBack();
+                                    $array_fail_info = [
+                                        'direction' => $new[$this->keyForDirection],
+                                        'msg'  => $e->getMessage(),
+                                    ];
+                                    $employees_fail = array_add($employees_fail, $i, $array_fail_info);
+                                }
+                            }
+                        }
+
+                        //Crear Areas sino existen
+                        if($this->createArea) {
+                            if (! Area::where($this->keyForCreate, $new[$this->keyForArea])->exists()){
+                                try {
+                                    DB::beginTransaction();
+                                    Area::create(array(
+                                            $this->keyForCreate => $new[$this->keyForArea],
+                                            $this->keyOrigin => $new[$this->keyForOrigin],
+                                        ));
+                                    DB::commit();
+                                } catch (\PDOException $e) {
+                                    DB::rollBack();
+                                    $array_fail_info = [
+                                        'area' => $new[$this->keyForArea],
+                                        'msg'  => $e->getMessage(),
+                                    ];
+                                    $employees_fail = array_add($employees_fail, $i, $array_fail_info);
+                                }
+                            }
+                        }
+
+                        //Crear Departamentos sino existen
+                        if($this->createDepartment) {
+                            if (! Department::where($this->keyForCreate, $new[$this->keyForDepartment])->exists()){
+                                try {
+                                    DB::beginTransaction();
+                                    Department::create(array(
+                                            $this->keyForCreate => $new[$this->keyForDepartment],
+                                            $this->keyOrigin => $new[$this->keyForOrigin],
+                                        ));
+                                    DB::commit();
+                                } catch (\PDOException $e) {
+                                    DB::rollBack();
+                                    $array_fail_info = [
+                                        'department' => $new[$this->keyForDepartment],
+                                        'msg'  => $e->getMessage(),
+                                    ];
+                                    $employees_fail = array_add($employees_fail, $i, $array_fail_info);
+                                }
+                            }
+                        }
+
+                        //Crear Puestos sino existen
+                        if($this->createJobPosition) {
+                            if (! JobPositionCatalog::where($this->keyForCreate, $new[$this->keyForJobPosition])->exists()){
+                                try {
+                                    DB::beginTransaction();
+                                    JobPositionCatalog::create(array(
+                                            $this->keyForCreate => $new[$this->keyForJobPosition],
+                                            $this->keyOrigin => $new[$this->keyForOrigin],
+                                        ));
+                                    DB::commit();
+                                } catch (\PDOException $e) {
+                                    DB::rollBack();
+                                    $array_fail_info = [
+                                        'jobPositionCatalog' => $new[$this->keyForJobPosition],
+                                        'msg'  => $e->getMessage(),
+                                    ];
+                                    $employees_fail = array_add($employees_fail, $i, $array_fail_info);
+                                }
+                            }
+                        }
+
                     } catch (\PDOException $e) {
                         DB::rollBack();
                         $array_fail_info = [
@@ -261,7 +432,7 @@ class AdminEmployees extends Controller
                 $employees_fail = array_add($employees_fail, $i, $array_fail_info);
             }
         }
-
+        //dd($employees_fail);
         if($array_rfc > 0) {
             $empleados = Employee::whereNotIn('rfc', $array_rfc)
                                     ->get();
@@ -325,13 +496,14 @@ class AdminEmployees extends Controller
                 $column = '';
                 while (!empty($data[$j])){
                     $column = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $data[$j]);
-                    $this->headers[$j] = trim($column);
+                    $this->headers[$j] = trim(strtolower($column));
                     $j++;
                 }
             } else {
-               for($j = 0; $j < count($data); $j++){
+                for($j = 0; $j < count($data); $j++){
                     if (!empty($data[$j])){
                         $columnData = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $data[$j]);
+                        $columnData = utf8_encode(preg_replace('/[\x00-\x1F\x7F\xA0]/', '', $data[$j]));
                         $this->dataFromFile[$i][$this->headers[$j]] = trim($columnData);
                     } else {
                         $this->dataFromFile[$i][$this->headers[$j]] = null;

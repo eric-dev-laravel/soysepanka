@@ -19,8 +19,11 @@ class JobpositionTable extends Migration
             $table->integer('id_direction')->nullable();
             $table->integer('id_area')->nullable();
             $table->integer('id_department')->nullable();
+            $table->integer('id_level')->nullable();
+            $table->integer('id_boss_position')->nullable();
             $table->string('name')->unique();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
+            $table->string('origin')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

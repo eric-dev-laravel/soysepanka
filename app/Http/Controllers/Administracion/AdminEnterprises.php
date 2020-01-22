@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Administracion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Administracion\Enterprise;
+use App\Models\Administracion\Direction;
+use App\Models\Administracion\Area;
+use App\Models\Administracion\Department;
 use Yajra\Datatables\Datatables;
 use DB;
 use Redirect;
@@ -26,10 +29,17 @@ class AdminEnterprises extends Controller
         $inactive_enterprises = Enterprise::onlyTrashed()->count();
         $active_enterprises = $all_enterprise - $inactive_enterprises;
 
+        $all_directions = Direction::withTrashed()->count();
+        $all_areas = Area::withTrashed()->count();
+        $all_departments = Department::withTrashed()->count();
+
         $enterprices_data = [
             'all_enterprises' => $all_enterprise,
             'active_enterprises' => $active_enterprises,
             'inactive_enterprises' => $inactive_enterprises,
+            'all_directions' => $all_directions,
+            'all_areas' => $all_areas,
+            'all_departments' => $all_departments,
         ];
 
         return view('administracion.enterprises.index', compact(['enterprices_data']));

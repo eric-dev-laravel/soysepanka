@@ -89,11 +89,11 @@
 		</div>
 
         <div class="row">
-			<div class="col-md-10">
+			<div class="col-md-12">
 
 				<div class="box">
 					<div class="box-header with-border">
-						<h3 class="box-title"><i class="fa fa-briefcase"></i> {{ trans('message.ma.admin_list_directions') }}</h3>
+						<h3 class="box-title"><i class="fa fa-briefcase"></i> {{ trans('message.ma.admin_list_departments') }}</h3>
 
 						<div class="box-tools pull-right">
 							<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -108,11 +108,11 @@
                             <thead>
                                 <tr style="background-color: #7A75B5; color: white; text-align: center; font-size: 14px;">
                                     <th>{{ trans('message.datatables_headers.number') }}</th>
+                                    <th>{{ trans('message.datatables_headers.name') }}</th>
+                                    <th>{{ trans('message.datatables_headers.description') }}</th>
                                     <th>{{ trans('message.datatables_headers.enterprise') }}</th>
                                     <th>{{ trans('message.datatables_headers.direction') }}</th>
                                     <th>{{ trans('message.datatables_headers.area') }}</th>
-                                    <th>{{ trans('message.datatables_headers.name') }}</th>
-                                    <th>{{ trans('message.datatables_headers.description') }}</th>
                                     <th>{{ trans('message.datatables_headers.actions') }}</th>
                                 </tr>
                             </thead>
@@ -138,11 +138,11 @@
                 ajax: "{{ route('departments.list') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'name', name: 'name'},
+                    {data: 'description', name: 'description'},
                     {data: 'id_enterprise', name: 'id_enterprise'},
                     {data: 'id_direction', name: 'id_direction'},
                     {data: 'id_area', name: 'id_area'},
-                    {data: 'name', name: 'name'},
-                    {data: 'description', name: 'description'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 language: {
@@ -150,7 +150,7 @@
                 },
                 columnDefs: [
                     {
-                        "width": "180px", "targets": [1, 2, 3, 4],
+                        "width": "180px", "targets": [1, 2, 3, 4, 5],
                     }
                 ],
                 fixedColumns:   {

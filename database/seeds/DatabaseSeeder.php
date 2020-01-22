@@ -32,6 +32,29 @@ class DatabaseSeeder extends Seeder
             'id_role' => \App\Models\Administracion\Role::ADMIN
         ]);
 
-        factory(\App\Models\Administracion\Employee::class, 5)->create();
+        factory(\App\Models\Administracion\Employee::class, 2)->create();
+
+        factory(\App\Models\Administracion\hierarchical_levels_positions::class, 1)->create(['level' => 1, 'name' => 'Operativo']);
+        factory(\App\Models\Administracion\hierarchical_levels_positions::class, 1)->create(['level' => 2, 'name' => 'Administrativo']);
+        factory(\App\Models\Administracion\hierarchical_levels_positions::class, 1)->create(['level' => 3, 'name' => 'Especializado']);
+        factory(\App\Models\Administracion\hierarchical_levels_positions::class, 1)->create(['level' => 4, 'name' => 'Supervisión']);
+        factory(\App\Models\Administracion\hierarchical_levels_positions::class, 1)->create(['level' => 5, 'name' => 'Coordinación']);
+        factory(\App\Models\Administracion\hierarchical_levels_positions::class, 1)->create(['level' => 6, 'name' => 'Jefatura']);
+        factory(\App\Models\Administracion\hierarchical_levels_positions::class, 1)->create(['level' => 7, 'name' => 'Gerencia']);
+        factory(\App\Models\Administracion\hierarchical_levels_positions::class, 1)->create(['level' => 8, 'name' => 'Dirección de Área']);
+        factory(\App\Models\Administracion\hierarchical_levels_positions::class, 1)->create(['level' => 9, 'name' => 'Dirección General']);
+
+        factory(\App\Models\Administracion\Gender::class, 1)->create(['name' => 'Masculino']);
+        factory(\App\Models\Administracion\Gender::class, 1)->create(['name' => 'Femenino']);
+        factory(\App\Models\Administracion\Gender::class, 1)->create(['name' => 'Indistinto']);
+
+        factory(\App\Models\Administracion\MaritalStatus::class, 1)->create(['name' => 'Soltero']);
+        factory(\App\Models\Administracion\MaritalStatus::class, 1)->create(['name' => 'Casado']);
+        factory(\App\Models\Administracion\MaritalStatus::class, 1)->create(['name' => 'Divorciado']);
+        factory(\App\Models\Administracion\MaritalStatus::class, 1)->create(['name' => 'Viudo']);
+
+        factory(\App\Models\Administracion\WorkShift::class, 1)->create(['name' => 'Matutino']);
+        factory(\App\Models\Administracion\WorkShift::class, 1)->create(['name' => 'Vespertino']);
+        factory(\App\Models\Administracion\WorkShift::class, 1)->create(['name' => 'Nocturno']);
     }
 }

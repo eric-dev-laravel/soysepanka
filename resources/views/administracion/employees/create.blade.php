@@ -191,9 +191,23 @@
                                     </div>
 
                                     <div class="form-group col-md-4">
+                                        <label for="id_direction">{{ trans('message.datatables_headers.boss') }}</label>
+                                        <select class="form-control" id="jefe" name="jefe">
+                                            <option value="">Sin Jefe</option>
+                                            @foreach ($data['list_employee'] as $boss)
+                                                @if(empty($boss->idempleado))
+                                                    <option value="{{ $boss->id }}">{{  $boss->nombre . ' ' . $boss->paterno . ' ' . $boss->materno }}</option>
+                                                @else
+                                                    <option value="{{ $boss->idempleado }}">{{  $boss->nombre . ' ' . $boss->paterno . ' ' . $boss->materno }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    {{--<div class="form-group col-md-4">
                                         <label for="jefe">{{ trans('message.datatables_headers.boss') }}</label>
                                         <input type="text" class="form-control" id="jefe" name="jefe" placeholder="{!! trans('message.form_employee_holder.boss') !!}">
-                                    </div>
+                                    </div>--}}
 
                                     <div class="form-group col-md-4">
                                         <label for="direccion">{{ trans('message.datatables_headers.direction') }}</label>
@@ -211,9 +225,19 @@
                                     </div>
 
                                     <div class="form-group col-md-4">
+                                        <label for="id_direction">{{ trans('message.datatables_headers.position') }}</label>
+                                        <select class="form-control" id="puesto" name="puesto">
+                                            <option value="">Sin Puesto</option>
+                                            @foreach ($data['list_jobpositions'] as $position)
+                                                <option value="{{ $position->id }}">{{  $position->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    {{--<div class="form-group col-md-4">
                                         <label for="puesto">{{ trans('message.datatables_headers.position') }}</label>
                                         <input type="text" class="form-control" id="puesto" name="puesto" placeholder="{!! trans('message.form_employee_holder.position') !!}">
-                                    </div>
+                                    </div>--}}
 
                                     <div class="form-group col-md-4">
                                         <label for="grado">{{ trans('message.datatables_headers.grade') }}</label>

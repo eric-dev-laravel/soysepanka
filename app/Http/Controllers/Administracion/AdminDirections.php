@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Administracion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Administracion\Direction;
-use App\Models\Administracion\Enterprise;
+use App\Models\Administracion\Mark;
 use Yajra\Datatables\Datatables;
 use DB;
 use Redirect;
@@ -37,7 +37,7 @@ class AdminDirections extends Controller
     }
 
     public function create(){
-        $enterprises = Enterprise::withTrashed()->get();
+        $enterprises = Mark::withTrashed()->get();
         return view('administracion.directions.create', compact(['enterprises']));
     }
 
@@ -62,7 +62,7 @@ class AdminDirections extends Controller
     public function show($id){}
 
     public function edit($id){
-        $enterprises = Enterprise::withTrashed()->get();
+        $enterprises = Mark::withTrashed()->get();
         $direction = Direction::withTrashed()->where('id', '=', $id)->get();
 
         $info_direction = [
@@ -130,6 +130,14 @@ class AdminDirections extends Controller
             $data = Direction::withTrashed()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
+                    ->editColumn('id_mark', function($row){
+                        if(!empty($row->id_mark))
+                            $content = $row->mark->name;
+                        else
+                            $content = 'N/A';
+
+                        return $content;
+                    })
                     ->addColumn('action', function($row){
                         if(empty($row->deleted_at))
                             $btn = '<a href="admin-directions/'.$row->id.'/edit" class="edit btn btn-success btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';

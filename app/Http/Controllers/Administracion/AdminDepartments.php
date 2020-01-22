@@ -143,6 +143,30 @@ class AdminDepartments extends Controller
             $data = Department::withTrashed()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
+                    ->editColumn('id_enterprise', function($row){
+                        if(!empty($row->id_enterprise))
+                            $content = $row->enterprise->name;
+                        else
+                            $content = 'N/A';
+
+                        return $content;
+                    })
+                    ->editColumn('id_direction', function($row){
+                        if(!empty($row->id_direction))
+                            $content = $row->direction->name;
+                        else
+                            $content = 'N/A';
+
+                        return $content;
+                    })
+                    ->editColumn('id_area', function($row){
+                        if(!empty($row->id_area))
+                            $content = $row->area->name;
+                        else
+                            $content = 'N/A';
+
+                        return $content;
+                    })
                     ->addColumn('action', function($row){
                         if(empty($row->deleted_at))
                             $btn = '<a href="admin-departments/'.$row->id.'/edit" class="edit btn btn-success btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';

@@ -119,7 +119,61 @@
                         </table>
 					</div>
 				</div>
-			</div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Info Boxes Style 2 -->
+                <div class="info-box bg-yellow">
+                    <span class="info-box-icon"><i class="fa fa-arrows"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">{{ trans('message.ma.number_directions') }}</span>
+                    <span class="info-box-number">{{ $enterprices_data['all_directions'] }}</span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="progress-description">
+                            {{ trans('message.ma.number_directions_msg') }}
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+                <div class="info-box bg-green">
+                    <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
+
+                    <div class="info-box-content">
+                    <span class="info-box-text">{{ trans('message.ma.number_areas') }}</span>
+                    <span class="info-box-number">{{ $enterprices_data['all_areas'] }}</span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                    <span class="progress-description">
+                        {{ trans('message.ma.number_areas_msg') }}
+                    </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+                <div class="info-box bg-aqua">
+                    <span class="info-box-icon"><i class="fa fa-briefcase"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">{{ trans('message.ma.number_departments') }}</span>
+                        <span class="info-box-number">{{ $enterprices_data['all_departments'] }}</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 100%"></div>
+                        </div>
+                        <span class="progress-description">
+                            {{ trans('message.ma.number_departments_msg') }}
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </div>
         </div>
 
     </div>

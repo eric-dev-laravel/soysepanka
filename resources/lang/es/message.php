@@ -162,14 +162,16 @@ return [
     'allemployees'            => 'Todos los Empleados',
     'onlyactiveemployees'     => 'Empleados Activos',
 
+    'newmark'                 => 'Nueva Marca',
     'newemployee'             => 'Nuevo Empleado',
     'newuser'                 => 'Nuevo Usuario',
     'newenterprise'           => 'Nueva Empresa',
     'newdirection'            => 'Nueva Dirección',
     'newarea'                 => 'Nueva Área',
     'newdepartment'           => 'Nuevo Departamento',
-    'newjobposition'        => 'Nuevo Puesto',
+    'newjobposition'          => 'Nuevo Puesto',
 
+    'createmark'              => 'Crear Marca',
     'createemployee'          => 'Crear Empleado',
     'createuser'              => 'Crear Usuario',
     'createenterprise'        => 'Crear Empresa',
@@ -178,6 +180,7 @@ return [
     'createdepartment'        => 'Nuevo Departamento',
     'createjobposition'       => 'Nuevo Puesto',
 
+    'editmark'                => 'Editar Marca',
     'editemployee'            => 'Editar Empleado',
     'edituser'                => 'Editar Usuario',
     'editenterprise'          => 'Editar Empresa',
@@ -195,6 +198,8 @@ return [
     'info_createarea'         => 'Información del Área',
     'info_createdepartment'   => 'Información del Departamento',
     'info_createjobposition'  => 'Información del Puesto',
+    'info_createmarks'        => 'Información de la Marca',
+    'infoespecify_createjobposition'   => 'Especificaciones del Puesto',
 
     'options'                 => 'Opciones',
     'employee_importation'    => 'Importación de Empleados',
@@ -301,6 +306,12 @@ return [
         'picture'          => 'Imagen',
         'description'      => 'Descripción',
         'area'             => 'Área',
+        'level'            => 'Nivel',
+
+        'position_number'  => 'Número de Puestos',
+        'general_objetive' => 'Objetivo General',
+        'principal_activities' => 'Principales Actividades del Puesto',
+        'responsabilities' => 'Responsabilidades del Puesto',
     ],
 
     /*
@@ -381,6 +392,9 @@ return [
      * |-----------------------
      */
     'ma' => [
+        'jobpositioncatalog'  => 'Catalogo de Puestos',
+        'structure'           => 'Estructura',
+        'mark'                => 'Marcas',
         'direction'           => 'Direcciones',
         'department'          => 'Departamentos',
         'area'                => 'Áreas',
@@ -388,13 +402,22 @@ return [
         'users'               => 'Usuarios',
         'company'             => 'Empresas',
         'employees'           => 'Empleados',
+        'startimportation'    => 'Comenzar Importación',
+
         'only_users'          => 'Solo Usuarios',
         'users_employees'     => 'Usuarios y Empleados',
         'only_employees'      => 'Solo Empleados',
         'only_users_msg'      => 'Usuarios sin información de empleado',
         'users_employees_msg' => 'Usuarios con información de empleado',
         'only_employees_msg'  => 'Empleados sin accesos',
-        'startimportation'    => 'Comenzar Importación',
+
+        'number_directions'   => 'Número de Direcciones',
+        'number_areas'        => 'Número de Áreas',
+        'number_departments'  => 'Número de Departamentos',
+        'number_directions_msg' => 'Total de Direcciones',
+        'number_areas_msg'      => 'Total de Áreas',
+        'number_departments_msg'=> 'Total de Departamentos',
+
 
         'admin_employee_title'     => 'Administración de Empleados',
         'admin_list_employee'      => 'Lista de Empleados',
@@ -417,6 +440,12 @@ return [
         'admin_all_enterprises'       => 'Total de Empresas',
         'admin_active_enterprises'    => 'Empresas Activas',
         'admin_inactive_enterprises'  => 'Empresas Inactivas',
+
+        'admin_marks_title'     => 'Administración de Marcas',
+        'admin_list_marks'      => 'Lista de Marcas',
+        'admin_all_marks'       => 'Total de Marcas',
+        'admin_active_marks'    => 'Marcas Activas',
+        'admin_inactive_marks'  => 'Marcas Inactivas',
 
         'admin_directions_title'     => 'Administración de Direcciones',
         'admin_list_directions'      => 'Lista de Direcciones',

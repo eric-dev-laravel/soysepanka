@@ -49,6 +49,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('admin-enterprises', 'Administracion\AdminEnterprises');
     Route::get('enterprises', ['uses'=>'Administracion\AdminEnterprises@listEnterprises', 'as'=>'enterprises.list']);
     Route::get('active-enterprise/{id}', ['uses'=>'Administracion\AdminEnterprises@activeEnterprise', 'as'=>'active.enterprise']);
+    //Marks
+    Route::resource('admin-marks', 'Administracion\AdminMarks');
+    Route::get('marks', ['uses'=>'Administracion\AdminMarks@listMarks', 'as'=>'marks.list']);
+    Route::get('active-mark/{id}', ['uses'=>'Administracion\AdminMarks@activeMark', 'as'=>'active.marks']);
     //Directions
     Route::resource('admin-directions', 'Administracion\AdminDirections');
     Route::get('directions', ['uses'=>'Administracion\AdminDirections@listDirections', 'as'=>'directions.list']);
@@ -61,6 +65,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('admin-departments', 'Administracion\AdminDepartments');
     Route::get('departments', ['uses'=>'Administracion\AdminDepartments@listDepartments', 'as'=>'departments.list']);
     Route::get('active-department/{id}', ['uses'=>'Administracion\AdminDepartments@activeDepartment', 'as'=>'active.department']);
+    //JobPositionsCatalog
+    Route::resource('admin-jobpositionscatalog', 'Administracion\AdminJobPositionsCatalog');
+    Route::get('jobpositionscatalog', ['uses'=>'Administracion\AdminJobPositionsCatalog@listJobPositionsCatalog', 'as'=>'jobpositionscatalog.list']);
+    Route::get('active-jobpositioncatalog/{id}', ['uses'=>'Administracion\AdminJobPositionsCatalog@activeJobPositionCatalog', 'as'=>'active.jobpositioncatalog']);
     //JobPositions
     Route::resource('admin-jobpositions', 'Administracion\AdminJobPositions');
     Route::get('jobpositions', ['uses'=>'Administracion\AdminJobPositions@listJobPositions', 'as'=>'jobpositions.list']);
