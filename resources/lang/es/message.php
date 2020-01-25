@@ -200,6 +200,7 @@ return [
     'info_createjobposition'  => 'Información del Puesto',
     'info_createmarks'        => 'Información de la Marca',
     'infoespecify_createjobposition'   => 'Especificaciones del Puesto',
+    'infoperfil_createjobposition'   => 'Perfil del Puesto',
 
     'options'                 => 'Opciones',
     'employee_importation'    => 'Importación de Empleados',
@@ -311,7 +312,17 @@ return [
         'position_number'  => 'Número de Puestos',
         'general_objetive' => 'Objetivo General',
         'principal_activities' => 'Principales Actividades del Puesto',
-        'responsabilities' => 'Responsabilidades del Puesto',
+        'responsabilities'     => 'Responsabilidades del Puesto',
+
+        'knowledge_required'   => 'Conocimientos Especificos Requeridos',
+        'competitions_required'=> 'Competencias Requeridas',
+        'tools_use_required'   => 'Manejo de Herramientas',
+        'education_level'      => 'Nivel de Estudios Requeridos',
+        'years_experience'     => 'Años de Experiencia Requeridos en el Puesto',
+        'languajes_required'   => 'Idiomas',
+        'read'                 => 'Lectura',
+        'write'                => 'Escritura',
+        'conversation'         => 'Conversación',
     ],
 
     /*
