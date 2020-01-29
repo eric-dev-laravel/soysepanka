@@ -22,7 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('admin-employees', 'Administracion\AdminEmployees');
-    Route::get('employees', ['uses'=>'Administracion\AdminEmployees@listEmployees', 'as'=>'employees.list']);
+    Route::post('employees', ['uses'=>'Administracion\AdminEmployees@listEmployees', 'as'=>'employees.list'])->middleware('cors');
     Route::get('active-employee/{id}', ['uses'=>'Administracion\AdminEmployees@activeEmployee', 'as'=>'active.employee']);
     Route::get('download-employees/{id}', ['uses'=>'Administracion\AdminEmployees@downloadEmployees', 'as'=>'download.employees']);
     Route::post('employees-file-layout', ['uses'=>'Administracion\AdminEmployees@employeesImportLayout', 'as'=>'employees.importLayout']);
