@@ -110,7 +110,7 @@
                                     <th>{{ trans('message.datatables_headers.number') }}</th>
                                     <th>{{ trans('message.datatables_headers.name') }}</th>
                                     <th>{{ trans('message.datatables_headers.description') }}</th>
-                                    <th>{{ trans('message.datatables_headers.enterprise') }}</th>
+                                    <th>{{ trans('message.datatables_headers.mark') }}</th>
                                     <th>{{ trans('message.datatables_headers.direction') }}</th>
                                     <th>{{ trans('message.datatables_headers.actions') }}</th>
                                 </tr>

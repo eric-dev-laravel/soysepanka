@@ -81,10 +81,28 @@
                                     </div>
 
                                     <div class="form-group col-md-4">
+                                        <label for="id_direction">{{ trans('message.datatables_headers.gender') }}</label>
+                                        <select class="form-control" id="id_gender" name="id_gender">
+                                            @foreach ($data['genders'] as $level)
+                                                <option value="{{ $level->id }}">{{  $level->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="id_direction">{{ trans('message.datatables_headers.marital_status') }}</label>
+                                        <select class="form-control" id="id_marital_status" name="id_marital_status">
+                                            @foreach ($data['marital_status'] as $level)
+                                                <option value="{{ $level->id }}">{{  $level->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
                                         <label for="id_direction">{{ trans('message.datatables_headers.working_day') }}</label>
                                         <select class="form-control" id="id_workshifts" name="id_workshifts">
                                             @foreach ($data['workshifts'] as $level)
-                                                <option value="{{ $level->id }}">{{  $level->name. ' ' . $level->start . '/' . $level->end }}</option>
+                                                <option value="{{ $level->id }}">{{  $level->name. ' ' . $level->up_start . ' a ' . $level->up_end. ' y ' . $level->down_start . ' a ' . $level->down_end }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -98,10 +116,15 @@
                                         </select>
                                     </div>
 
-                                    {{--<div class="form-group col-md-12">
-                                        <label for="nombre">{{ trans('message.datatables_headers.description') }}</label>
-                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
-                                    </div>--}}
+                                    <div class="form-group col-md-2">
+                                        <label for="nombre">{{ trans('message.datatables_headers.age_max') }}</label>
+                                        <input type="number" class="form-control" id="age_max" name="age_max" placeholder="{{ trans('message.form_employee_holder.position') }}">
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label for="nombre">{{ trans('message.datatables_headers.age_min') }}</label>
+                                        <input type="number" class="form-control" id="age_min" name="age_min" placeholder="{{ trans('message.form_employee_holder.position') }}">
+                                    </div>
 
                                 </div>
 
@@ -117,24 +140,24 @@
 
                                     <div class="form-group col-md-12">
                                         <label for="nombre">{{ trans('message.datatables_headers.general_objetive') }}</label>
-                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
+                                        <textarea class="form-control" rows="4" id="objective" name="objective" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
                                     </div>
 
                                     <div class="form-group col-md-12">
                                         <label for="nombre">{{ trans('message.datatables_headers.principal_activities') }}</label>
-                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
+                                        <textarea class="form-control" rows="4" id="activities" name="activities" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
                                     </div>
 
                                     <div class="form-group col-md-12">
                                         <label for="nombre">{{ trans('message.datatables_headers.responsabilities') }}</label>
-                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
+                                        <textarea class="form-control" rows="4" id="responsabilities" name="responsabilities" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
                                     </div>
 
                                 </div>
 
                             </div>
 
-                            <div class="box box-success">
+                            <div class="box box-primary">
 
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.infoperfil_createjobposition') }}</h3>
@@ -144,73 +167,44 @@
 
                                     <div class="form-group col-md-12">
                                         <label for="nombre">{{ trans('message.datatables_headers.knowledge_required') }}</label>
-                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
+                                        <textarea class="form-control" rows="4" id="knowledges" name="knowledges" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
                                     </div>
 
                                     <div class="form-group col-md-12">
                                         <label for="nombre">{{ trans('message.datatables_headers.competitions_required') }}</label>
-                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
+                                        <textarea class="form-control" rows="4" id="competitions" name="competitions" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
                                     </div>
 
                                     <div class="form-group col-md-12">
                                         <label for="nombre">{{ trans('message.datatables_headers.tools_use_required') }}</label>
-                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
+                                        <textarea class="form-control" rows="4" id="tools" name="tools" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
                                     </div>
 
                                     <div class="form-group col-md-8">
                                         <label for="nombre">{{ trans('message.datatables_headers.education_level') }}</label>
-                                        <input type="text" required class="form-control" id="name" name="name" placeholder="{{ trans('message.form_employee_holder.position') }}">
+                                        <input type="text" required class="form-control" id="education_level" name="education_level" placeholder="{{ trans('message.form_employee_holder.position') }}">
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <label for="nombre">{{ trans('message.datatables_headers.years_experience') }}</label>
-                                        <input type="text" required class="form-control" id="name" name="name" placeholder="{{ trans('message.form_employee_holder.position') }}">
-                                    </div>
-
-                                    {{--<div class="form-group col-md-4">
-                                        <label for="nombre">{{ trans('message.datatables_headers.languajes_required') }}</label>
-                                        <input type="text" required class="form-control" id="name" name="name" placeholder="{{ trans('message.form_employee_holder.position') }}">
-                                    </div>
-
-                                    <div class="form-group col-md-2">
-                                        <label for="nombre">{{ trans('message.datatables_headers.read') }}</label>
-                                        <input type="text" required class="form-control" id="name" name="name" placeholder="{{ trans('message.form_employee_holder.position') }}">
-                                    </div>
-
-                                    <div class="form-group col-md-2">
-                                        <label for="nombre">{{ trans('message.datatables_headers.write') }}</label>
-                                        <input type="text" required class="form-control" id="name" name="name" placeholder="{{ trans('message.form_employee_holder.position') }}">
-                                    </div>
-
-                                    <div class="form-group col-md-2">
-                                        <label for="nombre">{{ trans('message.datatables_headers.conversation') }}</label>
-                                        <input type="text" required class="form-control" id="name" name="name" placeholder="{{ trans('message.form_employee_holder.position') }}">
-                                    </div>
-
-                                    <div class="form-group col-md-1 center">
-                                        <label for="nombre">Agregar</label>
-                                        <button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
-                                    </div>--}}
-
-                                    <div class="text-right">
-
+                                        <input type="text" required class="form-control" id="years_experience" name="years_experience" placeholder="{{ trans('message.form_employee_holder.position') }}">
                                     </div>
 
                                     <div class="form-group col-md-12" style="padding:0px;">
                                         <div class="form-group col-md-5">
-                                            <label for="language">Idioma:</label>
-                                            <input type="text" name="language" id="language_c" class="form-control">
+                                            <label for="language">Idioma</label>
+                                            <input type="text" name="nlanguage" id="language_c" class="form-control">
                                         </div>
                                         <div class="form-group col-md-2">
-                                            <label for="reading">Lectura:</label>
+                                            <label for="reading">Lectura</label>
                                             <input type="text" name="reading" id="reading_c" class="form-control">
                                         </div>
                                         <div class="form-group col-md-2">
-                                            <label for="writing">Escritura:</label>
+                                            <label for="writing">Escritura</label>
                                             <input type="text" name="writing" id="writing_c" class="form-control">
                                         </div>
                                         <div class="form-group col-md-2">
-                                            <label for="spoken">Conversación:</label>
+                                            <label for="spoken">Conversación</label>
                                             <input type="text" name="spoken" id="spoken_c" class="form-control">
                                         </div>
 
@@ -223,6 +217,48 @@
 
                                         <div class="form-group col-md-12" id="language_div_c"></div>
 
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="box box-primary">
+
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.infotools_createjobposition') }}</h3>
+                                </div>
+
+                                <div class="box-body">
+
+                                    <div class="form-group col-md-12">
+                                        <label for="nombre">{{ trans('message.datatables_headers.tools_required') }}</label>
+                                        <textarea class="form-control" rows="4" id="equitment" name="equitment" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="nombre">{{ trans('message.datatables_headers.benefits') }}</label>
+                                        <textarea class="form-control" rows="4" id="benefits" name="benefits" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="nombre">{{ trans('message.datatables_headers.available') }}</label>
+                                        <textarea class="form-control" rows="4" id="available" name="available" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-5">
+                                        <label for="language">Rango Salarial</label>
+                                        <input type="text" name="salary_range" id="salary_range" class="form-control">
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label for="reading">Máx. </label>
+                                        <input type="text" name="salary_max" id="salary_max" class="form-control">
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label for="writing">Mín. </label>
+                                        <input type="text" name="salary_min" id="salary_min" class="form-control">
                                     </div>
 
                                 </div>
@@ -303,11 +339,11 @@
              @isset($profile->perfilLenguaje)
                 language = {!! json_encode($profile->perfilLenguaje) !!};
                 $.each(language, function(i, item) {
-                    inputLanguage = '<input type="text" name="language[]" class="col-2 form-control" value="'+item.language+'" readonly="true">';
-                    inputReading = '<input type="text" name="reading[]" class="col-2 form-control" value="'+item.reading+'" readonly="true">';
-                    inputWriting = '<input type="text" name="writing[]" class="col-2 form-control" value="'+item.writing+'" readonly="true">';
-                    inputSpoken = '<input type="text" name="spoken[]" class="col-2 form-control" value="'+item.spoken+'" readonly="true">';
-                    deleteRow = '<button type="button" class="col-1 btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button>';
+                    inputLanguage = '<div class="form-group col-md-5"><input type="text" name="nlanguage[]" value="'+item.language+'" class="form-control" readonly="true"></div>';
+                    inputReading = '<div class="form-group col-md-2"><input type="text" name="reading[]" value="'+item.reading+'" class="form-control" readonly="true"></div>';
+                    inputWriting = '<div class="form-group col-md-2"><input type="text" name="writing[]" value="'+item.writing+'" class="form-control" readonly="true"></div>';
+                    inputSpoken = '<div class="form-group col-md-2"><input type="text" name="spoken[]" value="'+item.spoken+'" class="form-control" readonly="true"></div>';
+                    deleteRow = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
                     $('#language_div_c').append('<div class="row">'+inputLanguage+inputReading+inputWriting+inputSpoken+deleteRow+'</div>');
                 });
             @endisset
@@ -325,7 +361,7 @@
                 var lastWriting = writing[writing.length-1];
                 var lastSpoken = spoken[spoken.length-1];
 
-                inputLanguage = '<div class="form-group col-md-5"><input type="text" name="language[]" value="'+lastLanguage+'" class="form-control" readonly="true"></div>';
+                inputLanguage = '<div class="form-group col-md-5"><input type="text" name="nlanguage[]" value="'+lastLanguage+'" class="form-control" readonly="true"></div>';
                 inputReading = '<div class="form-group col-md-2"><input type="text" name="reading[]" value="'+lastReading+'" class="form-control" readonly="true"></div>';
                 inputWriting = '<div class="form-group col-md-2"><input type="text" name="writing[]" value="'+lastWriting+'" class="form-control" readonly="true"></div>';
                 inputSpoken = '<div class="form-group col-md-2"><input type="text" name="spoken[]" value="'+lastSpoken+'" class="form-control" readonly="true"></div>';
@@ -344,7 +380,7 @@
             */
             $("#language_div_c").on('click', '#borrar',function(e) {
                 e.preventDefault();
-                $(this).parent().remove();
+                $(this).parent().parent().remove();
             });
     </script>
 @endsection

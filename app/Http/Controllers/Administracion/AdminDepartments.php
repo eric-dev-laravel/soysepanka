@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Administracion;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Administracion\Enterprise;
+use App\Models\Administracion\Mark;
 use App\Models\Administracion\Direction;
 use App\Models\Administracion\Area;
 use App\Models\Administracion\Department;
@@ -39,7 +39,7 @@ class AdminDepartments extends Controller
     }
 
     public function create(){
-        $enterprises = Enterprise::withTrashed()->get();
+        $enterprises = Mark::withTrashed()->get();
         $directions = Direction::withTrashed()->get();
         $areas = Area::withTrashed()->get();
         $data = [
@@ -71,7 +71,7 @@ class AdminDepartments extends Controller
     public function show($id){}
 
     public function edit($id){
-        $enterprises = Enterprise::withTrashed()->get();
+        $enterprises = Mark::withTrashed()->get();
         $directions = Direction::withTrashed()->get();
         $areas = Area::withTrashed()->get();
         $department = Department::withTrashed()->where('id', '=', $id)->get();

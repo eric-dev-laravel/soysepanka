@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Administracion;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Administracion\Enterprise;
+use App\Models\Administracion\Mark;
 use App\Models\Administracion\Direction;
 use App\Models\Administracion\Area;
 use Yajra\Datatables\Datatables;
@@ -38,7 +38,7 @@ class AdminAreas extends Controller
     }
 
     public function create(){
-        $enterprises = Enterprise::withTrashed()->get();
+        $enterprises = Mark::withTrashed()->get();
         $directions = Direction::withTrashed()->get();
         $data = [
             'enterprises' => $enterprises,
@@ -68,7 +68,7 @@ class AdminAreas extends Controller
     public function show($id){}
 
     public function edit($id){
-        $enterprises = Enterprise::withTrashed()->get();
+        $enterprises = Mark::withTrashed()->get();
         $directions = Direction::withTrashed()->get();
         $area = Area::withTrashed()->where('id', '=', $id)->get();
 

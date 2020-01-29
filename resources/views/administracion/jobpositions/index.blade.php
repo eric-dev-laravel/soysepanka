@@ -110,7 +110,7 @@
                                     <th>{{ trans('message.datatables_headers.number') }}</th>
                                     <th>{{ trans('message.datatables_headers.name') }}</th>
                                     <th>{{ trans('message.datatables_headers.description') }}</th>
-                                    <th>{{ trans('message.datatables_headers.enterprise') }}</th>
+                                    <th>{{ trans('message.datatables_headers.mark') }}</th>
                                     <th>{{ trans('message.datatables_headers.direction') }}</th>
                                     <th>{{ trans('message.datatables_headers.area') }}</th>
                                     <th>{{ trans('message.datatables_headers.department') }}</th>
@@ -141,7 +141,7 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
                     {data: 'description', name: 'description'},
-                    {data: 'id_enterprise', name: 'id_enterprise'},
+                    {data: 'id_mark', name: 'id_mark'},
                     {data: 'id_direction', name: 'id_direction'},
                     {data: 'id_area', name: 'id_area'},
                     {data: 'id_department', name: 'id_department'},

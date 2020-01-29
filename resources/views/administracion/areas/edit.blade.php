@@ -96,9 +96,9 @@
                                 <div class="box-body">
 
                                     <div class="form-group col-md-6">
-                                        <label for="id_enterprise">{{ trans('message.datatables_headers.enterprise') }}</label>
+                                        <label for="id_enterprise">{{ trans('message.datatables_headers.mark') }}</label>
                                         <select class="form-control" id="id_enterprise" name="id_enterprise">
-                                            <option value="">Sin empresa</option>
+                                            <option value="">Sin Marca</option>
                                             @foreach ($info_direction['enterprises'] as $enterprises)
                                                 @if($enterprises->id == $info_direction['area'][0]->id_enterprise)
                                                     <option selected value="{{ $enterprises->id }}">{{  $enterprises->name   }}</option>

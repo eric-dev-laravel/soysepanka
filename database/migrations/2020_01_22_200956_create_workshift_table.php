@@ -16,8 +16,10 @@ class CreateWorkshiftTable extends Migration
         Schema::create('workshifts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('start')->nullable();
-            $table->string('end')->nullable();
+            $table->string('up_start')->nullable();
+            $table->string('up_end')->nullable();
+            $table->string('down_start')->nullable();
+            $table->string('down_end')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

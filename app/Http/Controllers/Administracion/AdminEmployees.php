@@ -391,7 +391,7 @@ class AdminEmployees extends Controller
                                 } catch (\PDOException $e) {
                                     DB::rollBack();
                                     $array_fail_info = [
-                                        'jobPositionCatalog' => $new[$this->keyForJobPosition],
+                                        'jobcatalog' => $new[$this->keyForJobPosition],
                                         'msg'  => $e->getMessage(),
                                     ];
                                     $employees_fail = array_add($employees_fail, $i, $array_fail_info);

@@ -4,12 +4,17 @@ namespace App\Http\Controllers\Administracion;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Administracion\Enterprise;
+use App\Models\Administracion\Mark;
 use App\Models\Administracion\Direction;
 use App\Models\Administracion\Area;
 use App\Models\Administracion\Department;
 use App\Models\Administracion\JobPosition;
+use App\Models\Administracion\JobPositionCatalog;
 use App\Models\Administracion\hierarchical_levels_positions;
+use App\Models\Administracion\Gender;
+use App\Models\Administracion\MaritalStatus;
+use App\Models\Administracion\WorkShift;
+use App\Models\Administracion\JobPositionLanguaje;
 use Yajra\Datatables\Datatables;
 use DB;
 use Redirect;
@@ -41,7 +46,7 @@ class AdminJobPositions extends Controller
     }
 
     public function create(){
-        $enterprises = Enterprise::withTrashed()->get();
+        $enterprises = Mark::withTrashed()->get();
         $directions = Direction::withTrashed()->get();
         $areas = Area::withTrashed()->get();
         $departments = Department::withTrashed()->get();
@@ -60,9 +65,20 @@ class AdminJobPositions extends Controller
 
     public function store(Request $request){
         $data = request()->except(['_token', '_method']);
+        $data2 = request()->except(['_token', '_method', 'jobPositionSelected', 'jobPositionCatalog_length']);
+        $idJobPositions = explode(",", $data['jobPositionSelected']);
         try {
             DB::beginTransaction();
-                JobPosition::create($data);
+                foreach($idJobPositions as $id){
+                    $jobPositionCatalog = JobPositionCatalog::find($id)->toArray();
+                    $jobPositionLanguaje = JobPositionLanguaje::where('id_jobposition', $id)->get()->toArray();
+                    $jobPosition = JobPosition::create($jobPositionCatalog);
+                    JobPosition::whereId($jobPosition->id)->update($data2);
+                    foreach($jobPositionLanguaje as $languaje){
+                        $languaje['id_jobposition'] = $jobPosition->id;
+                        JobPositionLanguaje::create($languaje);
+                    }
+                }
             DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
@@ -79,15 +95,19 @@ class AdminJobPositions extends Controller
     public function show($id){}
 
     public function edit($id){
-        $enterprises = Enterprise::withTrashed()->get();
+        $enterprises = Mark::withTrashed()->get();
         $directions = Direction::withTrashed()->get();
         $areas = Area::withTrashed()->get();
         $departments = Department::withTrashed()->get();
         $jobposition = JobPosition::withTrashed()->where('id', '=', $id)->get();
+        $genders = Gender::orderByRaw('name ASC')->get();
+        $marital_status = MaritalStatus::orderByRaw('name ASC')->get();
+        $workshifts = WorkShift::orderByRaw('name ASC')->get();
         $levels_positions = hierarchical_levels_positions::orderByRaw('level ASC')->get();
         $list_jobpositions = JobPosition::withTrashed()->where('id', '!=', $id)->orderByRaw('id_level DESC')->get();
+        $jobpositionlanguaje = JobPositionLanguaje::where('id_jobposition', '=', $id)->get();
 
-        $info_direction = [
+        $data = [
             'enterprises' => $enterprises,
             'directions' => $directions,
             'areas' => $areas,
@@ -95,17 +115,35 @@ class AdminJobPositions extends Controller
             'jobposition' => $jobposition,
             'levels_positions' => $levels_positions,
             'list_jobpositions' => $list_jobpositions,
+            'genders' => $genders,
+            'marital_status' => $marital_status,
+            'workshifts' => $workshifts,
+            'jobpositionlanguaje' => $jobpositionlanguaje,
         ];
 
-        return view('administracion.jobpositions.edit', compact(['info_direction']));
+        return view('administracion.jobpositions.edit', compact(['data']));
     }
 
     public function update(Request $request, $id){
         $data = request()->except(['_token', '_method']);
-
+        $data2 = request()->except(['_token', '_method', 'nlanguage', 'reading', 'writing', 'spoken']);
         try {
              DB::beginTransaction();
-                JobPosition::withTrashed()->whereId($id)->update($data);
+                JobPosition::withTrashed()->whereId($id)->update($data2);
+                $languaje = JobPositionLanguaje::whereIdJobposition($id);
+                $languaje->delete();
+
+                if($data['nlanguage'] != null){
+                    for($i = 0; $i < count($data['nlanguage']); $i++){
+                        JobPositionLanguaje::create(array (
+                            'id_jobposition' => $id,
+                            'name' => $data['nlanguage'][$i],
+                            'read' => $data['reading'][$i],
+                            'write' => $data['writing'][$i],
+                            'conversation' => $data['spoken'][$i],
+                        ));
+                    }
+                }
              DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
@@ -157,9 +195,9 @@ class AdminJobPositions extends Controller
             $data = JobPosition::withTrashed()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
-                    ->editColumn('id_enterprise', function($row){
-                        if(!empty($row->id_enterprise))
-                            $content = $row->enterprise->name;
+                    ->editColumn('id_mark', function($row){
+                        if(!empty($row->id_mark))
+                            $content = $row->mark->name;
                         else
                             $content = 'N/A';
 

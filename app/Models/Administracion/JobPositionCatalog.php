@@ -15,6 +15,6 @@ class JobPositionCatalog extends Model
      */
     protected $table = 'jobpositions_catalog';
 
-    protected $fillable = ['name', 'description', 'origin'];
+    protected $fillable = ['id_level', 'id_workshifts', 'id_gender', 'id_marital_status', 'name', 'objective', 'activities', 'responsabilities', 'knowledges', 'competitions', 'tools', 'education_level', 'places', 'description', 'years_experience', 'age_max', 'age_min', 'equitment', 'benefits', 'salary_range', 'salary_max', 'salary_min', 'available', 'origin'];
     protected $dates = ['created_at, updated_at, deleted_at'];
 }

@@ -46,7 +46,7 @@
             <div class="box">
 
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-grav"></i> {{ trans('message.createdepartment') }}</h3>
+                    <h3 class="box-title"><i class="fa fa-grav"></i> {{ trans('message.createjobposition') }}</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -65,15 +65,15 @@
                             <div class="box box-primary">
 
                                 <div class="box-header with-border">
-                                    <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.info_createdepartment') }}</h3>
+                                    <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.info_createjobposition') }}</h3>
                                 </div>
 
                                 <div class="box-body">
 
                                     <div class="form-group col-md-6">
-                                        <label for="id_enterprise">{{ trans('message.datatables_headers.enterprise') }}</label>
-                                        <select class="form-control" id="id_enterprise" name="id_enterprise">
-                                            <option value="">Sin empresa</option>
+                                        <label for="id_enterprise">{{ trans('message.datatables_headers.mark') }}</label>
+                                        <select class="form-control" id="id_mark" name="id_mark">
+                                            <option value="">Sin Marca</option>
                                             @foreach ($data['enterprises'] as $enterprises)
                                                 <option value="{{ $enterprises->id }}">{{  $enterprises->name   }}</option>
                                             @endforeach
@@ -110,33 +110,35 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group col-md-6">
-                                        <label for="id_direction">{{ trans('message.datatables_headers.level') }}</label>
-                                        <select class="form-control" id="id_level" name="id_level">
-                                            @foreach ($data['levels_positions'] as $level)
-                                                <option value="{{ $level->id }}">{{  'Nivel: '. $level->level. ' ' .$level->name  }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div style="display:none">
+                                        <input type="text" class="form-control" id="jobPositionSelected" name="jobPositionSelected">
                                     </div>
 
-                                    <div class="form-group col-md-6">
-                                        <label for="id_direction">{{ trans('message.datatables_headers.boss') }}</label>
-                                        <select class="form-control" id="id_boss_position" name="id_boss_position">
-                                            <option value="">Sin Jefe</option>
-                                            @foreach ($data['list_jobpositions'] as $boss)
-                                                <option value="{{ $boss->id }}">{{  $boss->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    <div class="col-md-12">
 
-                                    <div class="form-group col-md-6">
-                                        <label for="nombre">{{ trans('message.datatables_headers.position') }}</label>
-                                        <input type="text" required class="form-control" id="name" name="name" placeholder="{{ trans('message.form_employee_holder.position') }}">
-                                    </div>
+                                        <div class="box">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title"><i class="fa fa-book"></i> {{ trans('message.ma.admin_list_jobpositions') }}</h3>
+                                            </div>
 
-                                    <div class="form-group col-md-12">
-                                        <label for="nombre">{{ trans('message.datatables_headers.description') }}</label>
-                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
+                                            <div class="box-body">
+                                                <table class="table data-table table-row-border" id="jobPositionCatalog" name="jobPositionCatalog">
+                                                    <thead>
+                                                        <tr style="background-color: #7A75B5; color: white; font-size: 14px;">
+                                                            <th style="background-color: #002C49"></th>
+                                                            <th>{{ trans('message.datatables_headers.number') }}</th>
+                                                            <th>{{ trans('message.datatables_headers.name') }}</th>
+                                                            <th>{{ trans('message.datatables_headers.objective') }}</th>
+                                                            <th>{{ trans('message.datatables_headers.activities') }}</th>
+                                                            <th>{{ trans('message.datatables_headers.responsabilities') }}</th>
+                                                            <th>{{ trans('message.datatables_headers.competitions') }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -198,5 +200,65 @@
         setTimeout(function() {
             $('#success-alert').fadeOut('fast');
         }, 5000); // <-- time in milliseconds
+
+
+        $(function () {
+            var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                scrollX: true,
+                ajax: "{{ route('jobpositionscatalog.list') }}",
+                columns: [
+                    {data: 'selected', name: 'selected'},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'name', name: 'name'},
+                    {data: 'objective', name: 'objective'},
+                    {data: 'activities', name: 'activities'},
+                    {data: 'responsabilities', name: 'responsabilities'},
+                    {data: 'competitions', name: 'competitions'},
+                ],
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                },
+                columnDefs: [ {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets:   0,
+                    },
+                    {"align-text": "center", "targets": [0]},
+                    { "width": "200px", "targets": [2, 3, 4, 5, 6],},
+                    {"className": "dt-justify", "targets": [2, 3, 4, 5]},
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child',
+                }
+                //fixedColumns:   {
+                  //  leftColumns: 2,
+               // }
+            });
+
+            var selectedUsers = [];
+            table.on( 'select', function ( e, dt, type, indexes ) {
+                var rowData = table.rows( indexes ).data().toArray();
+                selectedUsers.push(rowData[0]['id']);
+                document.getElementById('jobPositionSelected').value = selectedUsers;
+            }).on( 'deselect', function ( e, dt, type, indexes ) {
+                var rowData = table.rows( indexes ).data().toArray();
+                selectedUsers.remove(rowData[0]['id']);
+                document.getElementById('jobPositionSelected').value = selectedUsers;
+            });
+
+            Array.prototype.remove = function() {
+                var what, a = arguments, L = a.length, ax;
+                while (L && this.length) {
+                    what = a[--L];
+                    while ((ax = this.indexOf(what)) !== -1) {
+                        this.splice(ax, 1);
+                    }
+                }
+                return this;
+            };
+        });
     </script>
 @endsection

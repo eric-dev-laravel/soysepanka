@@ -109,7 +109,9 @@
                                 <tr style="background-color: #7A75B5; color: white; text-align: center; font-size: 14px;">
                                     <th>{{ trans('message.datatables_headers.number') }}</th>
                                     <th>{{ trans('message.datatables_headers.name') }}</th>
-                                    <th>{{ trans('message.datatables_headers.description') }}</th>
+                                    <th>{{ trans('message.datatables_headers.position_number') }}</th>
+                                    <th>{{ trans('message.datatables_headers.education_level') }}</th>
+                                    <th>{{ trans('message.datatables_headers.experience') }}</th>
                                     <th>{{ trans('message.datatables_headers.actions') }}</th>
                                 </tr>
                             </thead>
@@ -136,7 +138,9 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
-                    {data: 'description', name: 'description'},
+                    {data: 'places', name: 'places'},
+                    {data: 'education_level', name: 'education_level'},
+                    {data: 'years_experience', name: 'years_experience'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 language: {

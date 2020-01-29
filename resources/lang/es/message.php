@@ -200,7 +200,8 @@ return [
     'info_createjobposition'  => 'Información del Puesto',
     'info_createmarks'        => 'Información de la Marca',
     'infoespecify_createjobposition'   => 'Especificaciones del Puesto',
-    'infoperfil_createjobposition'   => 'Perfil del Puesto',
+    'infoperfil_createjobposition'     => 'Perfil del Puesto',
+    'infotools_createjobposition'      => 'Equipo Necesario para Desempeñar el Puesto',
 
     'options'                 => 'Opciones',
     'employee_importation'    => 'Importación de Empleados',
@@ -323,6 +324,18 @@ return [
         'read'                 => 'Lectura',
         'write'                => 'Escritura',
         'conversation'         => 'Conversación',
+        'tools_required'       => 'Equipo necesario',
+        'marital_status'       => 'Estado Civil',
+
+        'benefits'             => 'Prestaciones',
+        'available'            => 'Disponibilidad para',
+        'age_max'            => 'Edad Máxima',
+        'age_min'            => 'Edad Minima',
+        'experience'            => 'Experiencia',
+        'responsabilities'     => 'Responsabilidades',
+        'competitions'         => 'Competencias',
+        'activities'           => 'Actividades',
+        'objective'            => 'Objetivo',
     ],
 
     /*

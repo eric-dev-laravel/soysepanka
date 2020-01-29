@@ -71,9 +71,9 @@
                                 <div class="box-body">
 
                                     <div class="form-group col-md-6">
-                                        <label for="id_enterprise">{{ trans('message.datatables_headers.enterprise') }}</label>
+                                        <label for="id_enterprise">{{ trans('message.datatables_headers.mark') }}</label>
                                         <select class="form-control" id="id_enterprise" name="id_enterprise">
-                                            <option value="">Sin empresa</option>
+                                            <option value="">Sin Marca</option>
                                             @foreach ($data['enterprises'] as $enterprises)
                                                 <option value="{{ $enterprises->id }}">{{  $enterprises->name   }}</option>
                                             @endforeach

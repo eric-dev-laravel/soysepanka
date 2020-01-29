@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administracion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Administracion\JobPositionCatalog;
+use App\Models\Administracion\JobPositionLanguaje;
 use App\Models\Administracion\hierarchical_levels_positions;
 use App\Models\Administracion\Gender;
 use App\Models\Administracion\MaritalStatus;
@@ -54,10 +55,22 @@ class AdminJobPositionsCatalog extends Controller
     }
 
     public function store(Request $request){
-        /*$data = request()->except(['_token', '_method']);
+        $data = request()->except(['_token', '_method']);
         try {
             DB::beginTransaction();
-                JobPosition::create($data);
+                $newJobPosition = JobPositionCatalog::create($data);
+
+                if($data['nlanguage'] != null){
+                    for($i = 0; $i < count($data['nlanguage']); $i++){
+                        JobPositionLanguaje::create(array (
+                            'id_jobposition' => $newJobPosition->id,
+                            'name' => $data['nlanguage'][$i],
+                            'read' => $data['reading'][$i],
+                            'write' => $data['writing'][$i],
+                            'conversation' => $data['spoken'][$i],
+                        ));
+                    }
+                }
             DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
@@ -68,40 +81,52 @@ class AdminJobPositionsCatalog extends Controller
             return Redirect::back()->withErrors($errorsMessage);
         }
 
-        return redirect('admin-jobpositions/create')->with('success','Ok');*/
+        return redirect('admin-jobpositionscatalog/create')->with('success','Ok');
     }
 
     public function show($id){}
 
     public function edit($id){
-        /*$enterprises = Enterprise::withTrashed()->get();
-        $directions = Direction::withTrashed()->get();
-        $areas = Area::withTrashed()->get();
-        $departments = Department::withTrashed()->get();
-        $jobposition = JobPosition::withTrashed()->where('id', '=', $id)->get();
         $levels_positions = hierarchical_levels_positions::orderByRaw('level ASC')->get();
-        $list_jobpositions = JobPosition::withTrashed()->where('id', '!=', $id)->orderByRaw('id_level DESC')->get();
+        $genders = Gender::orderByRaw('name ASC')->get();
+        $marital_status = MaritalStatus::orderByRaw('name ASC')->get();
+        $workshifts = WorkShift::orderByRaw('name ASC')->get();
+        $jobposition = JobPositionCatalog::withTrashed()->where('id', '=', $id)->get();
+        $jobpositionlanguaje = JobPositionLanguaje::where('id_jobposition', '=', $id)->get();
 
-        $info_direction = [
-            'enterprises' => $enterprises,
-            'directions' => $directions,
-            'areas' => $areas,
-            'departments' => $departments,
-            'jobposition' => $jobposition,
+        $data = [
             'levels_positions' => $levels_positions,
-            'list_jobpositions' => $list_jobpositions,
+            'genders' => $genders,
+            'marital_status' => $marital_status,
+            'workshifts' => $workshifts,
+            'jobposition' => $jobposition,
+            'jobpositionlanguaje' => $jobpositionlanguaje,
         ];
 
-        return view('administracion.jobpositions.edit', compact(['info_direction']));*/
+        return view('administracion.jobpositionscatalog.edit', compact(['data']));
     }
 
     public function update(Request $request, $id){
-        /*$data = request()->except(['_token', '_method']);
-
+        $data = request()->except(['_token', '_method']);
+        $data2 = request()->except(['_token', '_method', 'nlanguage', 'reading', 'writing', 'spoken']);
         try {
-             DB::beginTransaction();
-                JobPosition::withTrashed()->whereId($id)->update($data);
-             DB::commit();
+            DB::beginTransaction();
+                JobPositionCatalog::withTrashed()->whereId($id)->update($data2);
+                $languaje = JobPositionLanguaje::whereIdJobposition($id);
+                $languaje->delete();
+
+                if($data['nlanguage'] != null){
+                    for($i = 0; $i < count($data['nlanguage']); $i++){
+                        JobPositionLanguaje::create(array (
+                            'id_jobposition' => $id,
+                            'name' => $data['nlanguage'][$i],
+                            'read' => $data['reading'][$i],
+                            'write' => $data['writing'][$i],
+                            'conversation' => $data['spoken'][$i],
+                        ));
+                    }
+                }
+            DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
             $errorsMessage = [
@@ -111,13 +136,13 @@ class AdminJobPositionsCatalog extends Controller
             return Redirect::back()->withErrors($errorsMessage);
         }
 
-        return redirect('admin-jobpositions/'.$id.'/edit')->with('success','Ok');*/
+        return redirect('admin-jobpositionscatalog/'.$id.'/edit')->with('success','Ok');
     }
 
     public function destroy($id){
-        /*try {
+        try {
             DB::beginTransaction();
-                $employee = JobPosition::find($id);
+                $employee = JobPositionCatalog::find($id);
                 $employee->delete();
             DB::commit();
         } catch (\PDOException $e) {
@@ -128,13 +153,13 @@ class AdminJobPositionsCatalog extends Controller
 
             return Redirect::back()->withErrors($errorsMessage);
         }
-        return redirect('admin-jobpositions/'.$id.'/edit')->with('success','Ok');*/
+        return redirect('admin-jobpositionscatalog/'.$id.'/edit')->with('success','Ok');
     }
 
-    public function activeJobPosition($id){
-        /*try {
+    public function activeJobPositionCatalog($id){
+        try {
             DB::beginTransaction();
-            JobPosition::onlyTrashed()->find($id)->restore(); //Recupera el usuario borrado
+            JobPositionCatalog::onlyTrashed()->find($id)->restore(); //Recupera el usuario borrado
             DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
@@ -144,7 +169,7 @@ class AdminJobPositionsCatalog extends Controller
 
             return Redirect::back()->withErrors($errorsMessage);
         }
-        return redirect('admin-jobpositions/'.$id.'/edit')->with('success','Ok');*/
+        return redirect('admin-jobpositionscatalog/'.$id.'/edit')->with('success','Ok');
     }
 
     public function listJobPositionsCatalog(Request $request){
@@ -152,6 +177,9 @@ class AdminJobPositionsCatalog extends Controller
             $data = JobPositionCatalog::withTrashed()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
+                    ->addColumn('selected', function($row){
+
+                    })
                     ->addColumn('action', function($row){
                         if(empty($row->deleted_at))
                             $btn = '<a href="admin-jobpositionscatalog/'.$row->id.'/edit" class="edit btn btn-success btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';
