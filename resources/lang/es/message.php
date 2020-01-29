@@ -345,7 +345,7 @@ return [
      */
     'form_employee_holder' => [
         'number'           => '#',
-        'idemployee'       => 'ID',
+        'idemployee'       => 'ID Empleado',
         'name'             => 'Ingrese su Nombre',
         'paterno'          => 'Ingrese su Apellido Paterno',
         'materno'          => 'Ingrese su Apellido Materno',

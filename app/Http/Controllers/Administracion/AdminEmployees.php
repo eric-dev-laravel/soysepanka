@@ -65,7 +65,6 @@ class AdminEmployees extends Controller
     public function index() {
         $all_employees = Employee::all()->count();
         $inactive_employees = Employee::onlyTrashed()->count();
-
         $users_data = [
             'all_users' => $all_employees + $inactive_employees,
             'active_users' => $all_employees,
