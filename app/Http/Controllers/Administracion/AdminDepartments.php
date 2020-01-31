@@ -140,7 +140,7 @@ class AdminDepartments extends Controller
 
     public function listDepartments(Request $request){
         if ($request->ajax()) {
-            $data = Department::withTrashed()->get();
+            $data = Department::withTrashed()->orderBy('name', 'asc')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('id_enterprise', function($row){

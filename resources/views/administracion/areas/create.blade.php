@@ -70,12 +70,22 @@
 
                                 <div class="box-body">
 
+                                    {{--<div class="form-group col-md-6">
+                                        <label for="id_enterprise">{{ trans('message.datatables_headers.enterprise') }}</label>
+                                        <select class="form-control" id="id_enterprise" name="id_enterprise">
+                                            <option value="">Sin Empresa</option>
+                                            @foreach ($data['enterprises'] as $enterprise)
+                                                <option value="{{ $enterprise->id }}">{{  $enterprise->name   }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                                     <div class="form-group col-md-6">
                                         <label for="id_enterprise">{{ trans('message.datatables_headers.mark') }}</label>
-                                        <select class="form-control" id="id_enterprise" name="id_enterprise">
+                                        <select class="form-control" id="id_mark" name="id_mark">
                                             <option value="">Sin Marca</option>
-                                            @foreach ($data['enterprises'] as $enterprises)
-                                                <option value="{{ $enterprises->id }}">{{  $enterprises->name   }}</option>
+                                            @foreach ($data['marks'] as $mark)
+                                                <option value="{{ $mark->id }}">{{  $mark->name   }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -84,11 +94,11 @@
                                         <label for="id_direction">{{ trans('message.datatables_headers.direction') }}</label>
                                         <select class="form-control" id="id_direction" name="id_direction">
                                             <option value="">Sin dirección</option>
-                                            @foreach ($data['directions'] as $enterprises)
-                                                <option value="{{ $enterprises->id }}">{{  $enterprises->name   }}</option>
+                                            @foreach ($data['directions'] as $enterprise)
+                                                <option value="{{ $enterprise->id }}">{{  $enterprise->name   }}</option>
                                             @endforeach
                                         </select>
-                                    </div>
+                                    </div>--}}
 
                                     <div class="form-group col-md-12">
                                         <label for="nombre">{{ trans('message.datatables_headers.area') }}</label>
@@ -159,5 +169,61 @@
         setTimeout(function() {
             $('#success-alert').fadeOut('fast');
         }, 5000); // <-- time in milliseconds
+
+        //Combo Empresas
+        /*$('#id_enterprise').change(function(){
+            var id = $(this).val();
+            getMarks(id);
+        });
+
+        function getMarks(id){
+            $.ajax({
+                url: "{{url('marks')}}/"+id,
+                Type:'GET',
+                success: function(result){
+
+                    $('#id_mark').empty();
+                    $('#id_mark').append($('<option>', {
+                        value: '',
+                        text : 'Sin Marca'
+                    }));
+                    $.each(result, function(i, item){
+                        $('#id_mark').append($('<option>', {
+                            value: item.id,
+                            text : item.name
+                        }));
+                    })
+
+                }
+            });
+        }
+
+        //Combo Marcas
+        $('#id_mark').change(function(){
+            var id = $(this).val();
+            getDirections(id);
+        });
+
+        function getDirections(id){
+            $.ajax({
+                url: "{{url('marks')}}/"+id,
+                Type:'GET',
+                success: function(result){
+
+                    $('#id_direction').empty();
+                    $('#id_direction').append($('<option>', {
+                        value: '',
+                        text : 'Sin Dirección'
+                    }));
+                    $.each(result, function(i, item){
+                        $('#id_direction').append($('<option>', {
+                            value: item.id,
+                            text : item.name
+                        }));
+                    })
+
+                }
+            });
+        }*/
     </script>
 @endsection

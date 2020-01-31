@@ -27,8 +27,7 @@ class AdminEmployees extends Controller
 	 *
 	 * @return void
 	 */
-	public function __construct()
-	{
+	public function __construct(){
         $this->middleware('auth');
         $this->pathLayout = 'manual_layouts';
         $this->folderProcessedFiles = 'processed_files';
@@ -75,10 +74,10 @@ class AdminEmployees extends Controller
     }
 
     public function create(){
-        $list_employees = Employee::orderByRaw('nombre ASC')->get();
-        $list_jobpositions = JobPosition::orderByRaw('id_level DESC')->get();
+        //$list_employees = Employee::orderByRaw('nombre ASC')->get();
+        $list_jobpositions = JobPosition::orderBy('id_level', 'asc')->get();
         $data = [
-            'list_employee' => $list_employees,
+            //'list_employee' => $list_employees,
             'list_jobpositions' => $list_jobpositions,
         ];
         return view('administracion.employees.create', compact(['data']));
@@ -86,6 +85,7 @@ class AdminEmployees extends Controller
 
     public function store(Request $request){
         $data = request()->except(['_token', '_method']);
+        //dd($data);
         try {
             DB::beginTransaction();
                 Employee::create($data);
@@ -105,8 +105,16 @@ class AdminEmployees extends Controller
     public function show($id){}
 
     public function edit($id){
-        $info_employee = Employee::withTrashed()->where('id', '=', $id)->get();
-        return view('administracion.employees.edit', compact(['info_employee']));
+        $employee = Employee::withTrashed()->where('id', '=', $id)->get();
+        $infoPositionBoss = JobPosition::withTrashed()->where('name', $employee[0]->puesto)->get();
+        $bosses = Employee::withTrashed()->where('puesto', $infoPositionBoss[0]->bossPosition->name)->get();
+        $list_jobpositions = JobPosition::withTrashed()->orderBy('id_level', 'asc')->get();
+        $data = [
+            'employee' => $employee,
+            'list_jobpositions' => $list_jobpositions,
+            'bosses' => $bosses,
+        ];
+        return view('administracion.employees.edit', compact(['data']));
     }
 
     public function update(Request $request, $id){
@@ -141,6 +149,49 @@ class AdminEmployees extends Controller
             return Redirect::back()->withErrors($errorsMessage);
         }
         return redirect('admin-employees/'.$id.'/edit')->with('success','Ok');
+    }
+
+    public function bosses($id){
+        $jobPosition = JobPosition::where('name', $id)->get();
+        $jobPositionBoss = JobPosition::where('id', $jobPosition[0]['id_boss_position'])->get();
+        $bosses = Employee::select('id','nombre', 'paterno', 'materno')->where('puesto', $jobPositionBoss[0]['name'])->orderBy('nombre', 'ASC')->get();
+
+        $id_enterprise = 'Sin IDEmpresa'; 
+        $enterprise = 'Sin Empresa'; 
+        $mark = 'Sin Marca'; 
+        $direction = 'Sin dirección';
+        $area = 'Sin Área';
+        $department = 'Sin Departamento';
+
+        if(!empty($jobPosition[0]->enterprise->id)){
+            $id_enterprise = $jobPosition[0]->enterprise->id;
+        }
+        if(!empty($jobPosition[0]->enterprise->name)){
+            $enterprise = $jobPosition[0]->enterprise->name;
+        }
+        if(!empty($jobPosition[0]->mark->name)){
+            $mark = $jobPosition[0]->mark->name;
+        }
+        if(!empty($jobPosition[0]->direction->name)){
+            $direction = $jobPosition[0]->direction->name;
+        }
+        if(!empty($jobPosition[0]->area->name)){
+            $area = $jobPosition[0]->area->name;
+        }
+        if(!empty($jobPosition[0]->department->name)){
+            $department = $jobPosition[0]->department->name;
+        }
+
+        $data = [
+            'bosses' => $bosses,
+            'id_enterprise' => $id_enterprise,
+            'enterprise' => $enterprise,
+            'mark' => $mark,
+            'direction' => $direction,
+            'area' => $area,
+            'department' => $department,
+        ];
+        return $data;
     }
 
     public function listEmployees(Request $request){

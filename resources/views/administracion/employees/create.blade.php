@@ -129,6 +129,97 @@
                             <div class="box box-warning">
 
                                 <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.jobpoistioninfo') }}</h3>
+                                </div>
+
+                                <div class="box-body">
+
+                                    <div class="form-group col-md-12">
+                                        <label for="id_direction">{{ trans('message.datatables_headers.position') }}</label>
+                                        <select class="form-control" id="puesto" name="puesto">
+                                            <option value="">{{ trans('message.datatables_headers.outjobposition') }}</option>
+                                            @foreach ($data['list_jobpositions'] as $position)
+                                                <?php 
+                                                    $enterprise = "Sin Empresa";
+                                                    $mark = "Sin Marca";
+                                                    $direction = "Sin Dirección";
+                                                    $area = "Sin Área";
+                                                    $department = "Sin Departamento";
+                                                    if(!empty($position->enterprise->name))
+                                                        $enterprise = $position->enterprise->name;
+                                                    if(!empty($position->mark->name))
+                                                        $mark = $position->mark->name;
+                                                    if(!empty($position->direction->name))
+                                                        $direction = $position->direction->name;
+                                                    if(!empty($position->area->name))
+                                                        $area = $position->area->name;
+                                                    if(!empty($position->department->name))
+                                                        $department = $position->department->name;
+                                                ?>
+                                                <option value="{{ $position->name }}">{{  $enterprise.' / '.$mark.' / '.$direction.' / '.$area.' / '.$department.' / '.$position->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="id_direction">{{ trans('message.datatables_headers.boss') }}</label>
+                                        <select class="form-control" id="jefe" name="jefe">
+                                            <option value="">{{ trans('message.datatables_headers.outboss') }}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="idempresa">{{ trans('message.datatables_headers.enterprise_id') }}</label>
+                                        <input type="text" disabled class="form-control" id="idempresa" name="idempresa" placeholder="{!! trans('message.form_employee_holder.enterprise_id') !!}">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="empresa">{{ trans('message.datatables_headers.enterprise') }}</label>
+                                        <input type="text" disabled class="form-control" id="empresa" name="empresa" placeholder="{!! trans('message.form_employee_holder.enterprise') !!}">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="marca">{{ trans('message.datatables_headers.mark') }}</label>
+                                        <input type="text" disabled class="form-control" id="marca" name="marca" placeholder="{!! trans('message.form_employee_holder.mark') !!}">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="direccion">{{ trans('message.datatables_headers.direction') }}</label>
+                                        <input type="text" disabled class="form-control" id="direccion" name="direccion" placeholder="{!! trans('message.form_employee_holder.direction') !!}">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="seccion">{{ trans('message.datatables_headers.section').' / '.trans('message.datatables_headers.area') }}</label>
+                                        <input type="text" disabled class="form-control" id="seccion" name="seccion" placeholder="{!! trans('message.form_employee_holder.section') !!}">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="departamento">{{ trans('message.datatables_headers.department') }}</label>
+                                        <input type="text" disabled class="form-control" id="departamento" name="departamento" placeholder="{!! trans('message.form_employee_holder.department') !!}">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="division">{{ trans('message.datatables_headers.division') }}</label>
+                                        <input type="text" class="form-control" id="division" name="division" placeholder="{!! trans('message.form_employee_holder.division') !!}">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="region">{{ trans('message.datatables_headers.region') }}</label>
+                                        <input type="text" class="form-control" id="region" name="region" placeholder="{!! trans('message.form_employee_holder.region') !!}">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="sucursal">{{ trans('message.datatables_headers.subsidiary') }}</label>
+                                        <input type="text" class="form-control" id="sucursal" name="sucursal" placeholder="{!! trans('message.form_employee_holder.subsidiary') !!}">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="box box-warning">
+
+                                <div class="box-header with-border">
                                     <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.personnelinfo') }}</h3>
                                 </div>
 
@@ -136,12 +227,12 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="idempleado">{{ trans('message.datatables_headers.idemployee') }}</label>
-                                        <input type="text" required class="form-control" id="idempleado" name="idempleado" placeholder="{!! trans('message.form_employee_holder.idemployee') !!}">
+                                        <input type="text" class="form-control" id="idempleado" name="idempleado" placeholder="{!! trans('message.form_employee_holder.idemployee') !!}">
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <label for="fuente">{{ trans('message.datatables_headers.origin') }}</label>
-                                        <input type="text" required class="form-control" id="fuente" name="fuente" placeholder="{!! trans('message.form_employee_holder.origin') !!}">
+                                        <input type="text" class="form-control" id="fuente" name="fuente" placeholder="{!! trans('message.form_employee_holder.origin') !!}">
                                     </div>
 
                                     <div class="form-group col-md-4">
@@ -190,7 +281,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-md-4">
+                                    {{--<div class="form-group col-md-4">
                                         <label for="id_direction">{{ trans('message.datatables_headers.boss') }}</label>
                                         <select class="form-control" id="jefe" name="jefe">
                                             <option value="">Sin Jefe</option>
@@ -204,10 +295,10 @@
                                         </select>
                                     </div>
 
-                                    {{--<div class="form-group col-md-4">
+                                    <div class="form-group col-md-4">
                                         <label for="jefe">{{ trans('message.datatables_headers.boss') }}</label>
                                         <input type="text" class="form-control" id="jefe" name="jefe" placeholder="{!! trans('message.form_employee_holder.boss') !!}">
-                                    </div>--}}
+                                    </div>
 
                                     <div class="form-group col-md-4">
                                         <label for="direccion">{{ trans('message.datatables_headers.direction') }}</label>
@@ -234,7 +325,7 @@
                                         </select>
                                     </div>
 
-                                    {{--<div class="form-group col-md-4">
+                                    <div class="form-group col-md-4">
                                         <label for="puesto">{{ trans('message.datatables_headers.position') }}</label>
                                         <input type="text" class="form-control" id="puesto" name="puesto" placeholder="{!! trans('message.form_employee_holder.position') !!}">
                                     </div>--}}
@@ -244,7 +335,7 @@
                                         <input type="text" class="form-control" id="grado" name="grado" placeholder="{!! trans('message.form_employee_holder.grade') !!}">
                                     </div>
 
-                                    <div class="form-group col-md-4">
+                                    {{--<div class="form-group col-md-4">
                                         <label for="region">{{ trans('message.datatables_headers.region') }}</label>
                                         <input type="text" class="form-control" id="region" name="region" placeholder="{!! trans('message.form_employee_holder.region') !!}">
                                     </div>
@@ -272,7 +363,7 @@
                                     <div class="form-group col-md-4">
                                         <label for="marca">{{ trans('message.datatables_headers.mark') }}</label>
                                         <input type="text" class="form-control" id="marca" name="marca" placeholder="{!! trans('message.form_employee_holder.mark') !!}">
-                                    </div>
+                                    </div>--}}
 
                                     <div class="form-group col-md-4">
                                         <label for="centro">{{ trans('message.datatables_headers.center') }}</label>
@@ -450,5 +541,54 @@
         setTimeout(function() {
             $('#success-alert').fadeOut('fast');
         }, 5000); // <-- time in milliseconds
+
+        $('#puesto').change(function(){
+            var id = $(this).val();
+            getBoss(id);
+        });
+
+        function getBoss(id){
+            $.ajax({
+                url: "{{url('bosses')}}/"+id,
+                Type:'GET',
+                success: function(result){
+                    $('#jefe').empty();
+                    document.getElementById('idempresa').value = '';
+                    document.getElementById('empresa').value = '';
+                    document.getElementById('marca').value = '';
+                    document.getElementById('direccion').value = '';
+                    document.getElementById('seccion').value = '';
+                    document.getElementById('departamento').value = '';
+
+                    $('#jefe').append($('<option>', {
+                        value: '',
+                        text : 'Sin Jefe'
+                    }));
+                    $.each(result['bosses'], function(i, item){
+                        $('#jefe').append($('<option>', {
+                            value: item.id,
+                            text : item.nombre+' '+item.paterno+' '+item.materno
+                        }));
+                    });
+
+                    document.getElementById('idempresa').value = result['id_enterprise'];
+                    document.getElementById('empresa').value = result['enterprise'];
+                    document.getElementById('marca').value = result['mark'];
+                    document.getElementById('direccion').value = result['direction'];
+                    document.getElementById('seccion').value = result['area'];
+                    document.getElementById('departamento').value = result['department'];
+
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    $('#jefe').empty();
+                    document.getElementById('idempresa').value = '';
+                    document.getElementById('empresa').value = '';
+                    document.getElementById('marca').value = '';
+                    document.getElementById('direccion').value = '';
+                    document.getElementById('seccion').value = '';
+                    document.getElementById('departamento').value = '';
+                } 
+            });
+        }
     </script>
 @endsection

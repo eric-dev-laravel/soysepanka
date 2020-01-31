@@ -75,12 +75,12 @@
                                         <input type="text" required class="form-control" id="name" name="name" placeholder="{{ trans('message.form_employee_holder.position') }}">
                                     </div>
 
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-2">
                                         <label for="nombre">{{ trans('message.datatables_headers.position_number') }}</label>
                                         <input type="number" class="form-control" id="places" name="places" placeholder="{{ trans('message.form_employee_holder.position') }}">
                                     </div>
 
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-2">
                                         <label for="id_direction">{{ trans('message.datatables_headers.gender') }}</label>
                                         <select class="form-control" id="id_gender" name="id_gender">
                                             @foreach ($data['genders'] as $level)
@@ -89,7 +89,7 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-2">
                                         <label for="id_direction">{{ trans('message.datatables_headers.marital_status') }}</label>
                                         <select class="form-control" id="id_marital_status" name="id_marital_status">
                                             @foreach ($data['marital_status'] as $level)
@@ -98,7 +98,7 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-6">
                                         <label for="id_direction">{{ trans('message.datatables_headers.working_day') }}</label>
                                         <select class="form-control" id="id_workshifts" name="id_workshifts">
                                             @foreach ($data['workshifts'] as $level)
@@ -107,13 +107,18 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group col-md-4">
+                                    {{--<div class="form-group col-md-4">
                                         <label for="id_direction">{{ trans('message.datatables_headers.level') }}</label>
                                         <select class="form-control" id="id_level" name="id_level">
                                             @foreach ($data['levels_positions'] as $level)
                                                 <option value="{{ $level->id }}">{{  'Nivel: '. $level->level. ' ' .$level->name  }}</option>
                                             @endforeach
                                         </select>
+                                    </div>--}}
+
+                                    <div class="form-group col-md-2">
+                                        <label for="nombre">{{ trans('message.datatables_headers.age_min') }}</label>
+                                        <input type="number" class="form-control" id="age_min" name="age_min" placeholder="{{ trans('message.form_employee_holder.position') }}">
                                     </div>
 
                                     <div class="form-group col-md-2">
@@ -121,9 +126,19 @@
                                         <input type="number" class="form-control" id="age_max" name="age_max" placeholder="{{ trans('message.form_employee_holder.position') }}">
                                     </div>
 
+                                    <div class="form-group col-md-4">
+                                        <label for="language">{{ trans('message.datatables_headers.salary_range') }}</label>
+                                        <input type="text" name="salary_range" id="salary_range" class="form-control">
+                                    </div>
+
                                     <div class="form-group col-md-2">
-                                        <label for="nombre">{{ trans('message.datatables_headers.age_min') }}</label>
-                                        <input type="number" class="form-control" id="age_min" name="age_min" placeholder="{{ trans('message.form_employee_holder.position') }}">
+                                        <label for="writing">{{ trans('message.datatables_headers.range_max') }}</label>
+                                        <input type="text" name="salary_min" id="salary_min" class="form-control">
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label for="reading">{{ trans('message.datatables_headers.range_min') }}</label>
+                                        <input type="text" name="salary_max" id="salary_max" class="form-control">
                                     </div>
 
                                 </div>
@@ -244,21 +259,6 @@
                                     <div class="form-group col-md-12">
                                         <label for="nombre">{{ trans('message.datatables_headers.available') }}</label>
                                         <textarea class="form-control" rows="4" id="available" name="available" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"></textarea>
-                                    </div>
-
-                                    <div class="form-group col-md-5">
-                                        <label for="language">Rango Salarial</label>
-                                        <input type="text" name="salary_range" id="salary_range" class="form-control">
-                                    </div>
-
-                                    <div class="form-group col-md-2">
-                                        <label for="reading">Máx. </label>
-                                        <input type="text" name="salary_max" id="salary_max" class="form-control">
-                                    </div>
-
-                                    <div class="form-group col-md-2">
-                                        <label for="writing">Mín. </label>
-                                        <input type="text" name="salary_min" id="salary_min" class="form-control">
                                     </div>
 
                                 </div>

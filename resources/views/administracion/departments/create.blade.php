@@ -70,7 +70,7 @@
 
                                 <div class="box-body">
 
-                                    <div class="form-group col-md-6">
+                                    {{--<div class="form-group col-md-6">
                                         <label for="id_enterprise">{{ trans('message.datatables_headers.mark') }}</label>
                                         <select class="form-control" id="id_enterprise" name="id_enterprise">
                                             <option value="">Sin Marca</option>
@@ -98,9 +98,9 @@
                                                 <option value="{{ $area->id }}">{{  $area->name   }}</option>
                                             @endforeach
                                         </select>
-                                    </div>
+                                    </div>--}}
 
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-12">
                                         <label for="nombre">{{ trans('message.datatables_headers.department') }}</label>
                                         <input type="text" required class="form-control" id="name" name="name" placeholder="{{ trans('message.form_employee_holder.department') }}">
                                     </div>

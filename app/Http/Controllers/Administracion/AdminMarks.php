@@ -37,7 +37,7 @@ class AdminMarks extends Controller
     }
 
     public function create(){
-        $enterprises = Enterprise::withTrashed()->get();
+        $enterprises = Enterprise::withTrashed()->orderBy('name', 'asc')->get();
         return view('administracion.marks.create', compact(['enterprises']));
     }
 
@@ -45,12 +45,12 @@ class AdminMarks extends Controller
         $data = request()->except(['_token', '_method']);
         try {
             DB::beginTransaction();
-            Mark::create($data);
-            DB::commit();
+                Mark::create($data);
+                DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
             $errorsMessage = [
-                'fullMessage' => $e->getMessage(),
+                'fullMessage' => $e->errorInfo[2],
             ];
 
             return Redirect::back()->withErrors($errorsMessage);
@@ -62,7 +62,7 @@ class AdminMarks extends Controller
     public function show($id){}
 
     public function edit($id){
-        $enterprises = Enterprise::withTrashed()->get();
+        $enterprises = Enterprise::withTrashed()->orderBy('name', 'asc')->get();
         $direction = Mark::withTrashed()->where('id', '=', $id)->get();
 
         $info_direction = [
@@ -75,15 +75,13 @@ class AdminMarks extends Controller
 
     public function update(Request $request, $id){
         $data = request()->except(['_token', '_method']);
-
         try {
-             DB::beginTransaction();
-             Mark::withTrashed()->whereId($id)->update($data);
-             DB::commit();
+                Mark::withTrashed()->whereId($id)->update($data);
+                DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
             $errorsMessage = [
-                'fullMessage' => $e->getMessage(),
+                'fullMessage' => $e->errorInfo[2],
             ];
 
             return Redirect::back()->withErrors($errorsMessage);
@@ -127,7 +125,7 @@ class AdminMarks extends Controller
 
     public function listMarks(Request $request){
         if ($request->ajax()) {
-            $data = Mark::withTrashed()->get();
+            $data = Mark::withTrashed()->orderBy('name', 'asc')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('id_enterprise', function($row){
@@ -152,4 +150,5 @@ class AdminMarks extends Controller
 
         return view('administracion.marks.index');
     }
+    
 }

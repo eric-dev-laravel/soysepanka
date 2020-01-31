@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administracion;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Administracion\Enterprise;
 use App\Models\Administracion\Mark;
 use App\Models\Administracion\Direction;
 use App\Models\Administracion\Area;
@@ -46,7 +47,7 @@ class AdminJobPositions extends Controller
     }
 
     public function create(){
-        $enterprises = Mark::withTrashed()->get();
+        /*$enterprises = Mark::withTrashed()->get();
         $directions = Direction::withTrashed()->get();
         $areas = Area::withTrashed()->get();
         $departments = Department::withTrashed()->get();
@@ -59,8 +60,9 @@ class AdminJobPositions extends Controller
             'departments' => $departments,
             'levels_positions' => $levels_positions,
             'list_jobpositions' => $list_jobpositions,
-        ];
-        return view('administracion.jobpositions.create', compact(['data']));
+        ];*/
+        //return view('administracion.jobpositions.create', compact(['data']));
+        return view('administracion.jobpositions.create');
     }
 
     public function store(Request $request){
@@ -95,20 +97,22 @@ class AdminJobPositions extends Controller
     public function show($id){}
 
     public function edit($id){
-        $enterprises = Mark::withTrashed()->get();
-        $directions = Direction::withTrashed()->get();
-        $areas = Area::withTrashed()->get();
-        $departments = Department::withTrashed()->get();
+        $enterprises = Enterprise::withTrashed()->orderBy('name', 'ASC')->get();
+        $marks = Mark::withTrashed()->orderBy('name', 'ASC')->get();
+        $directions = Direction::withTrashed()->orderBy('name', 'ASC')->get();
+        $areas = Area::withTrashed()->orderBy('name', 'ASC')->get();
+        $departments = Department::withTrashed()->orderBy('name', 'ASC')->get();
         $jobposition = JobPosition::withTrashed()->where('id', '=', $id)->get();
         $genders = Gender::orderByRaw('name ASC')->get();
         $marital_status = MaritalStatus::orderByRaw('name ASC')->get();
         $workshifts = WorkShift::orderByRaw('name ASC')->get();
         $levels_positions = hierarchical_levels_positions::orderByRaw('level ASC')->get();
-        $list_jobpositions = JobPosition::withTrashed()->where('id', '!=', $id)->orderByRaw('id_level DESC')->get();
+        $list_jobpositions = JobPosition::withTrashed()->where('id', '!=', $id)->orderBy('name', 'DESC')->get();
         $jobpositionlanguaje = JobPositionLanguaje::where('id_jobposition', '=', $id)->get();
 
         $data = [
             'enterprises' => $enterprises,
+            'marks' => $marks,
             'directions' => $directions,
             'areas' => $areas,
             'departments' => $departments,

@@ -16,8 +16,9 @@ class AreaTable extends Migration
         Schema::create('areas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_enterprise')->nullable();
+            $table->integer('id_mark')->nullable();
             $table->integer('id_direction')->nullable();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->text('description')->nullable();
             $table->string('origin')->nullable();
             $table->timestamps();

@@ -16,7 +16,7 @@ class CreateMarkTable extends Migration
         Schema::create('marks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_enterprise')->nullable();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->text('description')->nullable();
             $table->string('origin')->nullable();
             $table->timestamps();

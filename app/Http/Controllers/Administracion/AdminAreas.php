@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Administracion\Mark;
 use App\Models\Administracion\Direction;
 use App\Models\Administracion\Area;
+use App\Models\Administracion\Enterprise;
 use Yajra\Datatables\Datatables;
 use DB;
 use Redirect;
@@ -38,10 +39,12 @@ class AdminAreas extends Controller
     }
 
     public function create(){
-        $enterprises = Mark::withTrashed()->get();
-        $directions = Direction::withTrashed()->get();
+        $enterprises = Enterprise::withTrashed()->orderBy('name', 'asc')->get();
+        $marks = Mark::withTrashed()->orderBy('name', 'asc')->get();
+        $directions = Direction::withTrashed()->orderBy('name', 'asc')->get();
         $data = [
             'enterprises' => $enterprises,
+            'marks' => $marks,
             'directions' => $directions,
         ];
         return view('administracion.areas.create', compact(['data']));
@@ -135,7 +138,7 @@ class AdminAreas extends Controller
 
     public function listAreas(Request $request){
         if ($request->ajax()) {
-            $data = Area::withTrashed()->get();
+            $data = Area::withTrashed()->orderBy('name', 'asc')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('id_enterprise', function($row){

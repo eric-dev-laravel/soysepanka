@@ -89,7 +89,7 @@
 		</div>
 
         <div class="row">
-			<div class="col-md-10">
+			<div class="col-md-8">
 
 				<div class="box">
 					<div class="box-header with-border">
@@ -110,7 +110,6 @@
                                     <th>{{ trans('message.datatables_headers.number') }}</th>
                                     <th>{{ trans('message.datatables_headers.name') }}</th>
                                     <th>{{ trans('message.datatables_headers.description') }}</th>
-                                    <th>{{ trans('message.datatables_headers.mark') }}</th>
                                     <th>{{ trans('message.datatables_headers.actions') }}</th>
                                 </tr>
                             </thead>
@@ -138,7 +137,6 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
                     {data: 'description', name: 'description'},
-                    {data: 'id_mark', name: 'id_mark'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 language: {
@@ -146,11 +144,11 @@
                 },
                 columnDefs: [
                     {
-                        "width": "200px", "targets": [1, 2, 3],
+                        "width": "230px", "targets": [1, 2],
                     }
                 ],
                 fixedColumns:   {
-                    leftColumns: 3,
+                    leftColumns: 2,
                     rightColumns: 1
                 }
             });

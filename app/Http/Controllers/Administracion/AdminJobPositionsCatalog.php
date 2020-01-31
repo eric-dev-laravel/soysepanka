@@ -174,12 +174,9 @@ class AdminJobPositionsCatalog extends Controller
 
     public function listJobPositionsCatalog(Request $request){
         if ($request->ajax()) {
-            $data = JobPositionCatalog::withTrashed()->get();
+            $data = JobPositionCatalog::withTrashed()->orderBy('name', 'asc')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('selected', function($row){
-
-                    })
                     ->addColumn('action', function($row){
                         if(empty($row->deleted_at))
                             $btn = '<a href="admin-jobpositionscatalog/'.$row->id.'/edit" class="edit btn btn-success btn-sm"> <i class="fa fa-pencil"></i> '.trans('message.buttons.edit').'</a>';
@@ -189,6 +186,20 @@ class AdminJobPositionsCatalog extends Controller
                         return $btn;
                     })
                     ->rawColumns(['action'])
+                    ->make(true);
+        }
+
+        return view('administracion.jobpositionscatalog.index');
+    }
+
+    public function listJobPositionsCatalogSelect(Request $request){
+        if ($request->ajax()) {
+            $data = JobPositionCatalog::withTrashed()->orderBy('name', 'asc')->get();
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('selected', function($row){
+
+                    })
                     ->make(true);
         }
 

@@ -109,9 +109,10 @@
                                 <tr style="background-color: #7A75B5; color: white; text-align: center; font-size: 14px;">
                                     <th>{{ trans('message.datatables_headers.number') }}</th>
                                     <th>{{ trans('message.datatables_headers.name') }}</th>
-                                    <th>{{ trans('message.datatables_headers.position_number') }}</th>
-                                    <th>{{ trans('message.datatables_headers.education_level') }}</th>
-                                    <th>{{ trans('message.datatables_headers.experience') }}</th>
+                                    <th>{{ trans('message.datatables_headers.objective') }}</th>
+                                    <th>{{ trans('message.datatables_headers.activities') }}</th>
+                                    <th>{{ trans('message.datatables_headers.responsabilities') }}</th>
+                                    <th>{{ trans('message.datatables_headers.competitions') }}</th>
                                     <th>{{ trans('message.datatables_headers.actions') }}</th>
                                 </tr>
                             </thead>
@@ -138,18 +139,18 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
-                    {data: 'places', name: 'places'},
-                    {data: 'education_level', name: 'education_level'},
-                    {data: 'years_experience', name: 'years_experience'},
+                    {data: 'objective', name: 'objective'},
+                    {data: 'activities', name: 'activities'},
+                    {data: 'responsabilities', name: 'responsabilities'},
+                    {data: 'competitions', name: 'competitions'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 language: {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
                 },
                 columnDefs: [
-                    {
-                        "width": "180px", "targets": [1, 2],
-                    }
+                    {"width": "220px", "targets": [1, 2, 3, 4, 5]},
+                    {"className": "dt-justify", "targets": [2, 3, 4]},
                 ],
                 fixedColumns:   {
                     leftColumns: 2,

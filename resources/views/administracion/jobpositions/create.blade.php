@@ -70,7 +70,7 @@
 
                                 <div class="box-body">
 
-                                    <div class="form-group col-md-6">
+                                    {{--<div class="form-group col-md-6">
                                         <label for="id_enterprise">{{ trans('message.datatables_headers.mark') }}</label>
                                         <select class="form-control" id="id_mark" name="id_mark">
                                             <option value="">Sin Marca</option>
@@ -98,16 +98,10 @@
                                                 <option value="{{ $area->id }}">{{  $area->name   }}</option>
                                             @endforeach
                                         </select>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="id_direction">{{ trans('message.datatables_headers.department') }}</label>
-                                        <select class="form-control" id="id_department" name="id_department">
-                                            <option value="">Sin Departamento</option>
-                                            @foreach ($data['departments'] as $department)
-                                                <option value="{{ $department->id }}">{{  $department->name   }}</option>
-                                            @endforeach
-                                        </select>
+                                    </div>--}}
+                                    
+                                    <div class="form-group col-md-12">
+                                        {{ trans('message.datatables_headers.instructionsOfAddJobPositions') }}
                                     </div>
 
                                     <div style="display:none">
@@ -207,7 +201,7 @@
                 processing: true,
                 serverSide: true,
                 scrollX: true,
-                ajax: "{{ route('jobpositionscatalog.list') }}",
+                ajax: "{{ route('jobpositionscatalog.select.list') }}",
                 columns: [
                     {data: 'selected', name: 'selected'},
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},

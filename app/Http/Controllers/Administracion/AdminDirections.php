@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Administracion;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Administracion\Direction;
+use App\Models\Administracion\Enterprise;
 use App\Models\Administracion\Mark;
+use App\Models\Administracion\Direction;
 use Yajra\Datatables\Datatables;
 use DB;
 use Redirect;
@@ -37,8 +38,11 @@ class AdminDirections extends Controller
     }
 
     public function create(){
-        $enterprises = Mark::withTrashed()->get();
-        return view('administracion.directions.create', compact(['enterprises']));
+        $enterprises = Enterprise::withTrashed()->orderBy('name', 'asc')->get();
+        $data = [
+            'enterprises' => $enterprises,
+        ];
+        return view('administracion.directions.create', compact(['data']));
     }
 
     public function store(Request $request){
@@ -62,11 +66,13 @@ class AdminDirections extends Controller
     public function show($id){}
 
     public function edit($id){
-        $enterprises = Mark::withTrashed()->get();
+        $enterprises = Enterprise::withTrashed()->orderBy('name', 'asc')->get();
+        $marks = Mark::withTrashed()->orderBy('name', 'asc')->get();
         $direction = Direction::withTrashed()->where('id', '=', $id)->get();
 
         $info_direction = [
             'enterprises' => $enterprises,
+            'marks' => $marks,
             'direction' => $direction,
         ];
 
@@ -75,11 +81,10 @@ class AdminDirections extends Controller
 
     public function update(Request $request, $id){
         $data = request()->except(['_token', '_method']);
-
         try {
-             DB::beginTransaction();
+            DB::beginTransaction();
                 Direction::withTrashed()->whereId($id)->update($data);
-             DB::commit();
+            DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
             $errorsMessage = [
@@ -127,9 +132,17 @@ class AdminDirections extends Controller
 
     public function listDirections(Request $request){
         if ($request->ajax()) {
-            $data = Direction::withTrashed()->get();
+            $data = Direction::withTrashed()->orderBy('name', 'asc')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
+                    ->editColumn('id_enterprise', function($row){
+                        if(!empty($row->id_enterprise))
+                            $content = $row->enterprise->name;
+                        else
+                            $content = 'N/A';
+
+                        return $content;
+                    })
                     ->editColumn('id_mark', function($row){
                         if(!empty($row->id_mark))
                             $content = $row->mark->name;

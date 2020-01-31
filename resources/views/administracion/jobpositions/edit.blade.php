@@ -87,7 +87,7 @@
                             {!! method_field('PUT') !!}
                             {!! csrf_field() !!}
 
-                            {{--<div class="box box-primary">
+                            <div class="box box-primary">
 
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.info_createjobposition') }}</h3>
@@ -98,125 +98,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="id_enterprise">{{ trans('message.datatables_headers.enterprise') }}</label>
                                         <select class="form-control" id="id_enterprise" name="id_enterprise">
-                                            <option value="">Sin empresa</option>
-                                            @foreach ($info_direction['enterprises'] as $enterprises)
-                                                @if($enterprises->id == $info_direction['jobposition'][0]->id_enterprise)
-                                                    <option selected value="{{ $enterprises->id }}">{{  $enterprises->name   }}</option>
-                                                @else
-                                                    <option value="{{ $enterprises->id }}">{{  $enterprises->name   }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="id_enterprise">{{ trans('message.datatables_headers.direction') }}</label>
-                                        <select class="form-control" id="id_direction" name="id_direction">
-                                            <option value="">Sin Dirección</option>
-                                            @foreach ($info_direction['directions'] as $area)
-                                                @if($area->id == $info_direction['jobposition'][0]->id_direction)
-                                                    <option selected value="{{ $area->id }}">{{  $area->name   }}</option>
-                                                @else
-                                                    <option value="{{ $area->id }}">{{  $area->name   }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="id_enterprise">{{ trans('message.datatables_headers.area') }}</label>
-                                        <select class="form-control" id="id_area" name="id_area">
-                                            <option value="">Sin Área</option>
-                                            @foreach ($info_direction['areas'] as $area)
-                                                @if($area->id == $info_direction['jobposition'][0]->id_area)
-                                                    <option selected value="{{ $area->id }}">{{  $area->name   }}</option>
-                                                @else
-                                                    <option value="{{ $area->id }}">{{  $area->name   }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="id_enterprise">{{ trans('message.datatables_headers.department') }}</label>
-                                        <select class="form-control" id="id_department" name="id_department">
-                                            <option value="">Sin Departamento</option>
-                                            @foreach ($info_direction['departments'] as $area)
-                                                @if($area->id == $info_direction['jobposition'][0]->id_department)
-                                                    <option selected value="{{ $area->id }}">{{  $area->name   }}</option>
-                                                @else
-                                                    <option value="{{ $area->id }}">{{  $area->name   }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="id_enterprise">{{ trans('message.datatables_headers.level') }}</label>
-                                        <select class="form-control" id="id_level" name="id_level">
-                                            <option value="">Sin Departamento</option>
-                                            @foreach ($info_direction['levels_positions'] as $area)
-                                                @if($area->id == $info_direction['jobposition'][0]->id_level)
-                                                    <option selected value="{{ $area->id }}">{{  'Nivel: '. $area->level. ' ' .$area->name   }}</option>
-                                                @else
-                                                    <option value="{{ $area->id }}">{{  'Nivel: '. $area->level. ' ' .$area->name   }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="id_enterprise">{{ trans('message.datatables_headers.boss') }}</label>
-                                        <select class="form-control" id="id_boss_position" name="id_boss_position">
-                                            <option value="">Sin Jefe</option>
-                                            @foreach ($info_direction['list_jobpositions'] as $area)
-                                                @if($area->id == $info_direction['jobposition'][0]->id_boss_position)
-                                                    <option selected value="{{ $area->id }}">{{  $area->name   }}</option>
-                                                @else
-                                                    <option value="{{ $area->id }}">{{  $area->name   }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="nombre">{{ trans('message.datatables_headers.position') }}</label>
-                                        <input type="text" required class="form-control" id="name" name="name" value="{{ $info_direction['jobposition'][0]->name }}" placeholder="{{ trans('message.form_employee_holder.position') }}">
-                                    </div>
-
-                                    <div class="form-group col-md-12">
-                                        <label for="nombre">{{ trans('message.datatables_headers.description') }}</label>
-                                        <textarea class="form-control" rows="4" id="description" name="description" placeholder="{{ trans('message.form_employee_holder.info_jobposition') }}"> {{ $info_direction['jobposition'][0]->description }} </textarea>
-                                    </div>
-
-                                </div>
-
-                                <div class="box-footer">
-                                    <div class="row col-md-1 col-sm-12">
-                                        <button type="button" onclick="window.location.href = '{{ url('admin-jobpositions') }}';" class="btn btn-primary"><i class="fa fa-arrow-left"></i> {{ trans('message.buttons.back') }}</button>
-                                    </div>
-                                    <div class="row col-md-1 col-sm-12 col-md-offset-8">
-                                        <button type="submit" class="btn btn-success"><i class="fa fa-refresh"></i> {{ trans('message.buttons.edit') }}</button>
-                                    </div>
-                                    <div class="row col-md-1 col-sm-12 col-md-offset-1">
-                                        <button type="button" onclick="window.location.href = '{{ url('admin-jobpositions') }}';" class="btn btn-danger"><i class="fa fa-ban"></i> {{ trans('message.buttons.cancel') }}</button>
-                                    </div>
-                                </div>
-
-                            </div>--}}
-
-                            <div class="box box-primary">
-
-                                <div class="box-header with-border">
-                                    <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.info_createjobposition') }}</h3>
-                                </div>
-
-                                <div class="box-body">
-
-                                    <div class="form-group col-md-6">
-                                        <label for="id_enterprise">{{ trans('message.datatables_headers.mark') }}</label>
-                                        <select class="form-control" id="id_mark" name="id_mark">
-                                            <option value="">Sin empresa</option>
+                                            <option value="">{{ trans('message.datatables_headers.outenterprise') }}</option>
                                             @foreach ($data['enterprises'] as $enterprises)
                                                 @if($enterprises->id == $data['jobposition'][0]->id_enterprise)
                                                     <option selected value="{{ $enterprises->id }}">{{  $enterprises->name   }}</option>
@@ -228,9 +110,23 @@
                                     </div>
 
                                     <div class="form-group col-md-6">
+                                        <label for="id_enterprise">{{ trans('message.datatables_headers.mark') }}</label>
+                                        <select class="form-control" id="id_mark" name="id_mark">
+                                            <option value="">{{ trans('message.datatables_headers.outmark') }}</option>
+                                            @foreach ($data['marks'] as $marks)
+                                                @if($marks->id == $data['jobposition'][0]->id_mark)
+                                                    <option selected value="{{ $marks->id }}">{{  $marks->name   }}</option>
+                                                @else
+                                                    <option value="{{ $marks->id }}">{{  $marks->name   }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
                                         <label for="id_enterprise">{{ trans('message.datatables_headers.direction') }}</label>
                                         <select class="form-control" id="id_direction" name="id_direction">
-                                            <option value="">Sin Dirección</option>
+                                            <option value="">{{ trans('message.datatables_headers.outdirection') }}</option>
                                             @foreach ($data['directions'] as $area)
                                                 @if($area->id == $data['jobposition'][0]->id_direction)
                                                     <option selected value="{{ $area->id }}">{{  $area->name   }}</option>
@@ -244,7 +140,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="id_enterprise">{{ trans('message.datatables_headers.area') }}</label>
                                         <select class="form-control" id="id_area" name="id_area">
-                                            <option value="">Sin Área</option>
+                                            <option value="">{{ trans('message.datatables_headers.outarea') }}</option>
                                             @foreach ($data['areas'] as $area)
                                                 @if($area->id == $data['jobposition'][0]->id_area)
                                                     <option selected value="{{ $area->id }}">{{  $area->name   }}</option>
@@ -258,37 +154,9 @@
                                     <div class="form-group col-md-6">
                                         <label for="id_enterprise">{{ trans('message.datatables_headers.department') }}</label>
                                         <select class="form-control" id="id_department" name="id_department">
-                                            <option value="">Sin Departamento</option>
+                                            <option value="">{{ trans('message.datatables_headers.outdepartment') }}</option>
                                             @foreach ($data['departments'] as $area)
                                                 @if($area->id == $data['jobposition'][0]->id_department)
-                                                    <option selected value="{{ $area->id }}">{{  $area->name   }}</option>
-                                                @else
-                                                    <option value="{{ $area->id }}">{{  $area->name   }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="id_enterprise">{{ trans('message.datatables_headers.level') }}</label>
-                                        <select class="form-control" id="id_level" name="id_level">
-                                            <option value="">Sin Departamento</option>
-                                            @foreach ($data['levels_positions'] as $area)
-                                                @if($area->id == $data['jobposition'][0]->id_level)
-                                                    <option selected value="{{ $area->id }}">{{  'Nivel: '. $area->level. ' ' .$area->name   }}</option>
-                                                @else
-                                                    <option value="{{ $area->id }}">{{  'Nivel: '. $area->level. ' ' .$area->name   }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="id_enterprise">{{ trans('message.datatables_headers.boss') }}</label>
-                                        <select class="form-control" id="id_boss_position" name="id_boss_position">
-                                            <option value="">Sin Jefe</option>
-                                            @foreach ($data['list_jobpositions'] as $area)
-                                                @if($area->id == $data['jobposition'][0]->id_boss_position)
                                                     <option selected value="{{ $area->id }}">{{  $area->name   }}</option>
                                                 @else
                                                     <option value="{{ $area->id }}">{{  $area->name   }}</option>
@@ -300,6 +168,20 @@
                                     <div class="form-group col-md-12">
                                         <label for="nombre">{{ trans('message.datatables_headers.position') }}</label>
                                         <input type="text" required class="form-control" id="name" name="name" value="{{ $data['jobposition'][0]->name }}" placeholder="{{ trans('message.form_employee_holder.position') }}">
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="id_enterprise">{{ trans('message.datatables_headers.boss') }}</label>
+                                        <select class="form-control" id="id_boss_position" name="id_boss_position">
+                                            <option value="">{{ trans('message.datatables_headers.outboss') }}</option>
+                                            @foreach ($data['list_jobpositions'] as $area)
+                                                @if($area->id == $data['jobposition'][0]->id_boss_position)
+                                                    <option selected value="{{ $area->id }}">{{  $area->name   }}</option>
+                                                @else
+                                                    <option value="{{ $area->id }}">{{  $area->name   }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
                                     </div>
 
                                     <div class="form-group col-md-4">
@@ -347,13 +229,14 @@
                                     </div>
 
                                     <div class="form-group col-md-4">
-                                        <label for="id_direction">{{ trans('message.datatables_headers.level') }}</label>
+                                        <label for="id_enterprise">{{ trans('message.datatables_headers.level') }}</label>
                                         <select class="form-control" id="id_level" name="id_level">
+                                            <option value="">{{ trans('message.datatables_headers.outlevel') }}</option>
                                             @foreach ($data['levels_positions'] as $area)
                                                 @if($area->id == $data['jobposition'][0]->id_level)
-                                                    <option selected value="{{ $area->id }}">{{  $area->name   }}</option>
+                                                    <option selected value="{{ $area->id }}">{{  'Nivel: '. $area->level. ' ' .$area->name   }}</option>
                                                 @else
-                                                    <option value="{{ $area->id }}">{{  $area->name   }}</option>
+                                                    <option value="{{ $area->id }}">{{  'Nivel: '. $area->level. ' ' .$area->name   }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
@@ -425,12 +308,12 @@
 
                                     <div class="form-group col-md-8">
                                         <label for="nombre">{{ trans('message.datatables_headers.education_level') }}</label>
-                                        <input type="text" required class="form-control" id="education_level" name="education_level" value="{{ $data['jobposition'][0]->education_level }}" placeholder="{{ trans('message.form_employee_holder.position') }}">
+                                        <input type="text" class="form-control" id="education_level" name="education_level" value="{{ $data['jobposition'][0]->education_level }}" placeholder="{{ trans('message.form_employee_holder.position') }}">
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <label for="nombre">{{ trans('message.datatables_headers.years_experience') }}</label>
-                                        <input type="text" required class="form-control" id="years_experience" name="years_experience" value="{{ $data['jobposition'][0]->years_experience }}" placeholder="{{ trans('message.form_employee_holder.position') }}">
+                                        <input type="text" class="form-control" id="years_experience" name="years_experience" value="{{ $data['jobposition'][0]->years_experience }}" placeholder="{{ trans('message.form_employee_holder.position') }}">
                                     </div>
 
                                     <div class="form-group col-md-5">

@@ -15,15 +15,11 @@ class JobpositionTable extends Migration
     {
         Schema::create('job_positions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('id_enterprise')->nullable();
             $table->integer('id_mark')->nullable();
             $table->integer('id_direction')->nullable();
             $table->integer('id_area')->nullable();
             $table->integer('id_department')->nullable();
-            $table->integer('id_level')->nullable();
-            $table->integer('id_boss_position')->nullable();
-            $table->integer('id_workshifts')->nullable();
-            $table->integer('id_gender')->nullable();
-            $table->integer('id_marital_status')->nullable();
             $table->string('name');
             $table->text('objective')->nullable();
             $table->text('activities')->nullable();
@@ -43,6 +39,11 @@ class JobpositionTable extends Migration
             $table->string('salary_range')->nullable();
             $table->string('salary_max')->nullable();
             $table->string('salary_min')->nullable();
+            $table->integer('id_level')->nullable();
+            $table->integer('id_boss_position')->nullable();
+            $table->integer('id_workshifts')->nullable();
+            $table->integer('id_gender')->nullable();
+            $table->integer('id_marital_status')->nullable();
             $table->string('origin')->nullable();
             $table->timestamps();
             $table->softDeletes();

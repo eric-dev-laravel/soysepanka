@@ -205,6 +205,7 @@ return [
 
     'options'                 => 'Opciones',
     'employee_importation'    => 'Importación de Empleados',
+    'jobpoistioninfo'         => 'Información del Puesto',
 
     /*
      * |------------------------
@@ -329,13 +330,25 @@ return [
 
         'benefits'             => 'Prestaciones',
         'available'            => 'Disponibilidad para',
-        'age_max'            => 'Edad Máxima',
-        'age_min'            => 'Edad Minima',
-        'experience'            => 'Experiencia',
+        'age_max'              => 'Edad Máxima',
+        'age_min'              => 'Edad Mínima',
+        'salary_range'         => 'Rango Salarial',
+        'range_max'            => 'Máximo',
+        'range_min'            => 'Mínimo',
+        'experience'           => 'Experiencia',
         'responsabilities'     => 'Responsabilidades',
         'competitions'         => 'Competencias',
         'activities'           => 'Actividades',
         'objective'            => 'Objetivo',
+        'instructionsOfAddJobPositions' => 'Para agregar un nuevo puesto seleccionalo del listado inferior y da clic en el botón Crear. Puedes seleccionar más de un Puesto a la vez.',
+        'outenterprise'        => 'Sin Empresa',
+        'outmark'              => 'Sin Marca',
+        'outdirection'         => 'Sin Dirección',
+        'outarea'              => 'Sin Área',
+        'outdepartment'        => 'Sin Departamento',
+        'outjobposition'       => 'Sin Puesto',
+        'outlevel'             => 'Sin Nivel',
+        'outboss'              => 'Sin Jefe',
     ],
 
     /*
@@ -416,7 +429,7 @@ return [
      * |-----------------------
      */
     'ma' => [
-        'jobpositioncatalog'  => 'Catalogo de Puestos',
+        'jobpositioncatalog'  => 'Catálogo de Puestos',
         'structure'           => 'Estructura',
         'mark'                => 'Marcas',
         'direction'           => 'Direcciones',

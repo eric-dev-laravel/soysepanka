@@ -70,17 +70,27 @@
 
                                 <div class="box-body">
 
-                                    <div class="form-group col-md-6">
-                                        <label for="id_enterprise">{{ trans('message.datatables_headers.mark') }}</label>
-                                        <select class="form-control" id="id_mark" name="id_mark">
-                                            <option value="">Sin marca</option>
-                                            @foreach ($enterprises as $enterprises)
-                                                <option value="{{ $enterprises->id }}">{{  $enterprises->name   }}</option>
+                                    {{--<div class="form-group col-md-6">
+                                        <label for="id_enterprise">{{ trans('message.datatables_headers.enterprise') }}</label>
+                                        <select class="form-control" id="id_enterprise" name="id_enterprise">
+                                            <option value="">Sin Empresa</option>
+                                            @foreach ($data['enterprises'] as $enterprise)
+                                                <option value="{{ $enterprise->id }}">{{  $enterprise->name   }}</option>
                                             @endforeach
                                         </select>
                                     </div>
 
                                     <div class="form-group col-md-6">
+                                        <label for="id_enterprise">{{ trans('message.datatables_headers.mark') }}</label>
+                                        <select class="form-control" id="id_mark" name="id_mark">
+                                            <option value="">Sin Marca</option>
+                                            @foreach ($data['marks'] as $mark)
+                                                <option value="{{ $mark->id }}">{{  $mark->name   }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>--}}
+
+                                    <div class="form-group col-md-12">
                                         <label for="nombre">{{ trans('message.datatables_headers.direction') }}</label>
                                         <input type="text" required class="form-control" id="name" name="name" placeholder="{{ trans('message.form_employee_holder.direction') }}">
                                     </div>
@@ -146,8 +156,36 @@
 
 @section('main-script')
     <script type="text/javascript">
+
         setTimeout(function() {
             $('#success-alert').fadeOut('fast');
         }, 5000); // <-- time in milliseconds
+
+        /*$('#id_enterprise').change(function(){
+            var id = $(this).val();
+            getMarks(id);
+        });
+
+        function getMarks(id){
+            $.ajax({
+                url: "{{url('marks')}}/"+id,
+                Type:'GET',
+                success: function(result){
+
+                    $('#id_mark').empty();
+                    $('#id_mark').append($('<option>', {
+                        value: '',
+                        text : 'Sin Marca'
+                    }));
+                    $.each(result, function(i, item){
+                        $('#id_mark').append($('<option>', {
+                            value: item.id,
+                            text : item.name
+                        }));
+                    })
+
+                }
+            });
+        }*/
     </script>
 @endsection

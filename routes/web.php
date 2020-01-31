@@ -68,12 +68,15 @@ Route::group(['middleware' => 'auth'], function () {
     //JobPositionsCatalog
     Route::resource('admin-jobpositionscatalog', 'Administracion\AdminJobPositionsCatalog');
     Route::get('jobpositionscatalog', ['uses'=>'Administracion\AdminJobPositionsCatalog@listJobPositionsCatalog', 'as'=>'jobpositionscatalog.list']);
+    Route::get('jobpositionscatalog-select', ['uses'=>'Administracion\AdminJobPositionsCatalog@listJobPositionsCatalogSelect', 'as'=>'jobpositionscatalog.select.list']);
     Route::get('active-jobpositioncatalog/{id}', ['uses'=>'Administracion\AdminJobPositionsCatalog@activeJobPositionCatalog', 'as'=>'active.jobpositioncatalog']);
     //JobPositions
     Route::resource('admin-jobpositions', 'Administracion\AdminJobPositions');
     Route::get('jobpositions', ['uses'=>'Administracion\AdminJobPositions@listJobPositions', 'as'=>'jobpositions.list']);
     Route::get('active-jobposition/{id}', ['uses'=>'Administracion\AdminJobPositions@activeJobPosition', 'as'=>'active.jobposition']);
 
+    //Combos
+    Route::get('bosses/{id}','Administracion\AdminEmployees@bosses')->name('bosses');
     /*
     |--------------------------------------------------------------------------
     | Comunicacion Interna Routes

@@ -51,7 +51,6 @@ class AdminEnterprises extends Controller
 
     public function store(Request $request){
         $data = request()->except(['_token', '_method']);
-
         try {
             DB::beginTransaction();
                 Enterprise::create($data);
@@ -59,9 +58,8 @@ class AdminEnterprises extends Controller
         } catch (\PDOException $e) {
             DB::rollBack();
             $errorsMessage = [
-                'fullMessage' => $e->getMessage(),
+                'fullMessage' => $e->errorInfo[2],
             ];
-
             return Redirect::back()->withErrors($errorsMessage);
         }
 
@@ -86,7 +84,7 @@ class AdminEnterprises extends Controller
         } catch (\PDOException $e) {
             DB::rollBack();
             $errorsMessage = [
-                'fullMessage' => $e->getMessage(),
+                'fullMessage' => $e->errorInfo[2],
             ];
 
             return Redirect::back()->withErrors($errorsMessage);
@@ -130,7 +128,7 @@ class AdminEnterprises extends Controller
 
     public function listEnterprises(Request $request){
         if ($request->ajax()) {
-            $data = Enterprise::withTrashed()->get();
+            $data = Enterprise::withTrashed()->orderBy('name', 'asc')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
