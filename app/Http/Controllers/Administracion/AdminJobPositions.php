@@ -47,21 +47,6 @@ class AdminJobPositions extends Controller
     }
 
     public function create(){
-        /*$enterprises = Mark::withTrashed()->get();
-        $directions = Direction::withTrashed()->get();
-        $areas = Area::withTrashed()->get();
-        $departments = Department::withTrashed()->get();
-        $levels_positions = hierarchical_levels_positions::orderByRaw('level ASC')->get();
-        $list_jobpositions = JobPosition::withTrashed()->orderByRaw('id_level DESC')->get();
-        $data = [
-            'enterprises' => $enterprises,
-            'directions' => $directions,
-            'areas' => $areas,
-            'departments' => $departments,
-            'levels_positions' => $levels_positions,
-            'list_jobpositions' => $list_jobpositions,
-        ];*/
-        //return view('administracion.jobpositions.create', compact(['data']));
         return view('administracion.jobpositions.create');
     }
 
@@ -107,7 +92,7 @@ class AdminJobPositions extends Controller
         $marital_status = MaritalStatus::orderByRaw('name ASC')->get();
         $workshifts = WorkShift::orderByRaw('name ASC')->get();
         $levels_positions = hierarchical_levels_positions::orderByRaw('level ASC')->get();
-        $list_jobpositions = JobPosition::withTrashed()->where('id', '!=', $id)->orderBy('name', 'DESC')->get();
+        $list_jobpositions = JobPosition::withTrashed()->where('id', '!=', $id)->orderBy('name', 'ASC')->get();
         $jobpositionlanguaje = JobPositionLanguaje::where('id_jobposition', '=', $id)->get();
 
         $data = [
@@ -196,7 +181,7 @@ class AdminJobPositions extends Controller
 
     public function listJobPositions(Request $request){
         if ($request->ajax()) {
-            $data = JobPosition::withTrashed()->get();
+            $data = JobPosition::withTrashed()->orderBy('name', 'ASC')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('id_mark', function($row){

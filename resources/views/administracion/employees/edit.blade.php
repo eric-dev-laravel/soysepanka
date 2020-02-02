@@ -190,10 +190,10 @@
                                                     if(!empty($position->department->name))
                                                         $department = $position->department->name;
                                                 ?>
-                                                @if($position->name == $data['employee'][0]->puesto)
-                                                    <option selected value="{{ $position->name }}">{{  $enterprise.' / '.$mark.' / '.$direction.' / '.$area.' / '.$department.' / '.$position->name }}</option>
+                                                @if($position->name == $data['employee'][0]->puesto && $position->department->name == $data['employee'][0]->departamento)
+                                                    <option selected value="{{ $enterprise.','.$mark.','.$direction.','.$area.','.$department.','.$position->name }}">{{  $enterprise.' / '.$mark.' / '.$direction.' / '.$area.' / '.$department.' / '.$position->name }}</option>
                                                 @else
-                                                    <option value="{{ $position->name }}">{{  $enterprise.' / '.$mark.' / '.$direction.' / '.$area.' / '.$department.' / '.$position->name }}</option>
+                                                    <option value="{{ $enterprise.','.$mark.','.$direction.','.$area.','.$department.','.$position->name }}">{{  $enterprise.' / '.$mark.' / '.$direction.' / '.$area.' / '.$department.' / '.$position->name }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
@@ -615,19 +615,26 @@
 
         $(document).ready(function(){
             var id = $('#puesto').val();
-            getInfoJobPosition(id);
+            var index = id.split(',');
+            var jobPosition = index[5];
+            var department = index[4];
+            getInfoJobPosition(jobPosition, department);
         });
 
         $('#puesto').change(function(){
             var id = $(this).val();
-            getBoss(id);
+            var index = id.split(',');
+            var jobPosition = index[5];
+            var department = index[4];
+            getBoss(jobPosition, department);
         });
 
-        function getBoss(id){
+        function getBoss(id, id_department){
             $.ajax({
-                url: "{{url('bosses')}}/"+id,
+                url: "{{url('bosses')}}/"+id+"/"+id_department,
                 Type:'GET',
                 success: function(result){
+                    console.log(id_department);
                     $('#jefe').empty();
                     document.getElementById('idempresa').value = '';
                     document.getElementById('empresa').value = '';
@@ -667,9 +674,9 @@
             });
         }
 
-        function getInfoJobPosition(id){
+        function getInfoJobPosition(id, id_department){
             $.ajax({
-                url: "{{url('bosses')}}/"+id,
+                url: "{{url('bosses')}}/"+id+"/"+id_department,
                 Type:'GET',
                 success: function(result){
                     document.getElementById('idempresa').value = '';

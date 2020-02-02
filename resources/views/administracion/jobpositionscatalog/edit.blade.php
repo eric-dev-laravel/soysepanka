@@ -238,12 +238,12 @@
 
                                     <div class="form-group col-md-8">
                                         <label for="nombre">{{ trans('message.datatables_headers.education_level') }}</label>
-                                        <input type="text" required class="form-control" id="education_level" name="education_level" value="{{ $data['jobposition'][0]->education_level }}" placeholder="{{ trans('message.form_employee_holder.position') }}">
+                                        <input type="text" class="form-control" id="education_level" name="education_level" value="{{ $data['jobposition'][0]->education_level }}" placeholder="{{ trans('message.form_employee_holder.position') }}">
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <label for="nombre">{{ trans('message.datatables_headers.years_experience') }}</label>
-                                        <input type="text" required class="form-control" id="years_experience" name="years_experience" value="{{ $data['jobposition'][0]->years_experience }}" placeholder="{{ trans('message.form_employee_holder.position') }}">
+                                        <input type="text" class="form-control" id="years_experience" name="years_experience" value="{{ $data['jobposition'][0]->years_experience }}" placeholder="{{ trans('message.form_employee_holder.position') }}">
                                     </div>
 
                                     <div class="form-group col-md-5">

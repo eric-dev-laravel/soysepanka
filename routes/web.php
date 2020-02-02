@@ -76,7 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('active-jobposition/{id}', ['uses'=>'Administracion\AdminJobPositions@activeJobPosition', 'as'=>'active.jobposition']);
 
     //Combos
-    Route::get('bosses/{id}','Administracion\AdminEmployees@bosses')->name('bosses');
+    Route::get('bosses/{id}/{id_department}','Administracion\AdminEmployees@bosses')->name('bosses');
     /*
     |--------------------------------------------------------------------------
     | Comunicacion Interna Routes

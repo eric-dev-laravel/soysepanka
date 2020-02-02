@@ -47,7 +47,7 @@
                         <a href="#"><i class="fa fa-building"></i> {{ trans('message.ma.structure') }} <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                         <ul class="treeview-menu" style="display: none;">
                             <li><a href="{{ url('admin-enterprises') }}"><i class='fa fa-university'></i> {{ trans('message.ma.company') }}</a></li>
-                            <li><a href="{{ url('admin-marks') }}"><i class='fa fa-arrows'></i> {{ trans('message.ma.mark') }}</a></li>
+                            <li><a href="{{ url('admin-marks') }}"><i class='fa fa-bookmark'></i> {{ trans('message.ma.mark') }}</a></li>
                             <li><a href="{{ url('admin-directions') }}"><i class='fa fa-arrows'></i> {{ trans('message.ma.direction') }}</a></li>
                             <li><a href="{{ url('admin-areas') }}"><i class='fa fa-pie-chart'></i> {{ trans('message.ma.area') }}</a></li>
                             <li><a href="{{ url('admin-departments') }}"><i class='fa fa-briefcase'></i> {{ trans('message.ma.department') }}</a></li>

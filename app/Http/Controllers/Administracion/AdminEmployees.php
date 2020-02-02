@@ -106,22 +106,62 @@ class AdminEmployees extends Controller
 
     public function edit($id){
         $employee = Employee::withTrashed()->where('id', '=', $id)->get();
-        $infoPositionBoss = JobPosition::withTrashed()->where('name', $employee[0]->puesto)->get();
-        $bosses = Employee::withTrashed()->where('puesto', $infoPositionBoss[0]->bossPosition->name)->get();
-        $list_jobpositions = JobPosition::withTrashed()->orderBy('id_level', 'asc')->get();
-        $data = [
-            'employee' => $employee,
-            'list_jobpositions' => $list_jobpositions,
-            'bosses' => $bosses,
-        ];
+        $list_jobpositions = JobPosition::withTrashed()->orderBy('name', 'asc')->get();
+        if(JobPosition::withTrashed()->where('name', $employee[0]->puesto)->exists()){
+            if(JobPosition::withTrashed()->where('name', $employee[0]->puesto)->count() > 1){
+                $id_department = $employee[0]->departamento;
+                $infoPositionBoss = JobPosition::withTrashed()->where('name', $employee[0]->puesto)->whereHas('department', function($query) use($id_department){
+                    $query->where('name', $id_department);
+                })->get();
+            } else {
+                $infoPositionBoss = JobPosition::withTrashed()->where('name', $employee[0]->puesto)->get();
+            }
+            
+            if(!empty($infoPositionBoss[0]->bossPosition)){
+                $bosses = Employee::withTrashed()->where('puesto', $infoPositionBoss[0]->bossPosition->name)->get();
+            } else {
+                $bosses = [];
+            }
+            $data = [
+                'employee' => $employee,
+                'list_jobpositions' => $list_jobpositions,
+                'bosses' => $bosses,
+            ];
+        } else {
+            $bosses = [];
+            $data = [
+                'employee' => $employee,
+                'list_jobpositions' => $list_jobpositions,
+                'bosses' => $bosses,
+            ];
+        }
         return view('administracion.employees.edit', compact(['data']));
     }
 
     public function update(Request $request, $id){
         $data = request()->except(['_token', '_method']);
+        
+        if(!empty($data['puesto'])){
+            $jobPositionInfo = explode(',', $data['puesto']);
+            $enterprise = $jobPositionInfo[0];
+            $mark = $jobPositionInfo[1];
+            $direction = $jobPositionInfo[2];
+            $area = $jobPositionInfo[3];
+            $department = $jobPositionInfo[4];
+            $jobPosition = $jobPositionInfo[5];
+
+            $data = array_add($data, 'empresa', $enterprise);
+            $data = array_add($data, 'marca', $mark);
+            $data = array_add($data, 'direccion', $direction);
+            $data = array_add($data, 'departamento', $department);
+            $data = array_add($data, 'seccion', $area);
+            $data['puesto'] = $jobPosition;
+        }
+        
         try {
             DB::beginTransaction();
                 Employee::withTrashed()->whereId($id)->update($data);
+                //dd($data);
             DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
@@ -151,10 +191,21 @@ class AdminEmployees extends Controller
         return redirect('admin-employees/'.$id.'/edit')->with('success','Ok');
     }
 
-    public function bosses($id){
-        $jobPosition = JobPosition::where('name', $id)->get();
-        $jobPositionBoss = JobPosition::where('id', $jobPosition[0]['id_boss_position'])->get();
-        $bosses = Employee::select('id','nombre', 'paterno', 'materno')->where('puesto', $jobPositionBoss[0]['name'])->orderBy('nombre', 'ASC')->get();
+    public function bosses($id, $id_department){
+        if(JobPosition::where('name', $id)->count() > 1){
+            $jobPosition = JobPosition::where('name', $id)->whereHas('department', function($query) use($id_department){
+                $query->where('name', $id_department);
+            })->get();
+        } else {
+            $jobPosition = JobPosition::where('name', $id)->get();
+        }
+        
+        if(!empty($jobPosition[0]['id_boss_position'])){
+            $jobPositionBoss = JobPosition::where('id', $jobPosition[0]['id_boss_position'])->get();
+            $bosses = Employee::select('id','nombre', 'paterno', 'materno')->where('puesto', $jobPositionBoss[0]['name'])->orderBy('nombre', 'ASC')->get();
+        } else {
+            $bosses = [];
+        }
 
         $id_enterprise = 'Sin IDEmpresa'; 
         $enterprise = 'Sin Empresa'; 
