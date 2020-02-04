@@ -41,7 +41,7 @@
     @endif
     <div class="row">
         <div class="col-md-12">
-        
+
                 <div class="box box-primary box-solid">
 
                     <div class="box-header with-border">
@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="box-body">
-                        
+
                         <div class="row col-md-3 col-sm-12 col-md-offset-2">
                             @if($data['employee'][0]->isUser)
                                 <button type="button" disabled class="btn btn-block btn-primary" onclick="window.location.href = '{{ url('create-user-from-employee/'.$data['employee'][0]->id.'') }}';"><i class="fa fa-key"></i> {{ trans('message.buttons.makeaccess') }}</button>
@@ -57,7 +57,7 @@
                                 <button type="button" class="btn btn-block btn-primary" onclick="window.location.href = '{{ url('create-user-from-employee/'.$data['employee'][0]->id.'') }}';"><i class="fa fa-key"></i> {{ trans('message.buttons.makeaccess') }}</button>
                             @endif
                         </div>
-                        
+
                         <div class="row col-md-3 col-sm-12 col-md-offset-2">
                             @if($data['employee'][0]->deleted_at)
                                 <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-active-employee"><i class="fa fa-check-square"></i> {{ trans('message.buttons.active') }}</button>
@@ -65,7 +65,7 @@
                                 <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#modal-unactive-employee"><i class="fa fa-minus-square"></i> {{ trans('message.buttons.unactive') }}</button>
                             @endif
                         </div>
-                    
+
                     </div>
 
                 </div>
@@ -166,14 +166,13 @@
                                 </div>
 
                                 <div class="box-body">
-
                                     <div class="form-group col-md-12">
                                         <label for="puesto">{{ trans('message.datatables_headers.position') }}</label>
                                         {{--<input type="text" class="form-control" id="puesto" name="puesto" value="{{ $data['employee'][0]->puesto }}" placeholder="{!! trans('message.form_employee_holder.position') !!}">--}}
                                         <select class="form-control" id="puesto" name="puesto">
                                             <option value="">{{ trans('message.datatables_headers.outjobposition') }}</option>
                                             @foreach ($data['list_jobpositions'] as $position)
-                                                <?php 
+                                                <?php
                                                     $enterprise = "Sin Empresa";
                                                     $mark = "Sin Marca";
                                                     $direction = "Sin Dirección";
@@ -190,6 +189,7 @@
                                                     if(!empty($position->department->name))
                                                         $department = $position->department->name;
                                                 ?>
+
                                                 @if($position->name == $data['employee'][0]->puesto && $position->department->name == $data['employee'][0]->departamento)
                                                     <option selected value="{{ $enterprise.','.$mark.','.$direction.','.$area.','.$department.','.$position->name }}">{{  $enterprise.' / '.$mark.' / '.$direction.' / '.$area.' / '.$department.' / '.$position->name }}</option>
                                                 @else
@@ -566,7 +566,7 @@
                             <h4 class="modal-title">{{ trans('message.modals.alert') }}</h4>
                         </div>
 
-                        <div class="modal-body">                                
+                        <div class="modal-body">
                             {{ trans('message.modals.dangermessageemployee') }}
                             {{ trans('message.modals.questioncontinue') }}
                         </div>
@@ -590,7 +590,7 @@
                             <h4 class="modal-title">{{ trans('message.modals.alert') }}</h4>
                         </div>
 
-                        <div class="modal-body">                                
+                        <div class="modal-body">
                             {{ trans('message.modals.warningmessageemployee') }}
                             {{ trans('message.modals.questioncontinue') }}
                         </div>
@@ -670,7 +670,7 @@
                     document.getElementById('direccion').value = '';
                     document.getElementById('seccion').value = '';
                     document.getElementById('departamento').value = '';
-                } 
+                }
             });
         }
 
@@ -702,7 +702,7 @@
                     document.getElementById('direccion').value = '';
                     document.getElementById('seccion').value = '';
                     document.getElementById('departamento').value = '';
-                } 
+                }
             });
         }
     </script>

@@ -528,4 +528,34 @@ return [
 
         'birthdayMessage'     => 'Esta pantalla muestra a las personas que celebrearán su cumpleaños a partir de hoy y durante los próximos 30 días.',
     ],
+
+    /*
+     * |------------------------
+     * | ADMINISTRACION
+     * |-----------------------
+     */
+    'ex' => [
+        'record_title'  => 'Expediente Personal',
+        'tab1'           => 'Básica',
+        'tab2'           => 'Complementaria',
+        'tab3'           => 'En trámite',
+        'tab4'           => 'Regístro',
+        'tab5'           => 'Nóminas',
+        'tab6'           => 'Incidencias',
+        'tab7'           => 'Disciplinarios',
+        'tab8'           => 'Estadísticas',
+        'tab9'           => 'Salud',
+        'tab10'          => 'Beneficiarios',
+
+        'phone_number'   => 'Número de Celular',
+        'home_number'    => 'Numero de Teléfono Fijo',
+        'email'          => 'Correo Electrónico',
+        'gender'         => 'Sexo',
+        'birthday'       => 'Fecha de Nacimiento',
+        'rfc'            => 'RFC',
+
+        'alert'          => 'Alerta',
+        'alert_title1'   => 'No se encontro un Expediente',
+        'alert_msg1'     => 'Posiblemente el usuario con el que se encuentra logueado en la plataforma no se encuentre vinculado con un empleado. Contacte a su Administrador',
+    ],
 ];

@@ -116,7 +116,7 @@ class AdminEmployees extends Controller
             } else {
                 $infoPositionBoss = JobPosition::withTrashed()->where('name', $employee[0]->puesto)->get();
             }
-            
+
             if(!empty($infoPositionBoss[0]->bossPosition)){
                 $bosses = Employee::withTrashed()->where('puesto', $infoPositionBoss[0]->bossPosition->name)->get();
             } else {
@@ -135,12 +135,13 @@ class AdminEmployees extends Controller
                 'bosses' => $bosses,
             ];
         }
+        //dd($data);
         return view('administracion.employees.edit', compact(['data']));
     }
 
     public function update(Request $request, $id){
         $data = request()->except(['_token', '_method']);
-        
+
         if(!empty($data['puesto'])){
             $jobPositionInfo = explode(',', $data['puesto']);
             $enterprise = $jobPositionInfo[0];
@@ -157,7 +158,7 @@ class AdminEmployees extends Controller
             $data = array_add($data, 'seccion', $area);
             $data['puesto'] = $jobPosition;
         }
-        
+
         try {
             DB::beginTransaction();
                 Employee::withTrashed()->whereId($id)->update($data);
@@ -199,7 +200,7 @@ class AdminEmployees extends Controller
         } else {
             $jobPosition = JobPosition::where('name', $id)->get();
         }
-        
+
         if(!empty($jobPosition[0]['id_boss_position'])){
             $jobPositionBoss = JobPosition::where('id', $jobPosition[0]['id_boss_position'])->get();
             $bosses = Employee::select('id','nombre', 'paterno', 'materno')->where('puesto', $jobPositionBoss[0]['name'])->orderBy('nombre', 'ASC')->get();
@@ -207,9 +208,9 @@ class AdminEmployees extends Controller
             $bosses = [];
         }
 
-        $id_enterprise = 'Sin IDEmpresa'; 
-        $enterprise = 'Sin Empresa'; 
-        $mark = 'Sin Marca'; 
+        $id_enterprise = 'Sin IDEmpresa';
+        $enterprise = 'Sin Empresa';
+        $mark = 'Sin Marca';
         $direction = 'Sin dirección';
         $area = 'Sin Área';
         $department = 'Sin Departamento';

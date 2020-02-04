@@ -127,13 +127,13 @@
                                 <img src="{{ Gravatar::get($user->email) }}" class="img-circle" alt="User Image" />
                                 <p>
                                     <span data-toggle="tooltip" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</span>
-                                    <small>{{ trans('message.login') }} Nov. 2012</small>
+                                    <!--<small>{{ trans('message.login') }} Nov. 2012</small>-->
                                 </p>
                             </li>
                             <!-- Menu Body -->
                             <li class="user-body">
                                 <div class="col-xs-12 text-center">
-                                    <a href="#">{{ trans('message.proceedings') }}</a>
+                                    <button type="button" onclick="location.href='{{ url('records') }}';" class="btn bg-olive btn-flat margin">{{ trans('message.proceedings') }}</button>
                                 </div>
                                 <!--<div class="col-xs-4 text-center">
                                     <a href="#">{{ trans('message.sales') }}</a>

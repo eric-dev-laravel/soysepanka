@@ -79,6 +79,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('bosses/{id}/{id_department}','Administracion\AdminEmployees@bosses')->name('bosses');
     /*
     |--------------------------------------------------------------------------
+    | Expediente
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('records', 'Expediente\RecordController');
+    /*
+    |--------------------------------------------------------------------------
     | Comunicacion Interna Routes
     |--------------------------------------------------------------------------
     */
