@@ -116,6 +116,10 @@ class RecordController extends Controller
                     Record::withTrashed()->where('id_employee', $id)->update(array(
                         'picture' => $path,
                     ));
+
+                    User::withTrashed()->where('id_employee', $id)->update(array(
+                        'picture' => $path,
+                    ));
                 } catch (\PDOException $e) {
                     DB::rollBack();
                     $errorsMessage = [

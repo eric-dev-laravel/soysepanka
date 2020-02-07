@@ -8,7 +8,11 @@
         @if (! Auth::guest())
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="Gravatar::get($user->email)  }}" class="img-circle" alt="User Image" />
+                    @if (empty($user->picture))
+                        <img class="img-circle" src="{{ asset('img/record/user.png') }}" alt="User Avatar">
+                    @else
+                        <img class="img-circle" src="{{ asset($user->url_path) }}" alt="User Avatar">
+                    @endif
                 </div>
                 <div class="pull-left info">
                     <p style="overflow: hidden;text-overflow: ellipsis;max-width: 160px;" data-toggle="tooltip" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</p>

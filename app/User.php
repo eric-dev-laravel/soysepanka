@@ -49,9 +49,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'id_employee', 'name', 'email', 'password',
-    ];
+    protected $fillable = ['id_employee', 'name', 'email', 'password', 'picture'];
 
     protected $dates = ['created_at, updated_at, deleted_at'];
 
@@ -75,5 +73,9 @@ class User extends Authenticatable
 
     public function isEmployee(){
         return $this->belongsTo(Employee::class, 'id_employee', 'id');
+    }
+
+    public function getUrlPathAttribute(){
+        return \Storage::url($this->picture);
     }
 }

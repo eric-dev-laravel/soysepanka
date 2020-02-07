@@ -117,14 +117,22 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="max-width: 280px;white-space: nowrap;overflow: hidden;overflow-text: ellipsis">
                             <!-- The user image in the navbar-->
-                            <img src="{{ Gravatar::get($user->email) }}" class="user-image" alt="User Image"/>
+                            @if (empty($user->picture))
+                                <img class="img-circle" src="{{ asset('img/record/user.png') }}" alt="User Image" style="max-height: 20px;">
+                            @else
+                                <img class="img-circle" src="{{ asset($user->url_path) }}" alt="User Image" style="max-height: 20px;">
+                            @endif
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs" data-toggle="tooltip" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="{{ Gravatar::get($user->email) }}" class="img-circle" alt="User Image" />
+                                @if (empty($user->picture))
+                                    <img class="img-circle" src="{{ asset('img/record/user.png') }}" alt="User Image">
+                                @else
+                                    <img class="img-circle" src="{{ asset($user->url_path) }}" alt="User Image">
+                                @endif
                                 <p>
                                     <span data-toggle="tooltip" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</span>
                                     <!--<small>{{ trans('message.login') }} Nov. 2012</small>-->
