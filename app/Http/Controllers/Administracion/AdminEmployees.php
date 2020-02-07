@@ -14,6 +14,7 @@ use App\Models\Administracion\Department;
 use App\Models\Administracion\JobPosition;
 use App\Models\Administracion\JobPositionCatalog;
 use App\Models\Administracion\ProcessedFiles;
+use App\Models\Expediente\Record;
 use Yajra\Datatables\Datatables;
 use DB;
 use Redirect;
@@ -52,6 +53,7 @@ class AdminEmployees extends Controller
         $this->keyForOrigin = env('KEYFORORIGIN');
         $this->keyOrigin = env('KEYORIGIN');
 
+        $this->createRecords = true;
         $this->createEnterprise = env('KEY_ENTERPRISE');
         $this->createMark = env('KEY_MARK');
         $this->createDirection = env('KEY_DIRECTION');
@@ -88,15 +90,26 @@ class AdminEmployees extends Controller
         //dd($data);
         try {
             DB::beginTransaction();
-                Employee::create($data);
+            $employee = Employee::create($data);
+            if (! Record::where('id_employee', $employee->id)->exists()){
+                try {
+                    Record::create(array(
+                        'id_employee' => $employee->id,
+                    ));
+                } catch (\PDOException $e) {
+                    DB::rollBack();
+                    $errorsMessage = [
+                        'fullMessage' => $e->getMessage(),
+                    ];
+                    return Redirect::back()->withErrors($errorsMessage);
+                }
+            }
             DB::commit();
         } catch (\PDOException $e) {
-            dd($e);
             DB::rollBack();
             $errorsMessage = [
                 'fullMessage' => $e->getMessage(),
             ];
-
             return Redirect::back()->withErrors($errorsMessage);
         }
         return redirect('admin-employees/create')->with('success','Ok');
@@ -362,10 +375,31 @@ class AdminEmployees extends Controller
                     try {
                         DB::beginTransaction();
                         //dd($new);
-                            Employee::create($new);
+                            $employee = Employee::create($new);
                             $array_rfc = array_add($array_rfc, $i, $new[$this->keyForEmployee]);
                             $created++;
                         DB::commit();
+
+                        //Crear Expedientes sino existen
+                        if($this->createRecords) {
+                            if (! Record::where('id_employee', $employee->id)->exists()){
+                                try {
+                                    DB::beginTransaction();
+                                        Record::create(array(
+                                            'id_employee' => $employee->id,
+                                        ));
+
+                                    DB::commit();
+                                } catch (\PDOException $e) {
+                                    DB::rollBack();
+                                    $array_fail_info = [
+                                        'records' => $employee->rfc,
+                                        'msg'  => $e->getMessage(),
+                                    ];
+                                    $employees_fail = array_add($employees_fail, $i, $array_fail_info);
+                                }
+                            }
+                        }
 
                         //Crear Empresas sino existen
                         if($this->createEnterprise) {

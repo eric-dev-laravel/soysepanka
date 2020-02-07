@@ -557,5 +557,55 @@ return [
         'alert'          => 'Alerta',
         'alert_title1'   => 'No se encontro un Expediente',
         'alert_msg1'     => 'Posiblemente el usuario con el que se encuentra logueado en la plataforma no se encuentre vinculado con un empleado. Contacte a su Administrador',
+
+        'address_title'  => 'Domicilio Actual',
+        'street'         => 'Calle',
+        'external_number'=> 'No. Exterior',
+        'internal_number'=> 'No. Interior',
+        'postal_number'  => 'Código Postal',
+        'city'           => 'Ciudad',
+        'state'          => 'Estado',
+        'proof_address'  => 'Comprobante de Domicilio',
+        'search'         => 'Examinar',
+        'msg1'           => 'Si solamente subió curriculum vitae, favor de llenar los datos.',
+
+        'education_title'=> 'Formación',
+        'msg2'           => 'Favor de anotar todos los estudios que hayas realizado desde la educación básica.',
+        'especiality'    => 'Área de especialización',
+        'level'          => 'Máximo Nivel de Estudio Alcanzado',
+        'education_center'=> 'Centro de Estudios',
+        'period'         => 'Periodo',
+        'proof_education'=> 'Constancia',
+
+        'otherKnowledge_title'=> 'Otros Conocimientos',
+        'my_tools'         => 'Maquinaria y Equipos que manejo',
+        'my_programs'      => 'Programas y sistemas que Utilizo',
+        'my_functions'     => 'Funciones de Oficina que Domino',
+        'language'         => 'Idiomas',
+
+        'otherjobs_title'  => 'Antecedentes Laborales',
+        'msg3'             => 'Agregar al menos los últimos dos empleos.',
+        'jobposition'      => 'Puesto Ocupado',
+        'enterprise'       => 'Empresa / Domicilio',
+        'salary'           => 'Sueldo',
+        'separation'       => 'Motivo de la Separación',
+        'my_activities'    => 'Descripción de las Actividades Realizadas',
+
+        'references_title' => 'Referencias',
+        'name'             => 'Nombre',
+        'telephone'        => 'Teléfono',
+        'time'             => 'Tiempo de conocerla',
+        'ocupation'        => 'Ocupación',
+
+        'family_title'     => 'Familiares en la Empresa',
+        'msg4'             => 'Si tiene parientes trabajando en la empresa capture el nombre.',
+        'typeFamily'       => 'Parentesco',
+
+        'available_title'  => 'Disponibilidad',
+        'available'        => 'Describa si puede Viaja, Cambiar de Recidencia, Doblar Turno, etc.',
+
+        'syndicated_title' => 'Sindicato',
+        'msg5'             => 'Si has estado sindicalizado favor de anotar el nombre de las Organizaciones.',
+        'organization'     => 'Organización'
     ],
 ];

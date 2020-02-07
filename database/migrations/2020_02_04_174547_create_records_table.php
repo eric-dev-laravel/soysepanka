@@ -15,6 +15,9 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('id_employee')->nullable();
+            $table->integer('id_user')->nullable();
+            $table->string('picture')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -83,6 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('records', 'Expediente\RecordController');
+    Route::post('records-update-image-profile/{id}', 'Expediente\RecordController@updateUserProfilePicture');
     /*
     |--------------------------------------------------------------------------
     | Comunicacion Interna Routes

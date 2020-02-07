@@ -70,36 +70,6 @@
 
                                 <div class="box-body">
 
-                                    {{--<div class="form-group col-md-6">
-                                        <label for="id_enterprise">{{ trans('message.datatables_headers.mark') }}</label>
-                                        <select class="form-control" id="id_mark" name="id_mark">
-                                            <option value="">Sin Marca</option>
-                                            @foreach ($data['enterprises'] as $enterprises)
-                                                <option value="{{ $enterprises->id }}">{{  $enterprises->name   }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="id_direction">{{ trans('message.datatables_headers.direction') }}</label>
-                                        <select class="form-control" id="id_direction" name="id_direction">
-                                            <option value="">Sin dirección</option>
-                                            @foreach ($data['directions'] as $direction)
-                                                <option value="{{ $direction->id }}">{{  $direction->name   }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="id_direction">{{ trans('message.datatables_headers.area') }}</label>
-                                        <select class="form-control" id="id_area" name="id_area">
-                                            <option value="">Sin Área</option>
-                                            @foreach ($data['areas'] as $area)
-                                                <option value="{{ $area->id }}">{{  $area->name   }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>--}}
-                                    
                                     <div class="form-group col-md-12">
                                         {{ trans('message.datatables_headers.instructionsOfAddJobPositions') }}
                                     </div>

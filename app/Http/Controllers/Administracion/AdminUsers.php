@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Models\Administracion\Employee;
+use App\Models\Expediente\Record;
 use Yajra\Datatables\Datatables;
 use DB;
 use Redirect;
@@ -58,7 +59,7 @@ class AdminUsers extends Controller
             if($password === $retrypassword){
                 try {
                     DB::beginTransaction();
-                        User::create(array(
+                        $user = User::create(array(
                             'id_employee' => $idemployee,
                             'name'        => $data['name'],
                             'email'       => $data['email'],
@@ -89,12 +90,18 @@ class AdminUsers extends Controller
             if($password === $retrypassword){
                 try {
                     DB::beginTransaction();
-                        User::create(array(
+                    $user = User::create(array(
                             'id_employee' => $idemployee,
                             'name'        => $name,
                             'email'       => $email,
                             'password'    => bcrypt($password),
                         ));
+
+                        if(!is_null($idemployee)){
+                            Record::withTrashed()->where('id_employee', $idemployee)->update(array(
+                                'id_user' => $user->id,
+                            ));
+                        }
                     DB::commit();
                 } catch (\PDOException $e) {
                     DB::rollBack();

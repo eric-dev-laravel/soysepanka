@@ -3,7 +3,15 @@
 
         <div class="col-md-12">
             <div class="col-md-3">
-                <img class="img-circle" src="{{ asset('img/record/user.png') }}" alt="User Avatar" style="max-height: 222px;">
+
+                <div class="col-md-12">
+                    @if (empty($data['records_info'][0]->picture))
+                        <img class="img-circle" src="{{ asset('img/record/user.png') }}" alt="User Avatar" style="max-height: 222px;">
+                    @else
+                        <img class="img-circle" src="{{ asset($data['records_info'][0]->url_path) }}" alt="User Avatar" style="max-height: 222px;">
+                    @endif
+                </div>
+
             </div>
             <div class="col-md-8">
                 <div class="form-group col-xs-6 col-md-4">
