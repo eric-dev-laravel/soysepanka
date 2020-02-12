@@ -578,8 +578,8 @@ return [
         'proof_education'=> 'Constancia',
 
         'otherKnowledge_title'=> 'Otros Conocimientos',
-        'my_tools'         => 'Maquinaria y Equipos que manejo',
-        'my_programs'      => 'Programas y sistemas que Utilizo',
+        'my_tools'         => 'Maquinaria y Equipos que Manejo',
+        'my_programs'      => 'Programas y Sistemas que Utilizo',
         'my_functions'     => 'Funciones de Oficina que Domino',
         'language'         => 'Idiomas',
 

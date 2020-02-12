@@ -75,7 +75,9 @@
             </div>
 
         </div>
+
     </div>
+
     <div class="row">
         <form role="form" method="POST" action="{{ route('records.update',$data['employee_info'][0]->id) }}" id="updateRecord" enctype="multipart/form-data">
             {!! method_field('PUT') !!}
@@ -94,45 +96,79 @@
 
                     <div class="form-group col-xs-12 col-md-8">
                         <label for="nombre">{{ trans('message.ex.street') }}</label>
-                        <input type="text" class="form-control" id="street" name="street">
+                        @if (empty($data['records_info'][0]->street))
+                            <input type="text" class="form-control" id="street" name="street">
+                        @else
+                            <input type="text" class="form-control" id="street" name="street" value="{{ $data['records_info'][0]->street }}">
+                        @endif
                     </div>
 
                     <div class="form-group col-xs-6 col-md-2">
                         <label for="nombre">{{ trans('message.ex.external_number') }}</label>
-                        <input type="text" class="form-control" id="external_number" name="external_number">
+                        @if (empty($data['records_info'][0]->external_number))
+                            <input type="text" class="form-control" id="external_number" name="external_number">
+                        @else
+                            <input type="text" class="form-control" id="external_number" name="external_number" value="{{ $data['records_info'][0]->external_number }}">
+                        @endif
                     </div>
 
                     <div class="form-group col-xs-6 col-md-2">
                         <label for="nombre">{{ trans('message.ex.internal_number') }}</label>
-                        <input type="text" class="form-control" id="internal_number" name="internal_number">
+                        @if (empty($data['records_info'][0]->internal_number))
+                            <input type="text" class="form-control" id="internal_number" name="internal_number">
+                        @else
+                            <input type="text" class="form-control" id="internal_number" name="internal_number" value="{{ $data['records_info'][0]->internal_number }}">
+                        @endif
                     </div>
 
                     <div class="form-group col-xs-6 col-md-4">
                         <label for="nombre">{{ trans('message.ex.postal_number') }}</label>
-                        <input type="text" class="form-control" id="postal_number" name="postal_number">
+                        @if (empty($data['records_info'][0]->postal_code))
+                            <input type="text" class="form-control" id="postal_code" name="postal_code">
+                        @else
+                            <input type="text" class="form-control" id="postal_code" name="postal_code" value="{{ $data['records_info'][0]->postal_code }}">
+                        @endif
                     </div>
 
                     <div class="form-group col-xs-6 col-md-4">
                         <label for="nombre">{{ trans('message.ex.city') }}</label>
-                        <input type="text" class="form-control" id="city" name="city">
+                        @if (empty($data['records_info'][0]->city))
+                            <input type="text" class="form-control" id="city" name="city">
+                        @else
+                            <input type="text" class="form-control" id="city" name="city" value="{{ $data['records_info'][0]->city }}">
+                        @endif
                     </div>
 
                     <div class="form-group col-xs-6 col-md-4">
                         <label for="nombre">{{ trans('message.ex.state') }}</label>
-                        <input type="text" class="form-control" id="government" name="government">
+                        @if (empty($data['records_info'][0]->government))
+                            <input type="text" class="form-control" id="government" name="government">
+                        @else
+                            <input type="text" class="form-control" id="government" name="government" value="{{ $data['records_info'][0]->government }}">
+                        @endif
                     </div>
 
                     <div class="form-group col-ms-6 col-md-12">
-                        <label for="exampleInputFile">{{ trans('message.ex.proof_address') }}</label>
-                        <div class="input-group">
-                            <label class="input-group-btn">
-                                <span class="btn btn-success">
-                                <span class="fa fa-folder-open" aria-hidden="true"></span> {{ trans('message.ex.search') }}
-                                <input type="file" name="filesImport[]" id="filesImport" style="display: none;">
-                                </span>
-                            </label>
-                            <input type="text" class="form-control" readonly>
+                        <div class="col-md-9">
+                            <label for="exampleInputFile">{{ trans('message.ex.proof_address') }}</label>
+                            <div class="input-group">
+                                <label class="input-group-btn">
+                                    <span class="btn btn-success">
+                                    <span class="fa fa-folder-open" aria-hidden="true"></span> {{ trans('message.ex.search') }}
+                                    <input type="file" name="filesImport" id="filesImport" style="display: none;">
+                                    </span>
+                                </label>
+                                <input type="text" class="form-control" readonly>
+                            </div>
                         </div>
+
+                        <div class="col-md-3">
+                            @if (!empty($data['records_info'][0]->proof_address))
+                                <label for="exampleInputFile">{{ trans('message.ex.proof_address') }}</label>
+                                <a type="button" href="{{ $data['records_info'][0]->url_path_proof_address }}" target="_blank"class="btn btn-primary"><i class="fa fa-file"></i> Ver </a>
+                            @endif
+                        </div>
+
                     </div>
 
                 </div>
@@ -232,22 +268,38 @@
 
                     <div class="form-group col-md-12">
                         <label for="language">{{ trans('message.ex.language') }}</label>
-                        <input type="text" name="language" id="language" class="form-control">
+                        @if (empty($data['records_info'][0]->myLanguage))
+                            <input type="text" class="form-control" id="myLanguage" name="myLanguage">
+                        @else
+                            <input type="text" class="form-control" id="myLanguage" name="myLanguage" value="{{ $data['records_info'][0]->myLanguage }}">
+                        @endif
                     </div>
 
                     <div class="form-group col-md-12">
                         <label for="nombre">{{ trans('message.ex.my_tools') }}</label>
-                        <textarea class="form-control" rows="4" id="myTools" name="myTools"></textarea>
+                        @if (empty($data['records_info'][0]->myTools))
+                            <textarea class="form-control" rows="4" id="myTools" name="myTools"></textarea>
+                        @else
+                            <textarea class="form-control" rows="4" id="myTools" name="myTools">{{ $data['records_info'][0]->myTools }}</textarea>
+                        @endif
                     </div>
 
                     <div class="form-group col-md-12">
                         <label for="nombre">{{ trans('message.ex.my_programs') }}</label>
-                        <textarea class="form-control" rows="4" id="myPrograms" name="myPrograms"></textarea>
+                        @if (empty($data['records_info'][0]->mySistems))
+                            <textarea class="form-control" rows="4" id="mySistems" name="mySistems"></textarea>
+                        @else
+                            <textarea class="form-control" rows="4" id="mySistems" name="mySistems">{{ $data['records_info'][0]->mySistems }}</textarea>
+                        @endif
                     </div>
 
                     <div class="form-group col-md-12">
                         <label for="nombre">{{ trans('message.ex.my_functions') }}</label>
-                        <textarea class="form-control" rows="4" id="MyFunctions" name="MyFunctions"></textarea>
+                        @if (empty($data['records_info'][0]->myFunctions))
+                            <textarea class="form-control" rows="4" id="myFunctions" name="myFunctions"></textarea>
+                        @else
+                            <textarea class="form-control" rows="4" id="myFunctions" name="myFunctions">{{ $data['records_info'][0]->myFunctions }}</textarea>
+                        @endif
                     </div>
 
                 </div>
@@ -325,22 +377,22 @@
 
                     <div class="form-group col-md-4">
                         <label for="language">{{ trans('message.ex.name') }}</label>
-                        <input type="text" name="referenceName" id="referenceName_c" class="form-control">
+                        <input type="text" name="referenceName1" id="referenceName_c" class="form-control">
                     </div>
 
                     <div class="form-group col-md-2">
                         <label for="language">{{ trans('message.ex.telephone') }}</label>
-                        <input type="text" name="referenceTel" id="referenceTel_c" class="form-control">
+                        <input type="text" name="referenceTel1" id="referenceTel_c" class="form-control">
                     </div>
 
                     <div class="form-group col-md-2">
                         <label for="language">{{ trans('message.ex.time') }}</label>
-                        <input type="text" name="referenceTime" id="referenceTime_c" class="form-control">
+                        <input type="text" name="referenceTime1" id="referenceTime_c" class="form-control">
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="language">{{ trans('message.ex.ocupation') }}</label>
-                        <input type="text" name="referenceOcupation" id="referenceOcupation_c" class="form-control">
+                        <input type="text" name="referenceOcupation1" id="referenceOcupation_c" class="form-control">
                     </div>
 
                     <div class="form-group col-md-1">
@@ -378,7 +430,7 @@
 
                     <div class="form-group col-md-2">
                         <label for="language">{{ trans('message.ex.typeFamily') }}</label>
-                        <select class="form-control" id="familyType_c" name="familyType">
+                        <select class="form-control" id="familyType_c" name="familyType1">
                             <option value="">Ninguno</option>
                             <option value="Padre">Padre</option>
                             <option value="Madre">Madre</option>
@@ -415,7 +467,11 @@
 
                     <div class="form-group col-md-12">
                         <label for="nombre">{{ trans('message.datatables_headers.available') }}</label>
-                        <textarea class="form-control" rows="4" id="available" name="available" placeholder="{{ trans('message.ex.available') }}"></textarea>
+                        @if (empty($data['records_info'][0]->availability))
+                            <textarea class="form-control" rows="4" id="availability" name="availability"></textarea>
+                        @else
+                            <textarea class="form-control" rows="4" id="availability" name="availability">{{ $data['records_info'][0]->availability }}</textarea>
+                        @endif
                     </div>
 
                 </div>

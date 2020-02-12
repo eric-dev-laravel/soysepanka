@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         Storage::deleteDirectory('processed_files');
         Storage::makeDirectory('processed_files');
 
+        Storage::deleteDirectory('employees_proof');
+        Storage::makeDirectory('employees_proof');
+
         factory(\App\Models\Administracion\Role::class, 1)->create(['name' => 'admin']);
         factory(\App\Models\Administracion\Role::class, 1)->create(['name' => 'user']);
         factory(\App\Models\Administracion\Role::class, 1)->create(['name' => 'test']);

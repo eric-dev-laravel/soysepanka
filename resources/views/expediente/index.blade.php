@@ -13,6 +13,32 @@
 @endsection
 
 @section('main-content')
+    @if($errors->any())
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+
+                <h4><i class="icon fa fa-arrows"></i> {{ trans('message.modals.alert') }}</h4>
+                {{ trans('message.modals.alert_message_createuser') }}
+
+                <a href="#" class="small-box-footer pull-right" data-toggle="modal" data-target="#modal-danger">{{ trans('message.modals.moreinfo') }}</i></a>
+            </div>
+
+        </div>
+    </div>
+    @elseif(session()->has('success'))
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="alert alert-success alert-dismissible" id="success-alert">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+
+                <h4><i class="icon fa fa-check"></i> {{ trans('message.modals.alert') }}</h4>
+                {{ trans('message.modals.success_message') }}
+            </div>
+        </div>
+    </div>
+    @endif
     @if (! empty($data['employee_info']))
         <div class="row">
 
@@ -94,32 +120,66 @@
         </div>
     @else
         <div class="row">
-            <div class="col-md-12">
-                <div class="box box-default">
-                  <div class="box-header with-border">
-                    <i class="fa fa-warning"></i>
 
-                    <h3 class="box-title">{{ trans('message.ex.alert') }}</h3>
-                  </div>
-                  <!-- /.box-header -->
-                  <div class="box-body">
-                    <div class="alert alert-danger alert-dismissible">
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                      <h4><i class="icon fa fa-ban"></i> {{ trans('message.ex.alert_title1') }} </h4>
-                      {{ trans('message.ex.alert_msg1') }}
+            <div class="col-md-12">
+
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <i class="fa fa-warning"></i>
+                        <h3 class="box-title">{{ trans('message.ex.alert') }}</h3>
                     </div>
+
+                    <div class="box-body">
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h4><i class="icon fa fa-ban"></i> {{ trans('message.ex.alert_title1') }} </h4>
+                            {{ trans('message.ex.alert_msg1') }}
+                        </div>
                   </div>
-                  <!-- /.box-body -->
                 </div>
-                <!-- /.box -->
-              </div>
+
+            </div>
+
         </div>
     @endif
+
+    <div class="row">
+        <div class="modal modal-danger fade" id="modal-danger" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">{{ trans('message.modals.alert') }}</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        @if($errors->any())
+                            <ul>
+                                @foreach ($errors->all() as $message)
+                                    <li>{{ $message }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">{{ trans('message.buttons.close') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
 
 @section('main-script')
     <script type="text/javascript">
+        setTimeout(function() {
+            $('#success-alert').fadeOut('fast');
+        }, 5000); // <-- time in milliseconds
+
         $( document ).ready(function() {
 
             $('.btn-image').on('click',function(){
@@ -166,6 +226,25 @@
         var clone;
         var con = 0;
 
+        /*
+        Validamos si ya existen datos guardados
+        */
+        @isset($data['record_formation_info'])
+            language = {!! json_encode($data['record_formation_info']) !!};
+            $.each(language, function(i, item) {
+                inputEspeciality = '<div class="form-group col-md-3"><input type="text" name="especiality1[]" value="'+item.especialization_area+'" class="form-control" readonly="true"></div>';
+                inputLevel = '<div class="form-group col-md-3"><input type="text" name="level1[]" value="'+item.level+'" class="form-control" readonly="true"></div>';
+                inputState = '<div class="form-group col-md-2"><input type="text" name="status1[]" value="'+item.status+'" class="form-control" readonly="true"></div>';
+                inputEducationCenter = '<div class="form-group col-md-4"><input type="text" name="center1[]" value="'+item.center+'" class="form-control" readonly="true"></div>';
+                inputPeriod = '<div class="form-group col-md-3"><input type="text" name="period1[]" value="'+item.period_init+' a '+item.period_end+'" class="form-control" readonly="true"></div>';
+                inputFile = '<div class="form-group col-md-4"><a type="button" href="/storage/'+item.proof+'" target="_blank"class="btn btn-primary"><i class="fa fa-file"></i> Ver </a> <input type="text" name="file_proof[]" value="'+item.proof+'" style="display:none"></div>';
+                //inputFile = '<input type="text" name="file_studio[]" class="col-2 form-control" value="/storage/'+item.proof+'" readonly="true">';
+                deleteRow = '<div class="form-group col-md-1 col-md-offset-4"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+                $('#formation_div_c').append('<div class="row">'+inputEspeciality+inputLevel+inputState+inputEducationCenter+inputPeriod+inputFile+deleteRow+'</div>');
+            });
+        @endisset
+
+
         $('#save_language_c').on('click',  function(e) {
             e.preventDefault();
 
@@ -185,10 +264,10 @@
             inputEspeciality = '<div class="form-group col-md-3"><input type="text" name="especiality[]" value="'+lastEspeciality+'" class="form-control" readonly="true"></div>';
             inputLevel = '<div class="form-group col-md-3"><input type="text" name="level[]" value="'+lastLevel+'" class="form-control" readonly="true"></div>';
             inputState = '<div class="form-group col-md-2"><input type="text" name="status[]" value="'+lastState+'" class="form-control" readonly="true"></div>';
-            inputEducationCenter = '<div class="form-group col-md-4"><input type="text" name="education_center[]" value="'+lastEducationCenter+'" class="form-control" readonly="true"></div>';
+            inputEducationCenter = '<div class="form-group col-md-4"><input type="text" name="center[]" value="'+lastEducationCenter+'" class="form-control" readonly="true"></div>';
             inputPeriod = '<div class="form-group col-md-3"><input type="text" name="period[]" value="'+lastPeriod+'" class="form-control" readonly="true"></div>';
-            inputFile = '<div class="form-group col-md-4"><input type="text" name="fileName'+con+'" id="fileName'+con+'" class="form-control" readonly="true"> <span id="file'+con+'"><input type="file" id="file2_'+con+'"/></div>';
-            deleteRow = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+            inputFile = '<div class="form-group col-md-4"><input type="text" name="fileName'+con+'" id="fileName'+con+'" class="form-control" readonly="true"> <span id="file'+con+'"><input type="file" id="file2_'+con+' name="file2_'+con+'" style="display:none"/></div>';
+            deleteRow = '<div class="form-group col-md-1 col-md-offset-4"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
             $('#formation_div_c').append('<div class="row">'+inputEspeciality+inputLevel+inputState+inputEducationCenter+inputPeriod+inputFile+deleteRow+'</div>');
 
             clone = $("#proof_education").clone();
@@ -197,6 +276,8 @@
             $("#fileName"+con).val(clone[0]['files'][0]['name']);
 
             $('#especiality').val('');
+            $('#level').val('');
+            $('#status').val('');
             $('#education_center').val('');
             $("#proof_education").val('');
             con++;
@@ -224,6 +305,23 @@
         var previousSeparation = [];
         var previousActivities = [];
 
+        /*
+        Validamos si ya existen datos guardados
+        */
+        @isset($data['record_lastJob_info'])
+            language = {!! json_encode($data['record_lastJob_info']) !!};
+            $.each(language, function(i, item) {
+                inputPreviousJob        = '<div class="form-group col-md-6"><input type="text" name="last_jobPosition[]" value="'+item.last_jobPosition+'" class="form-control" readonly="true"></div>';
+                inputPreviousEnterprise = '<div class="form-group col-md-6"><input type="text" name="last_enterprise[]" value="'+item.last_enterprise+'" class="form-control" readonly="true"></div>';
+                inputPreviousPeriod     = '<div class="form-group col-md-3"><input type="text" name="last_period[]" value="'+item.period_init+' a '+item.period_end+'" class="form-control" readonly="true"></div>';
+                inputPreviousSalary     = '<div class="form-group col-md-2"><input type="text" name="last_salary[]" value="'+item.salary+'" class="form-control" readonly="true"></div>';
+                inputPreviousSeparation = '<div class="form-group col-md-7"><input type="text" name="last_separation[]" value="'+item.reason_separation+'" class="form-control" readonly="true"></div>';
+                inputPreviousActivities = '<div class="form-group col-md-11"><textarea class="form-control" rows="4" name="last_myActivities[]" readonly="true">'+item.activities+'</textarea></div>';
+                deleteRow               = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+                $('#other_jobs_div_c').append('<div class="row">'+inputPreviousJob+inputPreviousEnterprise+inputPreviousPeriod+inputPreviousSalary+inputPreviousSeparation+inputPreviousActivities+deleteRow+'</div>');
+            });
+        @endisset
+
         $('#save_other_jobs').on('click',  function(e) {
             e.preventDefault();
 
@@ -241,12 +339,12 @@
             var lastPreviousSeparation  = previousSeparation[previousSeparation.length-1];
             var lastPreviousActivities  = previousActivities[previousActivities.length-1];
 
-            inputPreviousJob        = '<div class="form-group col-md-6"><input type="text" name="jobposition[]" value="'+lastPreviousJob+'" class="form-control" readonly="true"></div>';
-            inputPreviousEnterprise = '<div class="form-group col-md-6"><input type="text" name="enterprise[]" value="'+lastPreviousEnterprise+'" class="form-control" readonly="true"></div>';
-            inputPreviousPeriod     = '<div class="form-group col-md-3"><input type="text" name="jobposotionperiod[]" value="'+lastPreviousPeriod+'" class="form-control" readonly="true"></div>';
-            inputPreviousSalary     = '<div class="form-group col-md-2"><input type="text" name="salary[]" value="'+lastPreviousSalary+'" class="form-control" readonly="true"></div>';
-            inputPreviousSeparation = '<div class="form-group col-md-7"><input type="text" name="separation[]" value="'+lastPreviousSeparation+'" class="form-control" readonly="true"></div>';
-            inputPreviousActivities = '<div class="form-group col-md-11"><textarea class="form-control" rows="4" name="myActivities[]" readonly="true">'+lastPreviousActivities+'</textarea></div>';
+            inputPreviousJob        = '<div class="form-group col-md-6"><input type="text" name="last_jobPosition[]" value="'+lastPreviousJob+'" class="form-control" readonly="true"></div>';
+            inputPreviousEnterprise = '<div class="form-group col-md-6"><input type="text" name="last_enterprise[]" value="'+lastPreviousEnterprise+'" class="form-control" readonly="true"></div>';
+            inputPreviousPeriod     = '<div class="form-group col-md-3"><input type="text" name="last_period[]" value="'+lastPreviousPeriod+'" class="form-control" readonly="true"></div>';
+            inputPreviousSalary     = '<div class="form-group col-md-2"><input type="text" name="last_salary[]" value="'+lastPreviousSalary+'" class="form-control" readonly="true"></div>';
+            inputPreviousSeparation = '<div class="form-group col-md-7"><input type="text" name="last_separation[]" value="'+lastPreviousSeparation+'" class="form-control" readonly="true"></div>';
+            inputPreviousActivities = '<div class="form-group col-md-11"><textarea class="form-control" rows="4" name="last_myActivities[]" readonly="true">'+lastPreviousActivities+'</textarea></div>';
             deleteRow               = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
             $('#other_jobs_div_c').append('<div class="row">'+inputPreviousJob+inputPreviousEnterprise+inputPreviousPeriod+inputPreviousSalary+inputPreviousSeparation+inputPreviousActivities+deleteRow+'</div>');
 
@@ -276,6 +374,21 @@
         var referenceTel = [];
         var referenceTime = [];
         var referenceOcupation = [];
+
+        /*
+        Validamos si ya existen datos guardados
+        */
+        @isset($data['record_references_info'])
+            language = {!! json_encode($data['record_references_info']) !!};
+            $.each(language, function(i, item) {
+                inputReferenceName      = '<div class="form-group col-md-4"><input type="text" name="referenceName[]" value="'+item.references_name+'" class="form-control" readonly="true"></div>';
+                inputReferenceTel       = '<div class="form-group col-md-2"><input type="text" name="referenceTel[]" value="'+item.references_phone+'" class="form-control" readonly="true"></div>';
+                inputReferenceTime      = '<div class="form-group col-md-2"><input type="text" name="referenceTime[]" value="'+item.references_time+'" class="form-control" readonly="true"></div>';
+                inputReferenceOcupation = '<div class="form-group col-md-3"><input type="text" name="referenceOcupation[]" value="'+item.references_ocupation+'" class="form-control" readonly="true"></div>';
+                deleteRow               = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+                $('#references_div_c').append('<div class="row">'+inputReferenceName+inputReferenceTel+inputReferenceTime+inputReferenceOcupation+deleteRow+'</div>');
+            });
+        @endisset
 
         $('#save_references').on('click',  function(e) {
             e.preventDefault();
@@ -322,6 +435,19 @@
         var familyName = [];
         var familyType = [];
 
+        /*
+        Validamos si ya existen datos guardados
+        */
+        @isset($data['data_family_enterprise'])
+            language = {!! json_encode($data['data_family_enterprise']) !!};
+            $.each(language, function(i, item) {
+                inputFamilyName      = '<div class="form-group col-md-9"><input type="text" name="familyName[]" value="'+item.name+'" class="form-control" readonly="true"><input type="text" name="familyID[]" value="'+item.id+'" class="form-control" readonly="true" style="display:none"></div>';
+                inputFamilyType      = '<div class="form-group col-md-2"><input type="text" name="familyType[]" value="'+item.family_type+'" class="form-control" readonly="true"></div>';
+                deleteRow               = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+                $('#family_div_c').append('<div class="row">'+inputFamilyName+inputFamilyType+deleteRow+'</div>');
+           });
+        @endisset
+
         $('#save_family').on('click',  function(e) {
             e.preventDefault();
 
@@ -358,6 +484,17 @@
         * -------------------------------------------
         */
         var organizationName = [];
+        /*
+        Validamos si ya existen datos guardados
+        */
+        @isset($data['record_syndicate_info'])
+            language = {!! json_encode($data['record_syndicate_info']) !!};
+            $.each(language, function(i, item) {
+                inputOrganization  = '<div class="form-group col-md-11"><input type="text" name="organizationName[]" value="'+item.name+'" class="form-control" readonly="true"></div>';
+                deleteRow          = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+                $('#organization_div_c').append('<div class="row">'+inputOrganization+deleteRow+'</div>');
+           });
+        @endisset
 
         $('#save_organization').on('click',  function(e) {
             e.preventDefault();
