@@ -1,15 +1,15 @@
 @extends('adminlte::layouts.app')
 
 @section('htmlheader_title')
-	{{ trans('message.ci.birthday') }}
+	{{ trans('message.ci.newrevenue') }}
 @endsection
 
 @section('contentheader_title')
-	{{ trans('message.ci.birthday') }}
+	{{ trans('message.ci.newrevenue') }}
 @endsection
 
 @section('contentheader_level_here')
-	{{ trans('message.ci.birthday') }}
+	{{ trans('message.ci.newrevenue') }}
 @endsection
 
 @section('main-content')
@@ -64,7 +64,7 @@
             <div class="box box-danger">
 
                 <div class="box-header with-border">
-                    <h3 class="box-title">Cumpleañeros!</h3>
+                    <h3 class="box-title">Nuevos compañeros!</h3>
 
                     <div class="box-tools pull-right">
                         <span class="label label-danger">{{  count($data['employee']) }} Personas</span>
@@ -86,8 +86,8 @@
                                     @endif
                                 @endif
                                 <a class="users-list-name" href="#">{{ $employee->nombre. ' ' . $employee->paterno. ' '. $employee->materno }}</a>
-                                <span class="users-list-date">{{ $employee->nacimiento }}</span>
-                                <span class="users-list-hobbies">Hobbies</span>
+                                <span class="users-list-date">{{ $employee->ingreso }}</span>
+                                <span class="users-list-hobbies">{{ $employee->puesto }}</span>
                             </li>
                         @endforeach
                     </ul>

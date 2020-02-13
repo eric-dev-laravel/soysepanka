@@ -77,9 +77,9 @@
                 <a href="#"><i class='fa fa-comments'></i> <span>{{ trans('message.module1') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ url('cumpleaños') }}"><i class='fa fa-birthday-cake'></i> {{ trans('message.ci.birthday') }}</a></li>
-                    <li><a href="#"><i class='fa fa-users'></i> {{ trans('message.ci.newrevenue') }}</a></li>
+                    <li><a href="{{ url('nuevos-ingresos') }}"><i class='fa fa-users'></i> {{ trans('message.ci.newrevenue') }}</a></li>
                     <li><a href="#"><i class='fa fa-street-view'></i> {{ trans('message.ci.movementofpersonnel') }}</a></li>
-                    <li><a href="#"><i class='fa fa-info'></i> {{ trans('message.ci.aboutus') }}</a></li>
+                    <li><a href="{{ url('quienes-somos') }}"><i class='fa fa-info'></i> {{ trans('message.ci.aboutus') }}</a></li>
                     <li><a href="#"><i class='fa fa-sitemap'></i> {{ trans('message.ci.organizationchart') }}</a></li>
                     <li><a href="#"><i class='fa fa-book'></i> {{ trans('message.ci.regulations') }}</a></li>
                     <li><a href="#"><i class='fa fa-bookmark'></i> {{ trans('message.ci.infographics') }}</a></li>
