@@ -87,7 +87,6 @@
 
 @section('main-script')
 <script type="text/javascript">
-
     $(document).ready(function(){
         $("#buscador").on("keyup", function() {
             var value = $(this).val().toLowerCase();
@@ -134,6 +133,7 @@
     });
 
     var genericCloseBtnHtml = '<a onclick="$(this).closest(\'div.popover\').popover(\'hide\');" type="button" class="close" aria-hidden="true">&times;</a>';
+
     $(function(){
         $('[data-toggle="popover"]').popover({
             trigger:'click',
@@ -148,74 +148,75 @@
         });
     });
 
-$.fn.extend({
-    treeview:   function() {
-        return this.each(function() {
-            // Initialize the top levels;
-            var tree = $(this);
+    $.fn.extend({
+        treeview_custom:   function() {
+            return this.each(function() {
+                // Initialize the top levels;
+                var tree = $(this);
 
-            tree.addClass('treeview-tree');
-            tree.find('li').each(function() {
-                var stick = $(this);
+                tree.addClass('treeview_custom-tree');
+                tree.find('li').each(function() {
+                    var stick = $(this);
+                });
+
+                tree.find('li').each(function () {
+
+
+                    var branch = $(this); //li with children ul
+                    //console.log($(this).children('ul').children('li').attr('class'));
+                    if($(this).children('ul').length > 0){
+
+                        // branch.prepend("<i class='tree-indicator glyphicon glyphicon-folder-open'></i>");
+                        branch.prepend("<i class='tree-indicator fa fa-users'></i>");
+                        branch.addClass('tree-branch');
+                        branch.on('click', function (e) {
+                            if (this == e.target) {
+                                var icon = $(this).children('i:first');
+
+                                icon.toggleClass("<i class='fa fa-chevron-down");
+                                $(this).children().children().toggle();
+                            }
+
+                        })
+                        branch.children().children().toggle();
+
+                        /**
+                        *  The following snippet of code enables the treeview_custom to
+                        *  function when a button, indicator or anchor is clicked.
+                        *
+                        *  It also prevents the default function of an anchor and
+                        *  a button from firing.
+                        */
+                        branch.children('.tree-indicator, button, i').click(function(e) {
+                            branch.click();
+                            e.preventDefault();
+                        });
+
+                    }else{
+                        branch.prepend("<i class='tree-indicator ' style='color: blue !important'></i>");
+                    }
+
+                });
+
             });
-
-			tree.find('li').each(function () {
-
-
-				var branch = $(this); //li with children ul
-                //console.log($(this).children('ul').children('li').attr('class'));
-				if($(this).children('ul').length > 0){
-
-					// branch.prepend("<i class='tree-indicator glyphicon glyphicon-folder-open'></i>");
-					branch.prepend("<i class='tree-indicator fa fa-users'></i>");
-					branch.addClass('tree-branch');
-					branch.on('click', function (e) {
-						if (this == e.target) {
-							var icon = $(this).children('i:first');
-
-							icon.toggleClass("<i class='fa fa-chevron-down");
-							$(this).children().children().toggle();
-						}
-
-					})
-					branch.children().children().toggle();
-
-					/**
-					 *  The following snippet of code enables the treeview to
-					 *  function when a button, indicator or anchor is clicked.
-					 *
-					 *  It also prevents the default function of an anchor and
-					 *  a button from firing.
-					 */
-					branch.children('.tree-indicator, button, i').click(function(e) {
-						branch.click();
-						e.preventDefault();
-					});
-
-				}else{
-					branch.prepend("<i class='tree-indicator ' style='color: blue !important'></i>");
-				}
-
-			 });
-
-        });
-    }
-});
-
-/**
- *  The following snippet of code automatically converst
- *  any '.treeview' DOM elements into a treeview component.
- */
-$(window).on('load', function () {
-
-    $('.treeview').each(function () {
-        var tree = $(this);
-        tree.treeview();
+        }
     });
-    $(document).ready(function(){
-    $("#open").trigger("click");
-});
-});
+
+    /**
+    *  The following snippet of code automatically converst
+    *  any '.treeview_custom' DOM elements into a treeview_custom component.
+    */
+    $(window).on('load', function () {
+
+        $('.treeview_custom').each(function () {
+            var tree = $(this);
+            tree.treeview_custom();
+        });
+
+        $(document).ready(function(){
+            $("#open").trigger("click");
+        });
+    });
 </script>
 @endsection
 @section('main-css')
@@ -335,23 +336,23 @@ $(window).on('load', function () {
          .close:hover{
             cursor: pointer;
          }
-         div.treeview ul:first-child:before {
+         div.treeview_custom ul:first-child:before {
             display: none;
         }
-        .treeview, .treeview ul {
+        .treeview_custom, .treeview_custom ul {
             margin:0;
             padding:0;
             list-style:none;
             color: #369;
         }
-        .treeview ul {
+        .treeview_custom ul {
             margin-left:1em;
             position:relative
         }
-        .treeview ul ul {
+        .treeview_custom ul ul {
             margin-left:.5em
         }
-        .treeview ul:before {
+        .treeview_custom ul:before {
             content:"";
             display:block;
             width:0;
@@ -363,7 +364,7 @@ $(window).on('load', function () {
             /* creates a more theme-ready standard for the bootstrap themes */
             bottom:15px;
         }
-        .treeview li {
+        .treeview_custom li {
             margin:0;
             padding:0 1em;
             line-height:2em;
@@ -371,39 +372,39 @@ $(window).on('load', function () {
             position:relative
         }
 
-        .treeview ul .c1:before{
+        .treeview_custom ul .c1:before{
             width:10px;
         }
 
-        .treeview ul .c2:before{
+        .treeview_custom ul .c2:before{
             width:32px;
         }
 
-        .treeview ul .c3:before{
+        .treeview_custom ul .c3:before{
             width:55px;
         }
 
-        .treeview ul .c4:before{
+        .treeview_custom ul .c4:before{
             width:85px;
         }
 
-        .treeview ul .c5:before{
+        .treeview_custom ul .c5:before{
             width:125px;
         }
 
-        .treeview ul .c6:before{
+        .treeview_custom ul .c6:before{
             width:175px;
         }
 
-        .treeview ul .c7:before{
+        .treeview_custom ul .c7:before{
             width:228px;
         }
 
-        .treeview ul .c8:before{
+        .treeview_custom ul .c8:before{
             width:250px;
         }
 
-        .treeview ul li:before {
+        .treeview_custom ul li:before {
             content:"";
             display:block;
             height:0;
@@ -419,13 +420,13 @@ $(window).on('load', function () {
 
             cursor:pointer;
         }
-        .treeview li a {
+        .treeview_custom li a {
             text-decoration: none;
             /*color:inherit;*/
 
             cursor:pointer;
         }
-        .treeview li button, .treeview li button:active, .treeview li button:focus {
+        .treeview_custom li button, .treeview_custom li button:active, .treeview_custom li button:focus {
             text-decoration: none;
             color:inherit;
             border:none;
@@ -445,14 +446,12 @@ $(window).on('load', function () {
             height: auto;
             float:left;
         }
+
         .popover{
             display: inline-block;
-            /*white-space: nowrap;*/
             min-width: 500px;
-            font-size: 1rem;
             box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
             border: 0;
-            border-radius: 0;
         }
         .popover-body{
             padding: 0;

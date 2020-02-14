@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ComunicacionInterna;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\User;
 use App\Models\Administracion\Employee;
 
 class OrganizationChart extends Controller
@@ -42,9 +43,16 @@ class OrganizationChart extends Controller
         $nivel = 0;
 
         if(count($boss_first) > 0){
-            $list2 = '<ul class="treeview">';
+            $list2 = '<ul class="treeview_custom">';
             foreach($boss_first as $boss){
-                $list2 .='<li id="open" class="encont"><a tabindex="1" class="btn btn-primary" style="background:#007AAB !important;color:white; margin-bottom:10px;" data-toggle="popover" data-trigger="focus" data-content="<strong><div class=bg-yellow>'.$boss->nombre. ' '.$boss->paterno. ' '.$boss->materno. ' '.'</div></strong><div>'.(isset($boss->puesto)?$boss->puesto:'N/A').'</div><div>'.$boss->sucursal.'</div><div>'.$boss->correoempresa.'</div><strong>Teléfono: </strong>'.($boss->telefono?$boss->telefono:'N/A').'<br><strong>Celular: </strong>'.($boss->celular?$boss->celular:'N/A').'<br><strong>Pasatiempos:</strong><br>">'.$boss->nombre. ' '.$boss->paterno. ' '.$boss->materno. ' '.' - '.     (isset($boss->puesto)?$boss->puesto:'N/A').'</a>';
+                $image = 'img/record/user.png';
+                $user = User::where('id_employee', $boss->id)->first();
+                $hobbies = 'N/A';
+                if($user){
+                    $image = is_null($user->picture)?'img/record/user.png':$user->url_path;
+                }
+
+                $list2 .='<li id="open" class="encont"><a tabindex="1" class="btn btn-primary" style="background:#007AAB !important;color:white; margin-bottom:10px;" data-toggle="popover" title="<div class=bg-yellow><strong>'.$boss->nombre. ' '.$boss->paterno. ' '.$boss->materno. ' '.'</strong></div>" data-trigger="focus" data-content="<img class=img-orgChart src='.asset($image).'><div>'.(isset($boss->puesto)?$boss->puesto:'N/A').'</div><div>'.$boss->sucursal.'</div><div>'.$boss->correoempresa.'</div><strong>Teléfono: </strong>'.($boss->telefono?$boss->telefono:'N/A').'<br><strong>Celular: </strong>'.($boss->celular?$boss->celular:'N/A').'<br><strong>Pasatiempos:</strong><br>">'.$boss->nombre. ' '.$boss->paterno. ' '.$boss->materno. ' '.' - '. (isset($boss->puesto)?$boss->puesto:'N/A').'</a>';
                 $list2 .= $this->subBossList($boss->idempleado,$nivel);
                 $list2 .= '</li>';
             }
@@ -88,7 +96,13 @@ class OrganizationChart extends Controller
             $list2 .= '<ul>';
 
             foreach($subBos as $sub){
-                $list2 .='<li class="encont"><a tabindex="0" class="label label-default badge" style="background:'.$nivelcolor[$nivel].' !important;color:white; margin-bottom:10px;" data-toggle="popover" data-trigger="focus" data-content="<strong><div class=bg-yellow>'.$sub->nombre. ' ' .$sub->paterno. ' ' .$sub->materno. ' ' .'</div></strong><div>'.(isset($sub->puesto)?$sub->puesto:'N/A').'</div><div>'.$sub->sucursal.'</div><div>'.$sub->correoempresa.'</div><strong>Teléfono: </strong>'.($sub->telefono?$sub->telefono:'N/A').'<br><strong>Celular: </strong>'.($sub->celular?$sub->celular:'N/A').'<br><strong>Pasatiempos:</strong><br>">'.$sub->nombre. ' '.$sub->paterno. ' '.$sub->materno. ' '.' - '.    (isset($sub->puesto)?$sub->puesto:'N/A').'</a>';
+                $image = 'img/record/user.png';
+                $user = User::where('id_employee', $sub->id)->first();
+                $hobbies = 'N/A';
+                if($user){
+                    $image = is_null($user->picture)?'img/record/user.png':$user->url_path;
+                }
+                $list2 .='<li class="encont"><a tabindex="0" class="label label-default badge" style="background:'.$nivelcolor[$nivel].' !important;color:white; margin-bottom:10px;" data-toggle="popover" data-trigger="focus" title="<div class=bg-yellow><strong>'.$sub->nombre. ' '.$sub->paterno. ' '.$sub->materno. ' '.'</strong></div>" data-content="<img class=img-orgChart src='.asset($image).'><div>'.(isset($sub->puesto)?$sub->puesto:'N/A').'</div><div>'.$sub->sucursal.'</div><div>'.$sub->correoempresa.'</div><strong>Teléfono: </strong>'.($sub->telefono?$sub->telefono:'N/A').'<br><strong>Celular: </strong>'.($sub->celular?$sub->celular:'N/A').'<br><strong>Pasatiempos:</strong><br>">'.$sub->nombre. ' '.$sub->paterno. ' '.$sub->materno. ' '.' - '.    (isset($sub->puesto)?$sub->puesto:'N/A').'</a>';
                 $list2 .= $this->subBossList($sub->idempleado,$nivel+1);
                 $list2 .= '</li>';
             }
