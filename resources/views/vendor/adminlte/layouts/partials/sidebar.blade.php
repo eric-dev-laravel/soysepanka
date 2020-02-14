@@ -81,11 +81,11 @@
                     <li><a href="#"><i class='fa fa-street-view'></i> {{ trans('message.ci.movementofpersonnel') }}</a></li>
                     <li><a href="{{ url('quienes-somos') }}"><i class='fa fa-info'></i> {{ trans('message.ci.aboutus') }}</a></li>
                     <li><a href="{{ url('organigrama') }}"><i class='fa fa-sitemap'></i> {{ trans('message.ci.organizationchart') }}</a></li>
-                    <li><a href="#"><i class='fa fa-book'></i> {{ trans('message.ci.regulations') }}</a></li>
-                    <li><a href="#"><i class='fa fa-bookmark'></i> {{ trans('message.ci.infographics') }}</a></li>
-                    <li><a href="#"><i class='fa fa-camera-retro'></i> {{ trans('message.ci.galleries') }}</a></li>
-                    <li><a href="#"><i class='fa fa-calendar'></i> {{ trans('message.ci.upcomingevents') }}</a></li>
-                    <li><a href="#"><i class='fa fa-question'></i> {{ trans('message.ci.faqs') }}</a></li>
+                    <li><a href="{{ url('politicas-reglamentos') }}"><i class='fa fa-book'></i> {{ trans('message.ci.regulations') }}</a></li>
+                    <li><a href="{{ url('infograficos') }}"><i class='fa fa-bookmark'></i> {{ trans('message.ci.infographics') }}</a></li>
+                    <li><a href="{{ url('galerias') }}"><i class='fa fa-camera-retro'></i> {{ trans('message.ci.galleries') }}</a></li>
+                    <li><a href="{{ url('proximos-eventos') }}"><i class='fa fa-calendar'></i> {{ trans('message.ci.upcomingevents') }}</a></li>
+                    <li><a href="{{ url('faqs') }}"><i class='fa fa-question'></i> {{ trans('message.ci.faqs') }}</a></li>
                 </ul>
             </li>
 

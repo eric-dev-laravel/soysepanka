@@ -29,7 +29,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="skin-purple fixed">
+<body class="skin-purple sidebar-mini fixed">
 <div id="app" v-cloak>
     <div class="wrapper">
 

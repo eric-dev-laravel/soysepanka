@@ -93,6 +93,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('nuevos-ingresos', 'ComunicacionInterna\NewEmployees@index')->name('nuevos-ingresos');
     Route::view('quienes-somos', 'comunicacionInterna.quienessomos')->name('quienes-somos');
     Route::get('organigrama', 'ComunicacionInterna\OrganizationChart@index')->name('organigrama');
+    Route::view('politicas-reglamentos', 'comunicacionInterna.politicas_reglamentos')->name('politicas-reglamentos');
+    Route::view('infograficos', 'comunicacionInterna.infograficos')->name('infograficos');
+    Route::view('galerias', 'comunicacionInterna.galerias')->name('galerias');
+    Route::view('faqs', 'comunicacionInterna.faqs')->name('faqs');
+    Route::view('proximos-eventos', 'comunicacionInterna.proximos_eventos')->name('proximos-eventos');
 });
 
 Auth::routes();
