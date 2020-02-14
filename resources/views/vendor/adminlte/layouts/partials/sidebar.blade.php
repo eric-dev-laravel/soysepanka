@@ -80,7 +80,7 @@
                     <li><a href="{{ url('nuevos-ingresos') }}"><i class='fa fa-users'></i> {{ trans('message.ci.newrevenue') }}</a></li>
                     <li><a href="#"><i class='fa fa-street-view'></i> {{ trans('message.ci.movementofpersonnel') }}</a></li>
                     <li><a href="{{ url('quienes-somos') }}"><i class='fa fa-info'></i> {{ trans('message.ci.aboutus') }}</a></li>
-                    <li><a href="#"><i class='fa fa-sitemap'></i> {{ trans('message.ci.organizationchart') }}</a></li>
+                    <li><a href="{{ url('organigrama') }}"><i class='fa fa-sitemap'></i> {{ trans('message.ci.organizationchart') }}</a></li>
                     <li><a href="#"><i class='fa fa-book'></i> {{ trans('message.ci.regulations') }}</a></li>
                     <li><a href="#"><i class='fa fa-bookmark'></i> {{ trans('message.ci.infographics') }}</a></li>
                     <li><a href="#"><i class='fa fa-camera-retro'></i> {{ trans('message.ci.galleries') }}</a></li>

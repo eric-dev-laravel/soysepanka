@@ -91,7 +91,8 @@ Route::group(['middleware' => 'auth'], function () {
     */
     Route::get('cumpleaños', 'ComunicacionInterna\BirthdayController@index')->name('cumpleaños');
     Route::get('nuevos-ingresos', 'ComunicacionInterna\NewEmployees@index')->name('nuevos-ingresos');
-    Route::view('quienes-somos', 'comunicacionInterna.quienessomos')->name('nuevos-ingresos');
+    Route::view('quienes-somos', 'comunicacionInterna.quienessomos')->name('quienes-somos');
+    Route::get('organigrama', 'ComunicacionInterna\OrganizationChart@index')->name('organigrama');
 });
 
 Auth::routes();

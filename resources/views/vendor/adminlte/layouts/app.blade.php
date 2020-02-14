@@ -62,4 +62,6 @@ desired effect
 </body>
 <!-- Your Script Page Content Here -->
     @yield('main-script')
+
+    @yield('main-css')
 </html>
