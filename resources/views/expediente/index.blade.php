@@ -190,6 +190,10 @@
                 $('#proof_education').click();
             });
 
+            $('.btn-proof-record').on('click',function(){
+                $('#proof_record').click();
+            });
+
             $("#image").change(function(){
                 readURL(this);
             });
@@ -519,6 +523,76 @@
             $(this).parent().parent().remove();
         });
 
+        /* ----------------------------------------
+             * Agregar renglones a los idiomas cada que se presiona
+             * el botón agregar y mostrarlos debajo
+             * y también la función de eliminar el renglón
+             * -------------------------------------------
+            */
+            var type_record = [];
+            var text_record = [];
+            var period_record = [];
+            var proof_record = [];
+            var clone_record;
+            var con_record = 0;
+
+            /*
+            Validamos si ya existen datos guardados
+            */
+            @isset($data['record_files_register'])
+                language = {!! json_encode($data['record_files_register']) !!};
+                $.each(language, function(i, item) {
+                    console.log(item);
+                    inputTypeRecord   = '<div class="form-group col-md-2"><input type="text" name="type_record[]" value="'+item.type+'" class="form-control" readonly="true"></div>';
+                    inputTextRecord   = '<div class="form-group col-md-5"><input type="text" name="text_record[]" value="'+item.description+'" class="form-control" readonly="true"></div>';
+                    inputPeriodRecord = '<div class="form-group col-md-2"><input type="text" name="period_record[]" value="'+item.expiration_date+'" class="form-control" readonly="true"></div>';
+                    inputFileRecord = '<div class="form-group col-md-2"><a type="button" href="/storage/'+item.proof+'" target="_blank"class="btn btn-primary col-md-12"><i class="fa fa-file"></i> Ver </a> <input type="text" name="file_record[]" value="'+item.proof+'" style="display:none"></div>';
+                    deleteRow = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+                    $('#record_div_c').append('<div class="row">'+inputTypeRecord+inputTextRecord+inputPeriodRecord+inputFileRecord+deleteRow+'</div>');
+                });
+            @endisset
+
+
+            $('#save_record_c').on('click',  function(e) {
+                e.preventDefault();
+
+                type_record.push($('#type_file').val());
+                text_record.push($('#text_file').val());
+                period_record.push($('#expiration_date').val());
+                proof_record.push($('#proof_record').val());
+
+                var lastTypeRecord   = type_record[type_record.length-1];
+                var lastTextRecord   = text_record[text_record.length-1];
+                var lastPeriodRecord = period_record[period_record.length-1];
+
+                inputTypeRecord   = '<div class="form-group col-md-2"><input type="text" name="type_record[]" value="'+lastTypeRecord+'" class="form-control" readonly="true"></div>';
+                inputTextRecord   = '<div class="form-group col-md-5"><input type="text" name="text_record[]" value="'+lastTextRecord+'" class="form-control" readonly="true"></div>';
+                inputPeriodRecord = '<div class="form-group col-md-2"><input type="text" name="period_record[]" value="'+lastPeriodRecord+'" class="form-control" readonly="true"></div>';
+                inputFileRecord = '<div class="form-group col-md-2"><input type="text" name="fileName_record'+con_record+'" id="fileName_record'+con_record+'" class="form-control" readonly="true"> <span id="file_record'+con_record+'"><input type="file" id="file2_record'+con_record+' name="file2_record'+con_record+'" style="display:none"/></div>';
+                deleteRow = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+                $('#record_div_c').append('<div class="row">'+inputTypeRecord+inputTextRecord+inputPeriodRecord+inputFileRecord+deleteRow+'</div>');
+
+                clone_record = $("#proof_record").clone();
+                clone_record.attr('id', 'file2_record'+con_record);
+                $("#file_record"+con_record).html(clone_record);
+                $("#fileName_record"+con_record).val(clone_record[0]['files'][0]['name']);
+
+                $('#type_file').val('');
+                $('#text_file').val('');
+                $('#expiration_date').val('');
+                $("#proof_record").val('');
+                con_record++;
+            });
+
+            /* ----------------------------------------
+             * eliminar renglón de escolaridad
+             * ----------------------------------------
+            */
+            $("#record_div_c").on('click', '#borrar',function(e) {
+                e.preventDefault();
+                $(this).parent().parent().remove();
+            });
+
         /*
         Date Range
         */
@@ -563,6 +637,26 @@
                     "toLabel": "To",
                     "customRangeLabel": "Custom",
                     "weekLabel": "W",
+                    "daysOfWeek": [
+                        "Do",
+                        "Lu",
+                        "Ma",
+                        "Mi",
+                        "Ju",
+                        "Vi",
+                        "Sa"
+                    ],
+                },
+            }, function(start, end, label) {
+              //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+        });
+
+        $(function() {
+            $('input[name="expiration_date_c"]').datepicker({
+                autoclose: true,
+                "locale": {
+                    "format": "DD/MM/YYYY",
                     "daysOfWeek": [
                         "Do",
                         "Lu",

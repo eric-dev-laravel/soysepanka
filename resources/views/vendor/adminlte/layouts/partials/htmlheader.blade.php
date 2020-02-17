@@ -23,6 +23,7 @@
 
     <!-- Date Range Picker -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
     <script>
         //See https://laracasts.com/discuss/channels/vue/use-trans-in-vuejs

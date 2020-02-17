@@ -606,6 +606,21 @@ return [
 
         'syndicated_title' => 'Sindicato',
         'msg5'             => 'Si has estado sindicalizado favor de anotar el nombre de las Organizaciones.',
-        'organization'     => 'Organización'
+        'organization'     => 'Organización',
+
+        'record_title'     => 'Registros',
+        'type_file'        => 'Tipo de Registro',
+        'text_file'        => 'Texto de Registro',
+        'expiration_date'  => 'Fecha de Expiración',
+        'proof_record'     => 'Archivo',
+
+        'register_data_title'     => 'Datos de Ingreso',
+        'info1'        => 'Nombre del Puesto',
+        'info2'        => 'Fecha',
+        'info3'        => 'Jornada',
+        'info4'        => 'Departamento',
+        'info5'        => 'Área',
+        'info6'        => 'Salario Bruto Mensual',
+        'info7'        => 'Tipo de Contrato',
     ],
 ];

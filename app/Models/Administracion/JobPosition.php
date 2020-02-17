@@ -10,6 +10,7 @@ use App\Models\Administracion\Mark;
 use App\Models\Administracion\Direction;
 use App\Models\Administracion\Area;
 use App\Models\Administracion\Department;
+use App\Models\Administracion\WorkShift;
 
 class JobPosition extends Model
 {
@@ -44,5 +45,9 @@ class JobPosition extends Model
 
     public function bossPosition(){
         return $this->belongsTo(JobPosition::class, 'id_boss_position', 'id');
+    }
+
+    public function workshift(){
+        return $this->belongsTo(WorkShift::class, 'id_workshifts', 'id');
     }
 }

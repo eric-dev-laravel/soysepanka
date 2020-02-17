@@ -7,12 +7,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Models\Administracion\Employee;
+use App\Models\Administracion\JobPosition;
 use App\Models\Expediente\Record;
 use App\Models\Expediente\RecordFormation;
 use App\Models\Expediente\RecordLastJobs;
 use App\Models\Expediente\RecordReferences;
 use App\Models\Expediente\RecordFamilyEnterprise;
 use App\Models\Expediente\RecordOrganizationSyndicate;
+use App\Models\Expediente\RecordFilesRegister;
 use DB;
 use Redirect;
 
@@ -43,6 +45,11 @@ class RecordController extends Controller
         $record_references_info = "";
         $record_family_enterprise_info = "";
         $record_syndicate_info = "";
+        $data_family_enterprise = array();
+
+        $record_files_register = "";
+        $record_info_jobposition = "";
+
         $all_employee = Employee::orderBy('Nombre', 'ASC')->get();
 
         if(! is_null($user->id_employee)) {
@@ -53,14 +60,19 @@ class RecordController extends Controller
             $record_references_info = RecordReferences::where('id_record', $records_info[0]->id)->get();
             $record_family_enterprise_info = RecordFamilyEnterprise::where('id_record', $records_info[0]->id)->get();
             $record_syndicate_info = RecordOrganizationSyndicate::where('id_record', $records_info[0]->id)->get();
-        }
-        $data_family_enterprise = array();
-        foreach($record_family_enterprise_info as $dato){
-            $array = array();
-            $array['id'] = $dato['id_family'];
-            $array['name'] = $dato->employee->nombre . ' ' . $dato->employee->paterno . ' ' . $dato->employee->materno;
-            $array['family_type'] = $dato['family_type'];
-            array_push($data_family_enterprise, $array);
+
+            $data_family_enterprise = array();
+            foreach($record_family_enterprise_info as $dato){
+                $array = array();
+                $array['id'] = $dato['id_family'];
+                $array['name'] = $dato->employee->nombre . ' ' . $dato->employee->paterno . ' ' . $dato->employee->materno;
+                $array['family_type'] = $dato['family_type'];
+                array_push($data_family_enterprise, $array);
+            }
+
+            $record_files_register = RecordFilesRegister::where('id_record', $records_info[0]->id)->get();
+
+            $record_info_jobposition = JobPosition::where('name', $employee_info[0]->puesto)->get();
         }
 
         $data = [
@@ -72,6 +84,8 @@ class RecordController extends Controller
             'record_references_info' => $record_references_info,
             'data_family_enterprise' => $data_family_enterprise,
             'record_syndicate_info' => $record_syndicate_info,
+            'record_files_register' => $record_files_register,
+            'record_info_jobposition' => $record_info_jobposition,
         ];
         return view('expediente.index', compact(['data']));
     }
@@ -284,14 +298,14 @@ class RecordController extends Controller
                     $recordSyndicate->delete();
                 }
             DB::commit();
-       } catch (\PDOException $e) {
-           DB::rollBack();
-           $errorsMessage = [
-               'fullMessage' => $e->getMessage(),
-           ];
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            $errorsMessage = [
+                'fullMessage' => $e->getMessage(),
+            ];
 
-           return Redirect::back()->withErrors($errorsMessage);
-       }
+            return Redirect::back()->withErrors($errorsMessage);
+        }
 
        return redirect('records')->with('success','Ok');
     }
@@ -335,6 +349,52 @@ class RecordController extends Controller
             ];
             return Redirect::back()->withErrors($errorsMessage);
         }
+        return redirect('records')->with('success','Ok');
+    }
+
+    public function updateFilesProfile(Request $request, int $id) {
+        $data = request()->except(['_token', '_method', 'type_file_c', 'text_file_c', 'expiration_date_c']);
+        try {
+            DB::beginTransaction();
+
+                $record = Record::withTrashed()->where('id_employee', $id)->get();
+
+                if(!empty($data['file_record'])){
+                    $lastRecordFormation = RecordFilesRegister::where('id_record', $record[0]->id)->whereNotIn('proof', $data['file_record']);
+                    $lastRecordFormation->delete();
+                } else {
+                    $lastRecordFormation = RecordFilesRegister::where('id_record', $record[0]->id);
+                    $lastRecordFormation->delete();
+                }
+
+                if(!empty($data['proofRecord'])){
+                    foreach ($data['type_record'] as $indice => $studio) {
+
+                        $formation = new RecordFilesRegister;
+                        $formation->id_employee = $id;
+                        $formation->id_record = $record[0]->id;
+                        $formation->type = $data['type_record'][$indice];
+                        $formation->description = $data['text_record'][$indice];
+                        $formation->expiration_date = $data['period_record'][$indice];
+                        if (isset($data['proofRecord'][$indice+1])) {
+                            if($path = $data['proofRecord'][$indice+1]->store($this->folderFileProofAddress)){
+                                $formation->proof = $path;
+                            }
+                        }
+                        $formation->save();
+                    }
+                }
+
+            DB::commit();
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            $errorsMessage = [
+                'fullMessage' => $e->getMessage(),
+            ];
+
+            return Redirect::back()->withErrors($errorsMessage);
+        }
+
         return redirect('records')->with('success','Ok');
     }
 }
