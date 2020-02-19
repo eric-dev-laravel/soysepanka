@@ -14,6 +14,7 @@ use App\Models\Administracion\Department;
 use App\Models\Administracion\JobPosition;
 use App\Models\Administracion\JobPositionCatalog;
 use App\Models\Administracion\ProcessedFiles;
+use App\Models\Administracion\JobPositionAddtional;
 use App\Models\Expediente\Record;
 use Yajra\Datatables\Datatables;
 use DB;
@@ -119,6 +120,37 @@ class AdminEmployees extends Controller
 
     public function edit($id){
         $employee = Employee::withTrashed()->where('id', '=', $id)->get();
+        $additional_jobposition = JobPositionAddtional::where('id_employee', $id)->get();
+        
+        $array_info_additional_jobposition = array();
+        foreach($additional_jobposition as $jobPosition){
+            $id_jobPosition = $jobPosition['id_jobposition'];
+            $infoJobPosition = JobPosition::where('id', $id_jobPosition)->get();
+            $enterprise = "Sin Empresa";
+            $mark = "Sin Marca";
+            $direction = "Sin Dirección";
+            $area = "Sin Área";
+            $department = "Sin Departamento";
+
+            if(! empty($infoJobPosition[0]->enterprise)){
+                $enterprise = $infoJobPosition[0]->enterprise->name;
+            }
+            if(! empty($infoJobPosition[0]->mark)){
+                $mark = $infoJobPosition[0]->mark->name;
+            }
+            if(! empty($infoJobPosition[0]->direction)){
+                $direction = $infoJobPosition[0]->direction->name;
+            }
+            if(! empty($infoJobPosition[0]->area)){
+                $area = $infoJobPosition[0]->area->name;
+            }
+            if(! empty($infoJobPosition[0]->department)){
+                $department = $infoJobPosition[0]->department->name;
+            }
+            $info = $id_jobPosition.' , '.$enterprise.' , '.$mark. ' , '.$direction.' , '.$area. ' , '.$department. ' , '.$infoJobPosition[0]->name;
+            array_push($array_info_additional_jobposition, $info);
+        }
+        //dd($array_info_additional_jobposition);
         $list_jobpositions = JobPosition::withTrashed()->orderBy('name', 'asc')->get();
         if(JobPosition::withTrashed()->where('name', $employee[0]->puesto)->exists()){
             if(JobPosition::withTrashed()->where('name', $employee[0]->puesto)->count() > 1){
@@ -139,6 +171,7 @@ class AdminEmployees extends Controller
                 'employee' => $employee,
                 'list_jobpositions' => $list_jobpositions,
                 'bosses' => $bosses,
+                'additional_jobposition' => $array_info_additional_jobposition,
             ];
         } else {
             $bosses = [];
@@ -146,6 +179,7 @@ class AdminEmployees extends Controller
                 'employee' => $employee,
                 'list_jobpositions' => $list_jobpositions,
                 'bosses' => $bosses,
+                'additional_jobposition' => $array_info_additional_jobposition,
             ];
         }
         //dd($data);
@@ -153,8 +187,9 @@ class AdminEmployees extends Controller
     }
 
     public function update(Request $request, $id){
-        $data = request()->except(['_token', '_method']);
-
+        $data = request()->except(['_token', '_method', 'additional_jobpositon', 'puesto_adicional']);
+        $data2 = request()->only(['additional_jobpositon']);
+        
         if(!empty($data['puesto'])){
             $jobPositionInfo = explode(',', $data['puesto']);
             $enterprise = $jobPositionInfo[0];
@@ -175,7 +210,33 @@ class AdminEmployees extends Controller
         try {
             DB::beginTransaction();
                 Employee::withTrashed()->whereId($id)->update($data);
-                //dd($data);
+                
+                if(!empty($data2['additional_jobpositon'])){
+                    $array_id_additional_jobposition=array();
+                    foreach ($data2['additional_jobpositon'] as $indice => $studio) {
+                        $id_jobposition = explode(" , ", $data2['additional_jobpositon'][$indice]);
+                        array_push($array_id_additional_jobposition, $id_jobposition[0]);
+                    }
+                    $lastAdditionalJobPosition = JobPositionAddtional::where('id_employee', $id)
+                                                        ->whereNotIn('id_jobposition', $array_id_additional_jobposition);
+                    $lastAdditionalJobPosition->delete();
+
+                    foreach ($data2['additional_jobpositon'] as $indice => $studio) {
+                        $id_jobposition = explode(" , ", $data2['additional_jobpositon'][$indice]);
+                        
+                        if(! JobPositionAddtional::where('id_employee', $id)
+                                            ->where('id_jobposition', $id_jobposition[0])
+                                            ->exists()) {
+                            $additional_jobposition = new JobPositionAddtional;
+                            $additional_jobposition->id_jobposition = $id_jobposition[0];
+                            $additional_jobposition->id_employee = $id;
+                            $additional_jobposition->save();
+                        }
+                    }
+                } else {
+                    $additional_jobposition = JobPositionAddtional::where('id_employee', $id);
+                    $additional_jobposition->delete();
+                }
             DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();

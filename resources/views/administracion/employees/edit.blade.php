@@ -265,6 +265,55 @@
                             <div class="box box-warning">
 
                                 <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="fa fa-building"></i> {{ trans('message.additional_jobposition') }}</h3>
+                                </div>
+
+                                <div class="box-body">
+                                    <div class="form-group col-md-11">
+                                        <label for="puesto">{{ trans('message.datatables_headers.position') }}</label>
+                                        <select class="form-control" id="puesto_adicional" name="puesto_adicional">
+                                            <option value="">{{ trans('message.datatables_headers.outjobposition') }}</option>
+                                            @foreach ($data['list_jobpositions'] as $position)
+                                                <?php
+                                                    $enterprise = "Sin Empresa";
+                                                    $mark = "Sin Marca";
+                                                    $direction = "Sin Dirección";
+                                                    $area = "Sin Área";
+                                                    $department = "Sin Departamento";
+                                                    if(!empty($position->enterprise->name))
+                                                        $enterprise = $position->enterprise->name;
+                                                    if(!empty($position->mark->name))
+                                                        $mark = $position->mark->name;
+                                                    if(!empty($position->direction->name))
+                                                        $direction = $position->direction->name;
+                                                    if(!empty($position->area->name))
+                                                        $area = $position->area->name;
+                                                    if(!empty($position->department->name))
+                                                        $department = $position->department->name;
+                                                ?>
+
+                                                <option value="{{ $position->id. ' , ' .$enterprise.' , '.$mark.' , '.$direction.' , '.$area.' , '.$department.' , '.$position->name }}">{{  $enterprise.' / '.$mark.' / '.$direction.' / '.$area.' / '.$department.' / '.$position->name }}</option>
+                                                
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-1">
+                                        <label for="spoken">Agregar:</label>
+                                        <button type="button" class="btn btn-success" id="add_aditional_jobposition">
+                                            <span class="fa fa-plus"></span>
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group col-md-12" id="aditional_jobposition_div_c"></div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="box box-warning">
+
+                                <div class="box-header with-border">
                                     <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.personnelinfo') }}</h3>
                                 </div>
 
@@ -705,5 +754,49 @@
                 }
             });
         }
+
+        /* ----------------------------------------
+        * Agregar renglones a los idiomas cada que se presiona
+        * el botón agregar y mostrarlos debajo
+        * y también la función de eliminar el renglón
+        * -------------------------------------------
+        */
+        var additional_jobposition = [];
+
+        /*
+        Validamos si ya existen datos guardados
+        */
+        @isset($data['additional_jobposition'])
+            language = {!! json_encode($data['additional_jobposition']) !!};
+            $.each(language, function(i, item) {
+                inputAdditionalJobPosition  = '<div class="form-group col-md-11"><input type="text" name="additional_jobpositon[]" value="'+item+'" class="form-control" readonly="true"></div>';
+                deleteRow         = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+                $('#aditional_jobposition_div_c').append('<div class="row">'+inputAdditionalJobPosition+deleteRow+'</div>');
+            });
+        @endisset
+
+        $('#add_aditional_jobposition').on('click',  function(e) {
+            e.preventDefault();
+
+            additional_jobposition.push($('#puesto_adicional').val());
+            
+
+            var lastAdditionalJobPosition = additional_jobposition[additional_jobposition.length-1];
+            
+            inputAdditionalJobPosition = '<div class="form-group col-md-11"><input type="text" name="additional_jobpositon[]" value="'+lastAdditionalJobPosition+'" class="form-control" readonly="true"></div>';
+            deleteRow               = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+            $('#aditional_jobposition_div_c').append('<div class="row">'+inputAdditionalJobPosition+deleteRow+'</div>');
+
+            $('#puesto_adicional').val('');
+        });
+
+        /* ----------------------------------------
+            * eliminar renglón de escolaridad
+            * ----------------------------------------
+        */
+        $("#aditional_jobposition_div_c").on('click', '#borrar',function(e) {
+            e.preventDefault();
+            $(this).parent().parent().remove();
+        });
     </script>
 @endsection

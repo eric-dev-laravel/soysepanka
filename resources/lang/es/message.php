@@ -206,6 +206,7 @@ return [
     'options'                 => 'Opciones',
     'employee_importation'    => 'Importación de Empleados',
     'jobpoistioninfo'         => 'Información del Puesto',
+    'additional_jobposition'  => 'Puestos Adicionales / Puestos que Cubre',
 
     /*
      * |------------------------
