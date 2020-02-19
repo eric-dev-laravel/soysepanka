@@ -13,7 +13,7 @@ class Record extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'id_employee', 'id_user', 'picture', 'street', 'external_number', 'internal_number', 'postal_code', 'city', 'government', 'proof_address', 'myLanguage', 'myTools', 'mySistems', 'myFunctions', 'availability'];
+    protected $fillable = ['id', 'id_employee', 'id_user', 'picture', 'street', 'external_number', 'internal_number', 'postal_code', 'city', 'government', 'proof_address', 'myLanguage', 'myTools', 'mySistems', 'myFunctions', 'availability', 'nss', 'blood', 'diseases', 'allergy'];
     protected $dates = ['created_at, updated_at, deleted_at'];
 
     public function getUrlPathAttribute(){

@@ -194,6 +194,10 @@
                 $('#proof_record').click();
             });
 
+            $('#btn_proof_medical_exam').on('click',function(){
+                $('#medical_exam_file').click();
+            });
+
             $("#image").change(function(){
                 readURL(this);
             });
@@ -593,6 +597,125 @@
                 $(this).parent().parent().remove();
             });
 
+        /* ----------------------------------------
+        * Agregar renglones a los idiomas cada que se presiona
+        * el botón agregar y mostrarlos debajo
+        * y también la función de eliminar el renglón
+        * -------------------------------------------
+        */
+        var policyType = [];
+        var policyCompany = [];
+        var policyNumber = [];
+
+        /*
+        Validamos si ya existen datos guardados
+        */
+        @isset($data['record_info_policies'])
+            language = {!! json_encode($data['record_info_policies']) !!};
+            $.each(language, function(i, item) {
+                inputPolicyType    = '<div class="form-group col-md-2"><input type="text" name="last_policyType[]" value="'+item.type+'" class="form-control" readonly="true"></div>';
+                inputPolicyCompany = '<div class="form-group col-md-5"><input type="text" name="last_policyCompany[]" value="'+item.company+'" class="form-control" readonly="true"></div>';
+                inputPolicyNumber  = '<div class="form-group col-md-4"><input type="text" name="last_policyNumber[]" value="'+item.number+'" class="form-control" readonly="true"></div>';
+                deleteRow               = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+                $('#record_policy_div_c').append('<div class="row">'+inputPolicyType+inputPolicyCompany+inputPolicyNumber+deleteRow+'</div>');
+            });
+        @endisset
+
+        $('#save_record_policy_c').on('click',  function(e) {
+            e.preventDefault();
+
+            policyType.push($('#policy_type').val());
+            policyCompany.push($('#policy_company').val());
+            policyNumber.push($('#policy_number').val());
+
+            var lastPolicyType      = policyType[policyType.length-1];
+            var lastPolicyCompany   = policyCompany[policyCompany.length-1];
+            var lastPolicyNumber    = policyNumber[policyNumber.length-1];
+
+            inputPolicyType    = '<div class="form-group col-md-2"><input type="text" name="last_policyType[]" value="'+lastPolicyType+'" class="form-control" readonly="true"></div>';
+            inputPolicyCompany = '<div class="form-group col-md-5"><input type="text" name="last_policyCompany[]" value="'+lastPolicyCompany+'" class="form-control" readonly="true"></div>';
+            inputPolicyNumber  = '<div class="form-group col-md-4"><input type="text" name="last_policyNumber[]" value="'+lastPolicyNumber+'" class="form-control" readonly="true"></div>';
+            deleteRow               = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+            $('#record_policy_div_c').append('<div class="row">'+inputPolicyType+inputPolicyCompany+inputPolicyNumber+deleteRow+'</div>');
+
+            $('#policy_type').val('');
+            $('#policy_company').val('');
+            $('#policy_number').val('');
+        });
+
+        /* ----------------------------------------
+            * eliminar renglón de escolaridad
+            * ----------------------------------------
+        */
+        $("#record_policy_div_c").on('click', '#borrar',function(e) {
+            e.preventDefault();
+            $(this).parent().parent().remove();
+        });
+
+        /* ----------------------------------------
+             * Agregar renglones a los idiomas cada que se presiona
+             * el botón agregar y mostrarlos debajo
+             * y también la función de eliminar el renglón
+             * -------------------------------------------
+            */
+            var medicalReason = [];
+            var medicalDate = [];
+            var medical_proof = [];
+            var clone_medical;
+            var con_medical = 0;
+
+            /*
+            Validamos si ya existen datos guardados
+            */
+            @isset($data['record_info_medicals'])
+                language = {!! json_encode($data['record_info_medicals']) !!};
+                $.each(language, function(i, item) {
+                    console.log(item);
+                    inputMedicalReason = '<div class="form-group col-md-7"><input type="text" name="medical_reason[]" value="'+item.reason+'" class="form-control" readonly="true"></div>';
+                    inputMedicalDate   = '<div class="form-group col-md-2"><input type="text" name="medical_date[]" value="'+item.date+'" class="form-control" readonly="true"></div>';
+                    inputFileRecord   = '<div class="form-group col-md-2"><a type="button" href="/storage/'+item.proof+'" target="_blank"class="btn btn-primary col-md-12"><i class="fa fa-file"></i> Ver </a> <input type="text" name="medicals_name[]" value="'+item.proof+'" style="display:none"></div>';
+                    deleteRow         = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+                    $('#record_medical_exam_div_c').append('<div class="row">'+inputMedicalReason+inputMedicalDate+inputFileRecord+deleteRow+'</div>');
+                });
+            @endisset
+
+
+            $('#save_record_medical_exam_c').on('click',  function(e) {
+                e.preventDefault();
+
+                medicalReason.push($('#medical_exam_reason_c').val());
+                medicalDate.push($('#medical_exam_date_c').val());
+                medical_proof.push($('#medical_exam_file').val());
+
+                var lastMedicalReason = medicalReason[medicalReason.length-1];
+                var lastMedicalDate   = medicalDate[medicalDate.length-1];
+
+                inputMedicalReason = '<div class="form-group col-md-7"><input type="text" name="medical_reason[]" value="'+lastMedicalReason+'" class="form-control" readonly="true"></div>';
+                inputMedicalDate   = '<div class="form-group col-md-2"><input type="text" name="medical_date[]" value="'+lastMedicalDate+'" class="form-control" readonly="true"></div>';
+                inputMedicalProof  = '<div class="form-group col-md-2"><input type="text" name="medical_proof'+con_medical+'" id="medical_proof'+con_medical+'" class="form-control" readonly="true"> <span id="medical2_proof'+con_medical+'"><input type="file" id="medical2_proof'+con_medical+' name="medical2_proof'+con_medical+'" style="display:none"/></div>';
+                deleteRow          = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
+                $('#record_medical_exam_div_c').append('<div class="row">'+inputMedicalReason+inputMedicalDate+inputMedicalProof+deleteRow+'</div>');
+
+                clone_record = $("#medical_exam_file").clone();
+                clone_record.attr('id', 'medical2_proof'+con_medical);
+                $("#medical_proof"+con_medical).html(clone_record);
+                $("#medical_proof"+con_medical).val(clone_record[0]['files'][0]['name']);
+
+                $('#medical_exam_reason_c').val('');
+                $('#medical_exam_date_c').val('');
+                $("#medical_exam_file").val('');
+                con_medical++;
+            });
+
+            /* ----------------------------------------
+             * eliminar renglón de escolaridad
+             * ----------------------------------------
+            */
+            $("#record_medical_exam_div_c").on('click', '#borrar',function(e) {
+                e.preventDefault();
+                $(this).parent().parent().remove();
+            });
+
         /*
         Date Range
         */
@@ -654,6 +777,26 @@
 
         $(function() {
             $('input[name="expiration_date_c"]').datepicker({
+                autoclose: true,
+                "locale": {
+                    "format": "DD/MM/YYYY",
+                    "daysOfWeek": [
+                        "Do",
+                        "Lu",
+                        "Ma",
+                        "Mi",
+                        "Ju",
+                        "Vi",
+                        "Sa"
+                    ],
+                },
+            }, function(start, end, label) {
+              //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+        });
+
+        $(function() {
+            $('input[name="medical_exam_date"]').datepicker({
                 autoclose: true,
                 "locale": {
                     "format": "DD/MM/YYYY",

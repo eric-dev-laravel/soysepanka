@@ -24,23 +24,14 @@
                         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
                         </ol>
                         <div class="carousel-inner">
 
                             <div class="item active">
-                                <img src="{{ asset('img/comunicacionInterna/banner1.jpg') }}" alt="First slide">
+                                <img src="{{ asset('img/comunicacionInterna/galeria_galeria_sepanka.png') }}" alt="First slide">
 
                                 <!--<div class="carousel-caption">
                                     First Slide
-                                </div>-->
-                            </div>
-
-                            <div class="item">
-                                <img src="{{ asset('img/comunicacionInterna/banner2.jpg') }}" alt="Second slide">
-
-                                <!--<div class="carousel-caption">
-                                    Second Slide
                                 </div>-->
                             </div>
 

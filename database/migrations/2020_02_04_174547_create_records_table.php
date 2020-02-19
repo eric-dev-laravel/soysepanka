@@ -30,6 +30,10 @@ class CreateRecordsTable extends Migration
             $table->text('mySistems')->nullable();
             $table->text('myFunctions')->nullable();
             $table->text('availability')->nullable();
+            $table->string('nss')->nullable();
+            $table->string('blood')->nullable();
+            $table->text('diseases')->nullable();
+            $table->text('allergy')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

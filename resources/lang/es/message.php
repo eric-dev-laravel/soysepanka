@@ -622,5 +622,27 @@ return [
         'info5'        => 'Área',
         'info6'        => 'Salario Bruto Mensual',
         'info7'        => 'Tipo de Contrato',
+
+        'health_data_title' => 'Generalidades',
+        'nss'          => 'NSS',
+        'blood'        => 'Grupo Sanguíneo',
+        'diseases'     => 'Padecimientos Actuales / Medicamentos',
+        'allergy'      => 'Alergías Conocidas',
+
+        'policy_data_title' => 'Póliza de Seguro',
+        'policy_type'       => 'Tipo',
+        'policy_company'    => 'Compañia',
+        'policy_number'     => 'Número de Póliza',
+
+        'exam_medical_data_title' => 'Exámen Médico',
+        'medical_exam_reason' => 'Razón / Motivo',
+        'medical_exam_date'   => 'Fecha',
+        'medical_exam_file'   => 'Documento',
+
+        'emergency_contact_data_title' => 'Contactos de Emergencia',
+        'emergency_contact_name'   => 'Nombre',
+        'emergency_contact_phone'  => 'Teléfono',
+        'emergency_contact_parent' => 'Parentesco',
+
     ],
 ];

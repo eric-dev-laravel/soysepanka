@@ -15,6 +15,8 @@ use App\Models\Expediente\RecordReferences;
 use App\Models\Expediente\RecordFamilyEnterprise;
 use App\Models\Expediente\RecordOrganizationSyndicate;
 use App\Models\Expediente\RecordFilesRegister;
+use App\Models\Expediente\RecordPolicy;
+use App\Models\Expediente\RecordMedical;
 use DB;
 use Redirect;
 
@@ -39,16 +41,18 @@ class RecordController extends Controller
     public function index(){
         $user = Auth::user();
         $employee_info = "";
+        $data_family_enterprise = array();
+
         $records_info = "";
         $record_formation_info = "";
         $record_lastJob_info = "";
         $record_references_info = "";
         $record_family_enterprise_info = "";
         $record_syndicate_info = "";
-        $data_family_enterprise = array();
-
         $record_files_register = "";
         $record_info_jobposition = "";
+        $record_info_policies = "";
+        $record_info_medicals = "";
 
         $all_employee = Employee::orderBy('Nombre', 'ASC')->get();
 
@@ -71,10 +75,11 @@ class RecordController extends Controller
             }
 
             $record_files_register = RecordFilesRegister::where('id_record', $records_info[0]->id)->get();
-
             $record_info_jobposition = JobPosition::where('name', $employee_info[0]->puesto)->get();
+            $record_info_policies = RecordPolicy::where('id_record', $records_info[0]->id)->get();
+            $record_info_medicals = RecordMedical::where('id_record', $records_info[0]->id)->get();
         }
-
+        //dd($record_info_medicals);
         $data = [
             'employee_info' => $employee_info,
             'records_info' => $records_info,
@@ -86,6 +91,8 @@ class RecordController extends Controller
             'record_syndicate_info' => $record_syndicate_info,
             'record_files_register' => $record_files_register,
             'record_info_jobposition' => $record_info_jobposition,
+            'record_info_policies' => $record_info_policies,
+            'record_info_medicals' => $record_info_medicals,
         ];
         return view('expediente.index', compact(['data']));
     }
@@ -382,6 +389,86 @@ class RecordController extends Controller
                             }
                         }
                         $formation->save();
+                    }
+                }
+
+            DB::commit();
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            $errorsMessage = [
+                'fullMessage' => $e->getMessage(),
+            ];
+
+            return Redirect::back()->withErrors($errorsMessage);
+        }
+
+        return redirect('records')->with('success','Ok');
+    }
+
+    public function updateHealth(Request $request, int $id) {
+        $data = request()->except(['_token', '_method']);
+        $data2 = request()->only(['last_policyType', 'last_policyCompany', 'last_policyNumber']);
+        $data3 = request()->only(['medical_reason', 'medical_date', 'medicalExamFile', 'medicals_name']);
+        //dd($data3);
+        try {
+            DB::beginTransaction();
+                $record = Record::withTrashed()->where('id_employee', $id)->get();
+
+                Record::withTrashed()->where('id_employee', $id)->update(array(
+                    'nss' => $data['health_nss_c'],
+                    'blood' => $data['health_blood_c'],
+                    'diseases' => $data['health_diseases_c'],
+                    'allergy' => $data['health_allergy_c'],
+                ));
+
+                if(!empty($data['last_policyType'])){
+                    $lastPolicies = RecordPolicy::where('id_record', $record[0]->id)
+                                                        ->whereNotIn('company', $data2['last_policyCompany'])
+                                                        ->whereNotIn('number', $data2['last_policyNumber']);
+                    $lastPolicies->delete();
+
+                    foreach ($data['last_policyType'] as $indice => $studio) {
+
+                        if(! RecordPolicy::where('id_record', $record[0]->id)
+                                            ->where('type', $data2['last_policyType'][$indice])
+                                            ->where('company', $data2['last_policyCompany'][$indice])
+                                            ->where('number', $data2['last_policyNumber'][$indice])
+                                            ->exists()) {
+                            $policy = new RecordPolicy;
+                            $policy->id_employee = $id;
+                            $policy->id_record = $record[0]->id;
+                            $policy->type = $data2['last_policyType'][$indice];
+                            $policy->company = $data2['last_policyCompany'][$indice];
+                            $policy->number = $data2['last_policyNumber'][$indice];
+                            $policy->save();
+                        }
+                    }
+                } else {
+                    $lastPolicies = RecordPolicy::where('id_record', $record[0]->id);
+                    $lastPolicies->delete();
+                }
+
+                if(!empty($data3['medicals_name'])){
+                    $lastRecordMedical = RecordMedical::where('id_record', $record[0]->id)->whereNotIn('proof', $data3['medicals_name']);
+                    $lastRecordMedical->delete();
+                } else {
+                    $lastRecordMedical = RecordMedical::where('id_record', $record[0]->id);
+                    $lastRecordMedical->delete();
+                }
+
+                if(!empty($data3['medical_reason']) and !empty($data3['medicalExamFile'])){
+                    foreach ($data3['medical_reason'] as $indice => $studio) {
+                        $medical = new RecordMedical;
+                        $medical->id_employee = $id;
+                        $medical->id_record = $record[0]->id;
+                        $medical->reason = $data3['medical_reason'][$indice];
+                        $medical->date = $data3['medical_date'][$indice];
+                        if (isset($data3['medicalExamFile'][$indice+1])) {
+                            if($path = $data3['medicalExamFile'][$indice+1]->store($this->folderFileProofAddress)){
+                                $medical->proof = $path;
+                            }
+                        }
+                        $medical->save();
                     }
                 }
 

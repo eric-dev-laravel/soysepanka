@@ -27,7 +27,7 @@
 
                     <div class="box-body">
                         <div class="col-md-6">
-                            <img class="img-responsive pad col-md-12" src="{{ asset('img/comunicacionInterna/nosotros.png') }}" alt="Photo">
+                            <img class="img-responsive pad col-md-12" src="{{ asset('img/comunicacionInterna/imagen_sobre_nosotros.png') }}" alt="Photo">
 
                             <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
                             <span class="pull-right text-muted">127 likes - 3 comments</span>
@@ -75,7 +75,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <img class="img-responsive pad col-md-12" src="{{ asset('img/comunicacionInterna/mision_vision.png') }}" alt="Photo">
+                            <img class="img-responsive pad col-md-12" src="{{ asset('img/comunicacionInterna/imagen_mision_vision.png') }}" alt="Photo">
 
                             <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
                             <span class="pull-right text-muted">127 likes - 3 comments</span>
@@ -100,7 +100,7 @@
 
                     <div class="box-body">
                         <div class="col-md-6">
-                            <img class="img-responsive pad col-md-12" src="{{ asset('img/comunicacionInterna/etica.png') }}" alt="Photo">
+                            <img class="img-responsive pad col-md-12" src="{{ asset('img/comunicacionInterna/imagen_codigo_etica.png') }}" alt="Photo">
 
                             <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
                             <span class="pull-right text-muted">127 likes - 3 comments</span>
