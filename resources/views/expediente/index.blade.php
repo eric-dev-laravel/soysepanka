@@ -670,7 +670,6 @@
             @isset($data['record_info_medicals'])
                 language = {!! json_encode($data['record_info_medicals']) !!};
                 $.each(language, function(i, item) {
-                    console.log(item);
                     inputMedicalReason = '<div class="form-group col-md-7"><input type="text" name="medical_reason[]" value="'+item.reason+'" class="form-control" readonly="true"></div>';
                     inputMedicalDate   = '<div class="form-group col-md-2"><input type="text" name="medical_date[]" value="'+item.date+'" class="form-control" readonly="true"></div>';
                     inputFileRecord   = '<div class="form-group col-md-2"><a type="button" href="/storage/'+item.proof+'" target="_blank"class="btn btn-primary col-md-12"><i class="fa fa-file"></i> Ver </a> <input type="text" name="medicals_name[]" value="'+item.proof+'" style="display:none"></div>';
@@ -820,7 +819,7 @@
             numFiles = input.get(0).files ? input.get(0).files.length : 1,
             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
             input.trigger('fileselect', [numFiles, label]);
-         });
+        });
 
         $(document).ready( function() {
             $(':file').on('fileselect', function(event, numFiles, label) {

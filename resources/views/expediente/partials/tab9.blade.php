@@ -66,6 +66,7 @@
 <div class="row">
     <form method="post" id="updateProfileHealth" action="{{ url('records-update-health/'.$data['employee_info'][0]->id) }}" enctype="multipart/form-data" autocomplete="off">
         {!! csrf_field() !!}
+    
     <div class="col-md-12">
         <div class="box box-primary">
 
@@ -229,17 +230,26 @@
 
                     <div class="form-group col-md-7">
                         <label for="language">{{ trans('message.ex.emergency_contact_name') }}</label>
-                        <input type="text" name="emergency_contact_name" id="emergency_contact_name" class="form-control">
+                        @if (empty($data['records_info'][0]->contact_name1))
+                            <input type="text" name="emergency_contact_name" id="emergency_contact_name" class="form-control">
+                        @else
+                            <input type="text" name="emergency_contact_name" id="emergency_contact_name" value="{{ $data['records_info'][0]->contact_name1 }}" class="form-control">
+                        @endif
+                        
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="language">{{ trans('message.ex.emergency_contact_phone') }}</label>
-                        <!--<input type="text" name="emergency_contact_phone" id="emergency_contact_phone" class="form-control">-->
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-phone"></i>
                             </div>
-                            <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="">
+                            @if (empty($data['records_info'][0]->contact_phone1))
+                                <input type="text" class="form-control" name="emergency_contact_phone" id="emergency_contact_phone">
+                            @else
+                                <input type="text" name="emergency_contact_phone" id="emergency_contact_phone" value="{{ $data['records_info'][0]->contact_phone1 }}" class="form-control">
+                            @endif
+                            
                         </div>
                     </div>
 
@@ -247,8 +257,51 @@
                         <label for="language">{{ trans('message.ex.emergency_contact_parent') }}</label>
                         <select class="form-control" id="emergency_contact_parent" name="emergency_contact_parent">
                             <option value="">Ninguno</option>
-                            <option value="Vida">Vida</option>
-                            <option value="Gastos Médicos">Gastos Médicos</option>
+                            <option value="Padre" {{ ('Padre' == $data['records_info'][0]->contact_patent1) ? 'selected':'' }} >Padre</option>
+                            <option value="Madre" {{ ('Madre' == $data['records_info'][0]->contact_patent1) ? 'selected':'' }} >Madre</option>
+                            <option value="Esposo" {{ ('Esposo' == $data['records_info'][0]->contact_patent1) ? 'selected':'' }} >Esposo</option>
+                            <option value="Esposa" {{ ('Esposa' == $data['records_info'][0]->contact_patent1) ? 'selected':'' }} >Esposa</option>
+                            <option value="Hijo" {{ ('Hijo' == $data['records_info'][0]->contact_patent1) ? 'selected':'' }} >Hijo</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group col-md-12">
+
+                    <div class="form-group col-md-7">
+                        <label for="language">{{ trans('message.ex.emergency_contact_name') }}</label>
+                        @if (empty($data['records_info'][0]->contact_name2))
+                            <input type="text" name="emergency_contact_name2" id="emergency_contact_name2" class="form-control">
+                        @else
+                            <input type="text" name="emergency_contact_name2" id="emergency_contact_name2" value="{{ $data['records_info'][0]->contact_name2 }}" class="form-control">
+                        @endif
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="language">{{ trans('message.ex.emergency_contact_phone') }}</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            @if (empty($data['records_info'][0]->contact_phone2))
+                                <input type="text" class="form-control" name="emergency_contact_phone2" id="emergency_contact_phone2">
+                            @else
+                                <input type="text" name="emergency_contact_phone2" id="emergency_contact_phone2" value="{{ $data['records_info'][0]->contact_phone2 }}" class="form-control">
+                            @endif
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="language">{{ trans('message.ex.emergency_contact_parent') }}</label>
+                        <select class="form-control" id="emergency_contact_parent2" name="emergency_contact_parent2">
+                            <option value="">Ninguno</option>
+                            <option value="Padre" {{ ('Padre' == $data['records_info'][0]->contact_patent2) ? 'selected':'' }} >Padre</option>
+                            <option value="Madre" {{ ('Madre' == $data['records_info'][0]->contact_patent2) ? 'selected':'' }} >Madre</option>
+                            <option value="Esposo" {{ ('Esposo' == $data['records_info'][0]->contact_patent2) ? 'selected':'' }} >Esposo</option>
+                            <option value="Esposa" {{ ('Esposa' == $data['records_info'][0]->contact_patent2) ? 'selected':'' }} >Esposa</option>
+                            <option value="Hijo" {{ ('Hijo' == $data['records_info'][0]->contact_patent2) ? 'selected':'' }} >Hijo</option>
                         </select>
                     </div>
 

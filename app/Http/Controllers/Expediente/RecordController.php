@@ -409,7 +409,7 @@ class RecordController extends Controller
         $data = request()->except(['_token', '_method']);
         $data2 = request()->only(['last_policyType', 'last_policyCompany', 'last_policyNumber']);
         $data3 = request()->only(['medical_reason', 'medical_date', 'medicalExamFile', 'medicals_name']);
-        //dd($data3);
+        //dd($data);
         try {
             DB::beginTransaction();
                 $record = Record::withTrashed()->where('id_employee', $id)->get();
@@ -419,6 +419,15 @@ class RecordController extends Controller
                     'blood' => $data['health_blood_c'],
                     'diseases' => $data['health_diseases_c'],
                     'allergy' => $data['health_allergy_c'],
+
+                    'contact_name1' => $data['emergency_contact_name'],
+                    'contact_phone1' => $data['emergency_contact_phone'],
+                    'contact_patent1' => $data['emergency_contact_parent'],
+
+                    'contact_name2' => $data['emergency_contact_name2'],
+                    'contact_phone2' => $data['emergency_contact_phone2'],
+                    'contact_patent2' => $data['emergency_contact_parent2'],
+                    
                 ));
 
                 if(!empty($data['last_policyType'])){

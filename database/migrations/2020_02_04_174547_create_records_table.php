@@ -34,6 +34,12 @@ class CreateRecordsTable extends Migration
             $table->string('blood')->nullable();
             $table->text('diseases')->nullable();
             $table->text('allergy')->nullable();
+            $table->string('contact_name1')->nullable();
+            $table->string('contact_phone1')->nullable();
+            $table->string('contact_patent1')->nullable();
+            $table->string('contact_name2')->nullable();
+            $table->string('contact_phone2')->nullable();
+            $table->string('contact_patent2')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

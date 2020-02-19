@@ -149,32 +149,32 @@
 
                             <div class="form-group col-md-2">
                                 <label for="info1">{{ trans('message.ex.info2') }}</label>
-                                <input type="text" name="info1" id="info1" value="{{ $data['employee_info'][0]->fechapuesto }}" class="form-control" readonly>
+                                <input type="text" name="info2" id="info2" value="{{ $data['employee_info'][0]->fechapuesto }}" class="form-control" readonly>
                             </div>
 
                             <div class="form-group col-md-5">
                                 <label for="info1">{{ trans('message.ex.info3') }}</label>
-                                <input type="text" name="info1" id="info1" value="{{ $data['record_info_jobposition'][0]->workshift->name }} de {{ $data['record_info_jobposition'][0]->workshift->up_start  }} a {{ $data['record_info_jobposition'][0]->workshift->down_end  }} " class="form-control" readonly>
+                                <input type="text" name="info3" id="info3" value="{{ $data['record_info_jobposition'][0]->workshift->name }} de {{ $data['record_info_jobposition'][0]->workshift->up_start  }} a {{ $data['record_info_jobposition'][0]->workshift->down_end  }} " class="form-control" readonly>
                             </div>
 
                             <div class="form-group col-md-5">
                                 <label for="info1">{{ trans('message.ex.info4') }}</label>
-                                <input type="text" name="info1" id="info1" value="{{ $data['employee_info'][0]->departamento }}" class="form-control" readonly>
+                                <input type="text" name="info4" id="info4" value="{{ $data['employee_info'][0]->departamento }}" class="form-control" readonly>
                             </div>
 
                             <div class="form-group col-md-5">
                                 <label for="info1">{{ trans('message.ex.info5') }}</label>
-                                <input type="text" name="info1" id="info1" value="{{ $data['employee_info'][0]->seccion }}" class="form-control" readonly>
+                                <input type="text" name="info5" id="info5" value="{{ $data['employee_info'][0]->seccion }}" class="form-control" readonly>
                             </div>
 
                             <div class="form-group col-md-2">
                                 <label for="info1">{{ trans('message.ex.info6') }}</label>
-                                <input type="text" name="info1" id="info1" value="{{ $data['record_info_jobposition'][0]->salary_min }} a {{ $data['record_info_jobposition'][0]->salary_max }}" class="form-control" readonly>
+                                <input type="text" name="info6" id="info6" value="{{ $data['record_info_jobposition'][0]->salary_min }} a {{ $data['record_info_jobposition'][0]->salary_max }}" class="form-control" readonly>
                             </div>
 
                             <div class="form-group col-md-5">
                                 <label for="info1">{{ trans('message.ex.info7') }}</label>
-                                <input type="text" name="info1" id="info1" value="{{ $data['record_info_jobposition'][0]->salary_range }}" class="form-control" readonly>
+                                <input type="text" name="info7" id="info7" value="{{ $data['record_info_jobposition'][0]->salary_range }}" class="form-control" readonly>
                             </div>
 
                         </div>
@@ -184,7 +184,7 @@
                             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="item active">
-                                        <img src="{{ asset('img/errors/nothingtoshow.png') }}" style="width:100%; height: 200px;" alt="First slide">
+                                        <img src="{{ asset('img/errors/error_no_datos.png') }}" style="width:100%; height: 450px;" alt="First slide">
                                     </div>
                                 </div>
                             </div>
