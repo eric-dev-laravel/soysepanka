@@ -176,9 +176,9 @@
                                             <option value="">{{ trans('message.datatables_headers.outboss') }}</option>
                                             @foreach ($data['list_jobpositions'] as $area)
                                                 @if($area->id == $data['jobposition'][0]->id_boss_position)
-                                                    <option selected value="{{ $area->id }}">{{  $area->name   }}</option>
+                                                    <option selected value="{{ $area->id }}">{{  $area->department->name.' / '.$area->name   }}</option>
                                                 @else
-                                                    <option value="{{ $area->id }}">{{  $area->name   }}</option>
+                                                    <option value="{{ $area->id }}">{{  $area->department->name.' / '.$area->name   }}</option>
                                                 @endif
                                             @endforeach
                                         </select>

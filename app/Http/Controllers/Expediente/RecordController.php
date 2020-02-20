@@ -427,7 +427,7 @@ class RecordController extends Controller
                     'contact_name2' => $data['emergency_contact_name2'],
                     'contact_phone2' => $data['emergency_contact_phone2'],
                     'contact_patent2' => $data['emergency_contact_parent2'],
-                    
+
                 ));
 
                 if(!empty($data['last_policyType'])){

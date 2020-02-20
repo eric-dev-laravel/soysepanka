@@ -121,7 +121,7 @@ class AdminEmployees extends Controller
     public function edit($id){
         $employee = Employee::withTrashed()->where('id', '=', $id)->get();
         $additional_jobposition = JobPositionAddtional::where('id_employee', $id)->get();
-        
+
         $array_info_additional_jobposition = array();
         foreach($additional_jobposition as $jobPosition){
             $id_jobPosition = $jobPosition['id_jobposition'];
@@ -189,15 +189,16 @@ class AdminEmployees extends Controller
     public function update(Request $request, $id){
         $data = request()->except(['_token', '_method', 'additional_jobpositon', 'puesto_adicional']);
         $data2 = request()->only(['additional_jobpositon']);
-        
+
         if(!empty($data['puesto'])){
             $jobPositionInfo = explode(',', $data['puesto']);
-            $enterprise = $jobPositionInfo[0];
-            $mark = $jobPositionInfo[1];
-            $direction = $jobPositionInfo[2];
-            $area = $jobPositionInfo[3];
-            $department = $jobPositionInfo[4];
-            $jobPosition = $jobPositionInfo[5];
+            $idJobPosition = $jobPositionInfo[0];
+            $enterprise = $jobPositionInfo[1];
+            $mark = $jobPositionInfo[2];
+            $direction = $jobPositionInfo[3];
+            $area = $jobPositionInfo[4];
+            $department = $jobPositionInfo[5];
+            $jobPosition = $jobPositionInfo[6];
 
             $data = array_add($data, 'empresa', $enterprise);
             $data = array_add($data, 'marca', $mark);
@@ -205,12 +206,13 @@ class AdminEmployees extends Controller
             $data = array_add($data, 'departamento', $department);
             $data = array_add($data, 'seccion', $area);
             $data['puesto'] = $jobPosition;
+            $data['id_puesto'] = $idJobPosition;
         }
 
         try {
             DB::beginTransaction();
                 Employee::withTrashed()->whereId($id)->update($data);
-                
+
                 if(!empty($data2['additional_jobpositon'])){
                     $array_id_additional_jobposition=array();
                     foreach ($data2['additional_jobpositon'] as $indice => $studio) {
@@ -223,7 +225,7 @@ class AdminEmployees extends Controller
 
                     foreach ($data2['additional_jobpositon'] as $indice => $studio) {
                         $id_jobposition = explode(" , ", $data2['additional_jobpositon'][$indice]);
-                        
+
                         if(! JobPositionAddtional::where('id_employee', $id)
                                             ->where('id_jobposition', $id_jobposition[0])
                                             ->exists()) {
@@ -277,7 +279,7 @@ class AdminEmployees extends Controller
 
         if(!empty($jobPosition[0]['id_boss_position'])){
             $jobPositionBoss = JobPosition::where('id', $jobPosition[0]['id_boss_position'])->get();
-            $bosses = Employee::select('id','nombre', 'paterno', 'materno')->where('puesto', $jobPositionBoss[0]['name'])->orderBy('nombre', 'ASC')->get();
+            $bosses = Employee::select('idempleado','nombre', 'paterno', 'materno')->where('puesto', $jobPositionBoss[0]['name'])->orderBy('nombre', 'ASC')->get();
         } else {
             $bosses = [];
         }
@@ -438,6 +440,9 @@ class AdminEmployees extends Controller
                         //dd($new);
                             $employee = Employee::create($new);
                             $array_rfc = array_add($array_rfc, $i, $new[$this->keyForEmployee]);
+                            Employee::where('id', $employee->id)->update(array(
+                                'puesto' => null,
+                            ));
                             $created++;
                         DB::commit();
 

@@ -22,6 +22,7 @@
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item active"><a class="nav-link active" id="tab1" href="#tab_1" data-toggle="tab" role="tab" aria-selected="true" aria-expanded="true">Lista</a>                    </li>
                         <li class="nav-item"><a href="#tab_2" data-toggle="tab" aria-expanded="false">Árbol</a></li>
+                        <li class="nav-item"><a href="#tab_3" data-toggle="tab" aria-expanded="false">Plantilla</a></li>
                     </ul>
 
                     <div class="tab-content" id="myTabContent">
@@ -46,11 +47,62 @@
                             </div>
                         </div>
 
+                        <div class="tab-pane fade" id="tab_3">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    {!! $data['list3'] !!}
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
             </div>
 
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-solid">
+                    <div class="box-header with-border">
+                        <i class="fa fa-building"></i>
+
+                        <h3 class="box-title">Información Estructural</h3>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="col-md-6">
+                            <div class="col-md-7">
+                                {!! $data['jobPositionChart']->container() !!}
+                            </div>
+
+                            <div class="col-md-5">
+                                <div class="row">
+
+                                    <div class="col-md-12">
+                                        <div style="background-color: rgba(22,160,133, 0.8);"><span style="color: #fff;">Total de plazas: {{ $data['alls_places'] }}</span></div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div style="background-color: rgba(255, 99, 132, 0.8);"><span style="color: #ffffff;">Total de plazas Ocupadas: {{ $data['places_used'] }}</span></div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div style="background-color: rgba(255, 205, 86, 0.8);"><span style="color: #000;">Total de plazas Temporales: {{ $data['places_additional'] }}</span></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        {{-- ChartScript --}}
+                        @if($data['jobPositionChart'])
+                            {!! $data['jobPositionChart']->script() !!}
+                        @endif
+                    </div>
+
+                </div>
+            </div>
         </div>
 
     </div>
@@ -87,6 +139,7 @@
 
 @section('main-script')
 <script type="text/javascript">
+
     $(document).ready(function(){
         $("#buscador").on("keyup", function() {
             var value = $(this).val().toLowerCase();
@@ -193,7 +246,7 @@
                         });
 
                     }else{
-                        branch.prepend("<i class='tree-indicator ' style='color: blue !important'></i>");
+                        branch.prepend("<i class='tree-indicator ' style='color: blue !important; margin-left: 15px;'></i>");
                     }
 
                 });

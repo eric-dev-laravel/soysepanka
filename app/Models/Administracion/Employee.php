@@ -137,7 +137,7 @@ class Employee extends Model
      *
      * @var array
      */
-    protected $fillable = ['idempleado', 'nombre', 'paterno', 'materno', 'fuente', 'rfc', 'curp', 'nss', 'correoempresa', 'correopersonal', 'nacimiento', 'sexo', 'civil', 'telefono', 'extension', 'celular', 'ingreso', 'fechapuesto', 'jefe', 'direccion', 'departamento', 'seccion', 'puesto', 'grado', 'region', 'sucursal', 'idempresa', 'empresa', 'division', 'marca', 'centro', 'checador', 'turno', 'tiponomina', 'clavenomina', 'nombrenomina', 'generalista', 'relacion', 'contrato', 'horario', 'jornada', 'calculo', 'vacaciones', 'flotante', 'base', 'rol', 'password', 'extra1', 'extra2', 'extra3', 'extra4', 'extra5', 'fecha', 'version'];
+    protected $fillable = ['idempleado', 'nombre', 'paterno', 'materno', 'fuente', 'rfc', 'curp', 'nss', 'correoempresa', 'correopersonal', 'nacimiento', 'sexo', 'civil', 'telefono', 'extension', 'celular', 'ingreso', 'fechapuesto', 'jefe', 'direccion', 'departamento', 'seccion', 'puesto', 'id_puesto', 'grado', 'region', 'sucursal', 'idempresa', 'empresa', 'division', 'marca', 'centro', 'checador', 'turno', 'tiponomina', 'clavenomina', 'nombrenomina', 'generalista', 'relacion', 'contrato', 'horario', 'jornada', 'calculo', 'vacaciones', 'flotante', 'base', 'rol', 'password', 'extra1', 'extra2', 'extra3', 'extra4', 'extra5', 'fecha', 'version'];
     protected $dates = ['created_at, updated_at, deleted_at'];
 
     public function isUser(){

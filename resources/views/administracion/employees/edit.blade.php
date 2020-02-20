@@ -191,9 +191,9 @@
                                                 ?>
 
                                                 @if($position->name == $data['employee'][0]->puesto && $position->department->name == $data['employee'][0]->departamento)
-                                                    <option selected value="{{ $enterprise.','.$mark.','.$direction.','.$area.','.$department.','.$position->name }}">{{  $enterprise.' / '.$mark.' / '.$direction.' / '.$area.' / '.$department.' / '.$position->name }}</option>
+                                                    <option selected value="{{ $position->id.','.$enterprise.','.$mark.','.$direction.','.$area.','.$department.','.$position->name }}">{{  $enterprise.' / '.$mark.' / '.$direction.' / '.$area.' / '.$department.' / '.$position->name }}</option>
                                                 @else
-                                                    <option value="{{ $enterprise.','.$mark.','.$direction.','.$area.','.$department.','.$position->name }}">{{  $enterprise.' / '.$mark.' / '.$direction.' / '.$area.' / '.$department.' / '.$position->name }}</option>
+                                                    <option value="{{ $position->id.','.$enterprise.','.$mark.','.$direction.','.$area.','.$department.','.$position->name }}">{{  $enterprise.' / '.$mark.' / '.$direction.' / '.$area.' / '.$department.' / '.$position->name }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
@@ -293,7 +293,7 @@
                                                 ?>
 
                                                 <option value="{{ $position->id. ' , ' .$enterprise.' , '.$mark.' , '.$direction.' , '.$area.' , '.$department.' , '.$position->name }}">{{  $enterprise.' / '.$mark.' / '.$direction.' / '.$area.' / '.$department.' / '.$position->name }}</option>
-                                                
+
                                             @endforeach
                                         </select>
                                     </div>
@@ -665,16 +665,16 @@
         $(document).ready(function(){
             var id = $('#puesto').val();
             var index = id.split(',');
-            var jobPosition = index[5];
-            var department = index[4];
+            var jobPosition = index[6];
+            var department = index[5];
             getInfoJobPosition(jobPosition, department);
         });
 
         $('#puesto').change(function(){
             var id = $(this).val();
             var index = id.split(',');
-            var jobPosition = index[5];
-            var department = index[4];
+            var jobPosition = index[6];
+            var department = index[5];
             getBoss(jobPosition, department);
         });
 
@@ -697,8 +697,9 @@
                         text : 'Sin Jefe'
                     }));
                     $.each(result['bosses'], function(i, item){
+                        console.log(item);
                         $('#jefe').append($('<option>', {
-                            value: item.id,
+                            value: item.idempleado,
                             text : item.nombre+' '+item.paterno+' '+item.materno
                         }));
                     });
@@ -779,10 +780,10 @@
             e.preventDefault();
 
             additional_jobposition.push($('#puesto_adicional').val());
-            
+
 
             var lastAdditionalJobPosition = additional_jobposition[additional_jobposition.length-1];
-            
+
             inputAdditionalJobPosition = '<div class="form-group col-md-11"><input type="text" name="additional_jobpositon[]" value="'+lastAdditionalJobPosition+'" class="form-control" readonly="true"></div>';
             deleteRow               = '<div class="form-group col-md-1"><button type="button" class="btn btn-danger" id="borrar"><span class="fa fa-minus"></span></button></div>';
             $('#aditional_jobposition_div_c').append('<div class="row">'+inputAdditionalJobPosition+deleteRow+'</div>');

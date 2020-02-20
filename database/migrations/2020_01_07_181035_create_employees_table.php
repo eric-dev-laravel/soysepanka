@@ -38,6 +38,7 @@ class CreateEmployeesTable extends Migration
             $table->string('departamento')->nullable();
             $table->string('seccion')->nullable();
             $table->string('puesto')->nullable();
+            $table->integer('id_puesto')->nullable();
             $table->string('grado')->nullable();
             $table->string('region')->nullable();
             $table->string('sucursal')->nullable();

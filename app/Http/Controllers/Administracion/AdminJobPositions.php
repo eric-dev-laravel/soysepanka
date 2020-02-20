@@ -82,17 +82,21 @@ class AdminJobPositions extends Controller
     public function show($id){}
 
     public function edit($id){
+        $level_number = 0;
         $enterprises = Enterprise::withTrashed()->orderBy('name', 'ASC')->get();
         $marks = Mark::withTrashed()->orderBy('name', 'ASC')->get();
         $directions = Direction::withTrashed()->orderBy('name', 'ASC')->get();
         $areas = Area::withTrashed()->orderBy('name', 'ASC')->get();
         $departments = Department::withTrashed()->orderBy('name', 'ASC')->get();
         $jobposition = JobPosition::withTrashed()->where('id', '=', $id)->get();
+        if(! empty($jobposition[0]->id_level)){
+            $level_number = $jobposition[0]->id_level;
+        }
         $genders = Gender::orderByRaw('name ASC')->get();
         $marital_status = MaritalStatus::orderByRaw('name ASC')->get();
         $workshifts = WorkShift::orderByRaw('name ASC')->get();
         $levels_positions = hierarchical_levels_positions::orderByRaw('level ASC')->get();
-        $list_jobpositions = JobPosition::withTrashed()->where('id', '!=', $id)->orderBy('name', 'ASC')->get();
+        $list_jobpositions = JobPosition::withTrashed()->where('id', '!=', $id)->where('id_level','>',0)->orderBy('name', 'ASC')->get();
         $jobpositionlanguaje = JobPositionLanguaje::where('id_jobposition', '=', $id)->get();
 
         $data = [
