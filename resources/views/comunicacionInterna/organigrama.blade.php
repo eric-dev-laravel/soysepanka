@@ -81,17 +81,22 @@
                                 <div class="row">
 
                                     <div class="col-md-12">
-                                        <div style="background-color: rgba(22,160,133, 0.8);"><span style="color: #fff;">Total de plazas: {{ $data['alls_places'] }}</span></div>
+                                        <div style="background-color: rgba(255, 99, 132, 0.8);"><span style="color: #fff;">Total de Plazas: {{ $data['alls_places'] }}</span></div>
                                     </div>
 
                                     <div class="col-md-12">
-                                        <div style="background-color: rgba(255, 99, 132, 0.8);"><span style="color: #ffffff;">Total de plazas Ocupadas: {{ $data['places_used'] }}</span></div>
+                                        <div style="background-color: rgba(22,160,133, 0.8);"><span style="color: #ffffff;">Total de Plazas Ocupadas: {{ $data['places_used'] }}</span></div>
                                     </div>
 
                                     <div class="col-md-12">
-                                        <div style="background-color: rgba(255, 205, 86, 0.8);"><span style="color: #000;">Total de plazas Temporales: {{ $data['places_additional'] }}</span></div>
+                                        <div style="background-color: rgba(255, 205, 86, 0.8);"><span style="color: #000;">Total de Plazas Temporales: {{ $data['places_additional'] }}</span></div>
                                     </div>
 
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div style="background-color: #605ca8;"><span style="color: #fff;">Plazas Vacantes: {{ $data['places_off'] }}</span></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

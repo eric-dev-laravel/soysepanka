@@ -26,6 +26,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     <title>{{ trans('message.landingdescriptionpratt') }}</title>
 
     <!-- Custom styles for this template -->
+    <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
     <link href="{{ asset('/css/all-landing.css') }}" rel="stylesheet">
 
     <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>

@@ -140,6 +140,7 @@ class OrganizationChart extends Controller
             'alls_places' => $number_places,
             'places_used' => $employee_jobposition,
             'places_additional' => $employee_additional_jobposition,
+            'places_off' => $number_places - $employee_jobposition - $employee_additional_jobposition,
         ];
         return view('comunicacionInterna.organigrama', compact(['data']));
     }

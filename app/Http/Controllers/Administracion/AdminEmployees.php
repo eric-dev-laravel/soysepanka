@@ -207,6 +207,8 @@ class AdminEmployees extends Controller
             $data = array_add($data, 'seccion', $area);
             $data['puesto'] = $jobPosition;
             $data['id_puesto'] = $idJobPosition;
+        } else {
+            $data['id_puesto'] = null;
         }
         //dd($data);
         try {
