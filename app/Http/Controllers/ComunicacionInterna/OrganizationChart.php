@@ -127,8 +127,8 @@ class OrganizationChart extends Controller
 
         $usersChart = new JobPositionChart;
         $usersChart->minimalist(true);
-        $usersChart->labels(['Plazas ocupadas', 'Plazas Totales', 'Plazas Temporales']);
-        $usersChart->dataset('Users by trimester', 'doughnut', [$employee_jobposition, $number_places, $employee_additional_jobposition])
+        $usersChart->labels(['Plazas Totales', 'Plazas Ocupadas', 'Plazas Temporales']);
+        $usersChart->dataset('Empleados ', 'bar', [$number_places, $employee_jobposition, $employee_additional_jobposition])
             ->color($this->borderColors)
             ->backgroundcolor($this->fillColors);
 

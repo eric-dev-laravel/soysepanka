@@ -182,7 +182,7 @@ class AdminEmployees extends Controller
                 'additional_jobposition' => $array_info_additional_jobposition,
             ];
         }
-        //dd($data);
+        //dd($bosses);
         return view('administracion.employees.edit', compact(['data']));
     }
 
@@ -208,7 +208,7 @@ class AdminEmployees extends Controller
             $data['puesto'] = $jobPosition;
             $data['id_puesto'] = $idJobPosition;
         }
-
+        //dd($data);
         try {
             DB::beginTransaction();
                 Employee::withTrashed()->whereId($id)->update($data);

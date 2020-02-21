@@ -204,10 +204,10 @@
                                         <select class="form-control" id="jefe" name="jefe">
                                             <option value="">{{ trans('message.datatables_headers.outboss') }}</option>
                                             @foreach ($data['bosses'] as $boss)
-                                                @if($boss->id == $data['employee'][0]->jefe)
-                                                    <option selected value="{{ $boss->id }}">{{  $boss->nombre.' '.$boss->paterno.' '.$boss->materno }}</option>
+                                                @if($boss->idempleado == $data['employee'][0]->jefe)
+                                                    <option selected value="{{ $boss->idempleado }}">{{  $boss->nombre.' '.$boss->paterno.' '.$boss->materno }}</option>
                                                 @else
-                                                    <option value="{{ $boss->id }}">{{  $boss->nombre.' '.$boss->paterno.' '.$boss->materno }}</option>
+                                                    <option value="{{ $boss->idempleado }}">{{  $boss->nombre.' '.$boss->paterno.' '.$boss->materno }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
