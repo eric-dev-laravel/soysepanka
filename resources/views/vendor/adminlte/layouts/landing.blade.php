@@ -59,7 +59,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">{{ trans('message.login') }}</a></li>
-                        <li><a href="{{ url('/register') }}">{{ trans('message.register') }}</a></li>
+                        <!--<li><a href="{{ url('/register') }}">{{ trans('message.register') }}</a></li>-->
                     @else
                         <li><a href="/home">{{ Auth::user()->name }}</a></li>
                     @endif
@@ -78,7 +78,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                         <h3><a href="#">Soysepanka</a> {{ trans('message.laravelpackage') }}
                             desarrollada {{ trans('message.by') }} <a href="https://sepankasuite.com">Sepankasuite</a> {{ trans('message.templatewith') }}
                             <a href="#">Capital</a> humano <a href="#">aprovechando</a> la tecnología</h3>
-                        <h3><a href="{{ url('/register') }}" class="btn btn-lg btn-success">{{ trans('message.gedstarted') }}</a></h3>
+                        <h3><a href="{{ url('/login') }}" class="btn btn-lg btn-success">{{ trans('message.gedstarted') }}</a></h3>
                     </div>
                     <div class="col-lg-2">
                         <h5>{{ trans('message.amazing') }}</h5>
