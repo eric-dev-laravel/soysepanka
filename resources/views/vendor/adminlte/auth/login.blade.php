@@ -7,6 +7,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Soysepanka</title>
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <script src="https://kit.fontawesome.com/82ac0fb848.js" crossorigin="anonymous" ></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
@@ -42,7 +43,15 @@
                                 <!--<label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña:') }}</label>-->
 
                                 <div class="col-md-12">
-                                    <input id="password" placeholder="Contraseña" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                    <div class="input-group">
+
+                                        <input id="password" placeholder="Contraseña" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                        <div class="input-group-append">
+                                            <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> 
+                                                <span class="fa fa-eye-slash icon"></span> 
+                                            </button>
+                                        </div>
+                                    </div>
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong class="text-white">{{ $errors->first('password') }}</strong>
@@ -79,3 +88,24 @@
     </div>
 </div>
 </html>
+
+
+<script type="text/javascript">
+function mostrarPassword(){
+        var cambio = document.getElementById("password");
+        if(cambio.type == "password"){
+            cambio.type = "text";
+            $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+        }else{
+            cambio.type = "password";
+            $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+        }
+    } 
+    
+    $(document).ready(function () {
+    //CheckBox mostrar contraseña
+    $('#ShowPassword').click(function () {
+        $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+    });
+});
+</script>
