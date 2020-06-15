@@ -48,10 +48,11 @@
                                         <input id="password" placeholder="Contraseña" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
                                         <div class="input-group-append">
                                             <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> 
-                                                <span class="fa fa-eye-slash icon"></span> 
+                                                <span class="fa fa-eye icon"></span> 
                                             </button>
                                         </div>
                                     </div>
+                                    
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong class="text-white">{{ $errors->first('password') }}</strong>
@@ -88,8 +89,6 @@
     </div>
 </div>
 </html>
-
-
 <script type="text/javascript">
 function mostrarPassword(){
         var cambio = document.getElementById("password");
