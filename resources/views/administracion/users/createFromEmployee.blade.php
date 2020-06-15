@@ -102,17 +102,28 @@
                                         class="form-control @error('email') is-invalid @enderror" autocomplete="email">
                                     </div>
 
-                                    <!--<div class="form-group col-md-4">
+                                    <div class="form-group col-md-4">
                                         <label for="password">{{ trans('message.datatables_headers.password') }}</label>
-                                        <input type="text" class="form-control" id="password" name="password" placeholder="{!! trans('message.form_employee_holder.password') !!}">
-                                    </div>-->
-                                    <div class="form-group has-feedback col-md-4">
-                                        <label for="password">{{ trans('message.datatables_headers.password') }}</label>
-                                        <input type="password" class="form-control" placeholder="{{ trans('message.form_employee_holder.password') }}" name="password"/>
+                                        <div class="input-group">
+                                            <input type="password" class="form-control" placeholder="{{ trans('message.form_employee_holder.password') }}" name="password" id="password"/>
+                                            <span class="input-group-btn">
+                                                <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()">
+                                                    <span class="fa fa-eye-slash icon"></span> 
+                                                </button>
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="form-group has-feedback col-md-4">
+
+                                    <div class="form-group col-md-4">
                                         <label for="password">{{ trans('message.datatables_headers.password') }}</label>
-                                        <input type="password" class="form-control" placeholder="{{ trans('message.form_employee_holder.retrypassword') }}" name="password_confirmation"/>
+                                        <div class="input-group">
+                                            <input type="password" class="form-control" placeholder="{{ trans('message.form_employee_holder.retrypassword') }}" name="password_confirmation" id="password_confirmation"/>
+                                            <span class="input-group-btn">
+                                                <button id="show_retrypassword" class="btn btn-primary" type="button" onclick="mostrarRePassword()">
+                                                    <span class="fa fa-eye-slash reicon"></span> 
+                                                </button>
+                                            </span>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -174,5 +185,41 @@
         setTimeout(function() {
             $('#success-alert').fadeOut('fast');
         }, 5000); // <-- time in milliseconds
+
+        function mostrarPassword(){
+            var cambio = document.getElementById("password");
+            if(cambio.type == "password"){
+                cambio.type = "text";
+                $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+            }else{
+                cambio.type = "password";
+                $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+            }
+        } 
+        
+        $(document).ready(function () {
+            //CheckBox mostrar contraseña
+            $('#ShowPassword').click(function () {
+                $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+            });
+        });
+
+        function mostrarRePassword(){
+            var cambio = document.getElementById("password_confirmation");
+            if(cambio.type == "password"){
+                cambio.type = "text";
+                $('.reicon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+            }else{
+                cambio.type = "password";
+                $('.reicon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+            }
+        } 
+        
+        $(document).ready(function () {
+            //CheckBox mostrar contraseña
+            $('#ShowRePassword').click(function () {
+                $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+            });
+        });
     </script>
 @endsection

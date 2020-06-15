@@ -162,7 +162,7 @@
                             <div class="box box-warning">
 
                                 <div class="box-header with-border">
-                                    <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.personnelinfo') }}</h3>
+                                    <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.jobpositionInfo') }}</h3>
                                 </div>
 
                                 <div class="box-body">
@@ -314,7 +314,7 @@
                             <div class="box box-warning">
 
                                 <div class="box-header with-border">
-                                    <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.personnelinfo') }}</h3>
+                                    <h3 class="box-title"><i class="fa fa-pencil"></i> {{ trans('message.jobpositionInfo') }}</h3>
                                 </div>
 
                                 <div class="box-body">

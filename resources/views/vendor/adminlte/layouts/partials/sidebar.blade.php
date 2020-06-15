@@ -144,6 +144,14 @@
                     <li><a href="#">{{ trans('message.linklevel2') }}</a></li>
                 </ul>
             </li>
+
+            <!-- Modulo9 Herramientas-->
+            <li class="treeview">
+                <a href="#"><i class='fa fa-wrench'></i> <span>{{ trans('message.module9') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="#">{{ trans('message.linklevel2') }}</a></li>
+                </ul>
+            </li>
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

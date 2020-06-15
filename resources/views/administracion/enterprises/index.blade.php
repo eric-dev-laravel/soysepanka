@@ -89,7 +89,7 @@
 		</div>
 
         <div class="row">
-			<div class="col-md-8">
+			<div class="col-md-7">
 
 				<div class="box">
 					<div class="box-header with-border">
@@ -121,7 +121,7 @@
 				</div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <!-- Info Boxes Style 2 -->
                 <div class="info-box bg-yellow">
                     <span class="info-box-icon"><i class="fa fa-arrows"></i></span>

@@ -66,6 +66,8 @@ class AdminUsers extends Controller
                             'password'    => bcrypt($password),
                         ));
                     DB::commit();
+
+                    return redirect('admin-users/create')->with('success','Ok');
                 } catch (\PDOException $e) {
                     DB::rollBack();
                     $errorsMessage = [
@@ -106,7 +108,8 @@ class AdminUsers extends Controller
                 } catch (\PDOException $e) {
                     DB::rollBack();
                     $errorsMessage = [
-                        'fullMessage' => $e->getMessage(),
+                        //'fullMessage' => $e->getMessage(),
+                        'fullMessage' => $e->errorInfo[2],
                     ];
 
                     return Redirect::back()->withErrors($errorsMessage);

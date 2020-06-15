@@ -66,6 +66,7 @@ return [
     'module6'                 => 'Control de Incidencias',
     'module7'                 => 'Reconocimientos',
     'module8'                 => 'Capacitación en Línea',
+    'module9'                 => 'Herramientas',
     'linklevel2'              => 'Enlace en el Nivel 2',
     'birthday'                => 'Cumpleaños de Langdon',
     'birthdaydate'            => 'Será 23 el 24 de abril',
@@ -190,6 +191,7 @@ return [
     'editjobposition'         => 'Editar Puesto',
 
     'generalinfo'             => 'Información General',
+    'jobpositionInfo'         => 'Información del Puesto',
     'personnelinfo'           => 'Información Personal',
     'personnelinfo_extra'     => 'Información Extra',
     'info_createusers'        => 'Información de Acceso',
