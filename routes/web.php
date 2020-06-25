@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('init');
 
+Route::get('hash', function (){
+    return Hash::make('Sepanka2020$');
+});
+
 Route::group(['middleware' => 'auth'], function () {
     /*
     |--------------------------------------------------------------------------
