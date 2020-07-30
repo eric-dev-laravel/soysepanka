@@ -104,6 +104,24 @@
                             </div>
                         </div>
 
+                        <div class="row col-md-12">
+                            <div class="form-group">
+                                <div class="box box-primary box-solid">
+
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title"><i class="fa fa-pencil-square-o"></i> Nómina</h3>
+                                    </div>
+
+                                    <div class="box-body">
+                                        <div class="row col-md-3 col-sm-12 col-md-offset-1">
+                                            <button type="button" onclick="window.location.href = '{{ url('payroll') }}';" class="btn btn-block btn-primary"><i class="fa fa-user-plus"></i> Importar Nómina</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
 					</div>
 				</div>
 			</div>

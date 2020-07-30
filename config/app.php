@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -234,6 +235,8 @@ return [
 
         'AdminLTE' => Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

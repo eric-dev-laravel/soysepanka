@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers\Expediente;
 
+use DB;
+use File;
+use App\User;
+use Redirect;
 use Illuminate\Http\Request;
+use App\Models\Payroll\Payroll;
+use App\Models\Expediente\Record;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\User;
 use App\Models\Administracion\Employee;
-use App\Models\Administracion\JobPosition;
-use App\Models\Expediente\Record;
-use App\Models\Expediente\RecordFormation;
-use App\Models\Expediente\RecordLastJobs;
-use App\Models\Expediente\RecordReferences;
-use App\Models\Expediente\RecordFamilyEnterprise;
-use App\Models\Expediente\RecordOrganizationSyndicate;
-use App\Models\Expediente\RecordFilesRegister;
 use App\Models\Expediente\RecordPolicy;
 use App\Models\Expediente\RecordMedical;
-use DB;
-use Redirect;
+use App\Models\Expediente\RecordLastJobs;
+use App\Models\Administracion\JobPosition;
+use App\Models\Expediente\RecordFormation;
+use App\Models\Expediente\RecordReferences;
+use App\Models\Expediente\RecordFilesRegister;
+use App\Models\Expediente\RecordFamilyEnterprise;
+use App\Models\Expediente\RecordOrganizationSyndicate;
 
 class RecordController extends Controller
 {
@@ -79,6 +81,9 @@ class RecordController extends Controller
             $record_info_policies = RecordPolicy::where('id_record', $records_info[0]->id)->get();
             $record_info_medicals = RecordMedical::where('id_record', $records_info[0]->id)->get();
         }
+
+        $nominas = Payroll::where('user_id', $user->id)->orderBy('year','DESC')->get();
+
         //dd($record_info_medicals);
         $data = [
             'employee_info' => $employee_info,
@@ -93,6 +98,7 @@ class RecordController extends Controller
             'record_info_jobposition' => $record_info_jobposition,
             'record_info_policies' => $record_info_policies,
             'record_info_medicals' => $record_info_medicals,
+            'nominas' => $nominas,
         ];
         return view('expediente.index', compact(['data']));
     }
@@ -493,4 +499,20 @@ class RecordController extends Controller
 
         return redirect('records')->with('success','Ok');
     }
+
+    /*
+	 * controllador para mostrar los archivos
+	 * de nomina
+	 */
+	public function download(Request $request) {
+		$nomina = Payroll::where('id', $request->idnomina)->first();
+		//dd(storage_path('app/Interface/recibos/'.$source.'/'.$nomina->year.'/'.$nomina->file));
+		$existe = File::exists(storage_path('app/public/payroll_files/'.$nomina->year.'/'.$nomina->file));
+		
+		if($existe) {
+			return response()->download(storage_path('app/public/payroll_files/'.$nomina->year.'/'.$nomina->file));
+		} else {
+			return redirect()->back()->with('error', @Lang::get('nomina.sinarchivo')); 
+		}
+	}
 }
