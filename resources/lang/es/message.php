@@ -245,6 +245,7 @@ return [
         'dangermessageemployee' => 'Estas a punto de desactivar este elemento, si continuas dejarás de ver la información de este elemento en los módulos.',
         'warningmessageemployee'=> 'Estas a punto de activar este elemento, si continuas la información de este elemento se verá reflejada en los módulos.',
         'questioncontinue'      => '¿Continuar?',
+        'warning_payroll'      => 'Debe seleccionar un archivo, de tipo csv o xlsx.',
     ],
 
     /*
@@ -625,6 +626,14 @@ return [
         'info5'        => 'Área',
         'info6'        => 'Salario Bruto Mensual',
         'info7'        => 'Tipo de Contrato',
+
+        'payroll_title' => 'Nóminas',
+        'period'       => 'Periodo',
+        'anio'         => 'Año',
+        'period_type'  => 'Periodo',
+        'payroll'      => 'Nómina',
+        'payroll_file' => 'Archivo',
+
 
         'health_data_title' => 'Generalidades',
         'nss'          => 'NSS',

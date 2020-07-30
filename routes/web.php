@@ -90,6 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('records-update-image-profile/{id}', 'Expediente\RecordController@updateUserProfilePicture');
     Route::post('records-update-files/{id}', 'Expediente\RecordController@updateFilesProfile');
     Route::post('records-update-health/{id}', 'Expediente\RecordController@updateHealth');
+    Route::post('nomina', 'Expediente\RecordController@download');
     /*
     |--------------------------------------------------------------------------
     | Comunicacion Interna Routes
@@ -104,6 +105,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::view('galerias', 'comunicacionInterna.galerias')->name('galerias');
     Route::view('faqs', 'comunicacionInterna.faqs')->name('faqs');
     Route::view('proximos-eventos', 'comunicacionInterna.proximos_eventos')->name('proximos-eventos');
+    /*
+    |--------------------------------------------------------------------------
+    | Nóminas
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('payroll', 'Payroll\PayrollController');
 });
 
 Auth::routes();
