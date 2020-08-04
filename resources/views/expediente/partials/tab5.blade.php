@@ -67,7 +67,7 @@
         <div class="box box-primary">
 
             <div class="box-header with-border">
-                <h3 class="box-title"><i class="fa fa-map"></i> {{ trans('message.ex.payroll_title') }}</h3>
+                <h3 class="box-title"><i class="fa fa-money"></i> {{ trans('message.ex.payroll_title') }}</h3>
             </div>
 
             <table class="table" id="tableNomina" style="width: 100%">
@@ -103,16 +103,3 @@
         </div>
     </div>
 </div>
-
-@section('main-script')
-    <script type="text/javascript">
-        $(function () {
-            $('#tableNomina').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
-                }
-            });
-        });
-    </script>
-@endsection
-
