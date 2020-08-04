@@ -18,7 +18,9 @@ use App\Models\Expediente\RecordLastJobs;
 use App\Models\Administracion\JobPosition;
 use App\Models\Expediente\RecordFormation;
 use App\Models\Expediente\RecordReferences;
+use App\Models\Expediente\RecordBeneficiaries;
 use App\Models\Expediente\RecordFilesRegister;
+use App\Models\Expediente\RecordBeneficiariesDet;
 use App\Models\Expediente\RecordFamilyEnterprise;
 use App\Models\Expediente\RecordOrganizationSyndicate;
 
@@ -55,6 +57,9 @@ class RecordController extends Controller
         $record_info_jobposition = "";
         $record_info_policies = "";
         $record_info_medicals = "";
+        $record_beneficiaries = "";
+        $record_beneficiaries_det = "";
+        $record_beneficiaries_otr = "";
 
         $all_employee = Employee::orderBy('Nombre', 'ASC')->get();
 
@@ -66,6 +71,9 @@ class RecordController extends Controller
             $record_references_info = RecordReferences::where('id_record', $records_info[0]->id)->get();
             $record_family_enterprise_info = RecordFamilyEnterprise::where('id_record', $records_info[0]->id)->get();
             $record_syndicate_info = RecordOrganizationSyndicate::where('id_record', $records_info[0]->id)->get();
+            $record_beneficiaries = RecordBeneficiaries::where('id_record', $records_info[0]->id)->get();
+            $record_beneficiaries_det = RecordBeneficiariesDet::where('record_beneficiaries_id', $record_beneficiaries[0]->id)->where('type_beneficiarie', 'HIJO')->get();
+            $record_beneficiaries_otr = RecordBeneficiariesDet::where('record_beneficiaries_id', $record_beneficiaries[0]->id)->where('type_beneficiarie', 'OTRO')->get();
 
             $data_family_enterprise = array();
             foreach($record_family_enterprise_info as $dato){
@@ -98,6 +106,9 @@ class RecordController extends Controller
             'record_info_jobposition' => $record_info_jobposition,
             'record_info_policies' => $record_info_policies,
             'record_info_medicals' => $record_info_medicals,
+            'record_beneficiaries' => $record_beneficiaries,
+            'record_beneficiaries_det' => $record_beneficiaries_det,
+            'record_beneficiaries_otr' => $record_beneficiaries_otr,
             'nominas' => $nominas,
         ];
         return view('expediente.index', compact(['data']));
@@ -514,5 +525,150 @@ class RecordController extends Controller
 		} else {
 			return redirect()->back()->with('error', @Lang::get('nomina.sinarchivo')); 
 		}
-	}
+    }
+        
+    /**
+     * updateBeneficiaries
+     * Funcion para el guardado de los datos de la pestaña 10
+     * Beneficiarios
+     * @param  mixed $request
+     * @return void
+     */
+    public function updateBeneficiaries (Request $request, int $id) {
+        $data = $request->all();
+
+        try {
+            DB::beginTransaction();
+                $record = Record::withTrashed()->where('id_employee', $id)->first();
+
+                if ($request->hasFile('file_marriage')) {
+                    $path = $request->file_marriage->store($this->folderFileProofAddress);
+
+                    $fileExiste = RecordBeneficiaries::select('file_marriage')->where('id_employee', $id)->where('id_record', $record->id)->first();
+                    if(is_null($fileExiste->file_marriage)) {
+                        $data['file_marriage'] = $path;
+                    } else {
+                        $exists = \Storage::exists($fileExiste->file_marriage);
+                        if($exists) {
+                            \Storage::delete($fileExiste->file_marriage);
+                        }
+                        $data['file_marriage'] = $path;
+                    }  
+                }
+                if ($request->hasFile('file_birth_certificate_father')) {
+                    $path = $request->file_birth_certificate_father->store($this->folderFileProofAddress);
+
+                    $fileExiste = RecordBeneficiaries::select('file_birth_certificate_father')->where('id_employee', $id)->where('id_record', $record->id)->first();
+                    if(is_null($fileExiste->file_birth_certificate_father)) {
+                        $data['file_birth_certificate_father'] = $path;
+                    } else {
+                        $exists = \Storage::exists($fileExiste->file_birth_certificate_father);
+                        if($exists) {
+                            \Storage::delete($fileExiste->file_birth_certificate_father);
+                        }
+                        $data['file_birth_certificate_father'] = $path;
+                    }  
+                }
+                if ($request->hasFile('file_birth_certificate_mother')) {
+                    $path = $request->file_birth_certificate_mother->store($this->folderFileProofAddress);
+
+                    $fileExiste = RecordBeneficiaries::select('file_birth_certificate_mother')->where('id_employee', $id)->where('id_record', $record->id)->first();
+                    if(is_null($fileExiste->file_birth_certificate_mother)) {
+                        $data['file_birth_certificate_mother'] = $path;
+                    } else {
+                        $exists = \Storage::exists($fileExiste->file_birth_certificate_mother);
+                        if($exists) {
+                            \Storage::delete($fileExiste->file_birth_certificate_mother);
+                        }
+                        $data['file_birth_certificate_mother'] = $path;
+                    }  
+                }
+
+                $beneficiarios = RecordBeneficiaries::updateOrCreate(
+                    ['id_employee' => $id, 'id_record' => $record->id], $data
+                );
+
+                $newId = [];
+                if(!empty($data['beneficiarie_name_son']) && !is_null($data['beneficiarie_name_son'])) {
+                    $existen = RecordBeneficiariesDet::where('record_beneficiaries_id', $beneficiarios->id)->where('type_beneficiarie', 'HIJO')->first();
+                    foreach ($data['beneficiarie_name_son'] as $indice => $studio) {
+                        $path = "";
+                        if($existen)
+                            $i = $indice;
+                        else
+                            $i = $indice+1;
+                        
+                        if ($request->hasFile('file_birth_certificate_beneficiarie_son.'.$i)) {
+                            $path = $data['file_birth_certificate_beneficiarie_son'][$i]->store($this->folderFileProofAddress);
+                        } else {
+                            $path = $data['file_birth_certificate_beneficiarie_son'][$indice];
+                        }
+                        $detalle = RecordBeneficiariesDet::updateOrCreate([
+                                'record_beneficiaries_id' => $beneficiarios->id,
+                                'beneficiarie_name' => $data['beneficiarie_name_son'][$indice]
+                            ],[
+                                'beneficiarie_name' => $data['beneficiarie_name_son'][$indice],
+                                'date_birth_beneficiarie' => $data['date_birth_beneficiarie_son'][$indice],
+                                'file_birth_certificate_beneficiarie' => $path,
+                                'type_beneficiarie' => 'HIJO'
+                        ]);
+
+                        $newId[] = $detalle->id;
+                        $fileExiste = RecordBeneficiariesDet::select('file_birth_certificate_beneficiarie')->whereNotIn('id', $newId)->where('type_beneficiarie', 'HIJO')->first();
+                        if(!is_null($fileExiste)) {
+                            $exists = \Storage::exists($fileExiste->file_birth_certificate_beneficiarie);
+                            if($exists) {
+                                \Storage::delete($fileExiste->file_birth_certificate_beneficiarie);
+                            }
+                        }
+                    }
+                    $recordBeneficieriesDet= RecordBeneficiariesDet::whereNotIn('id', $newId)->where('type_beneficiarie', 'HIJO')->delete();
+                } else {
+                    $recordBeneficieriesDet= RecordBeneficiariesDet::whereNotIn('id', $newId)->where('type_beneficiarie', 'HIJO')->delete();
+                }
+
+                $newOther = [];
+                if(!empty($data['beneficiarie_name_other']) && isset($data['file_birth_certificate_beneficiarie'])) {
+                    $path = "";
+                    if ($request->hasFile('file_birth_certificate_beneficiarie')) {
+                        $path = $data['file_birth_certificate_beneficiarie']->store($this->folderFileProofAddress);
+                    }
+
+                    $detalleOther = RecordBeneficiariesDet::updateOrCreate([
+                            'record_beneficiaries_id' => $beneficiarios->id,
+                            'beneficiarie_name' => $data['beneficiarie_name_other']
+                        ],[
+                            'beneficiarie_name' => $data['beneficiarie_name_other'],
+                            'date_birth_beneficiarie' => $data['date_birth_beneficiarie_other'],
+                            'file_birth_certificate_beneficiarie' => $path,
+                            'type_beneficiarie' => 'OTRO'
+                    ]);
+
+                    $newOther[] = $detalleOther->id;
+                    $fileExiste = RecordBeneficiariesDet::select('file_birth_certificate_beneficiarie')->whereNotIn('id', $newOther)->where('type_beneficiarie', 'OTRO')->first();
+                    if(!is_null($fileExiste)) {
+                        $exists = \Storage::exists($fileExiste->file_birth_certificate_beneficiarie);
+                        if($exists) {
+                            \Storage::delete($fileExiste->file_birth_certificate_beneficiarie);
+                        }
+                    }
+                    $recordBeneficieriesDetOther= RecordBeneficiariesDet::whereNotIn('id', $newOther)->where('type_beneficiarie', 'OTRO')->delete();
+                }
+
+                
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollback();
+
+            dd($e);
+            
+            $errorsMessage = [
+                'fullMessage' => $e->getMessage(),
+            ];
+
+            return Redirect::back()->withErrors($errorsMessage);
+        }
+
+        return redirect('records')->with('success','Ok');
+    }
 }

@@ -168,7 +168,6 @@
                                 <a type="button" href="{{ $data['records_info'][0]->url_path_proof_address }}" target="_blank"class="btn btn-primary"><i class="fa fa-file"></i> Ver </a>
                             @endif
                         </div>
-
                     </div>
 
                 </div>
@@ -436,7 +435,7 @@
                             <option value="Madre">Madre</option>
                             <option value="Esposo">Esposo</option>
                             <option value="Esposa">Esposa</option>
-                            <option value="Conyugue">Conyugue</option>
+                            <option value="Conyugue">Cónyuge</option>
                             <option value="Hijo">Hijo</option>
                             <option value="Primo">Primo</option>
                             <option value="Tio">Tio</option>
