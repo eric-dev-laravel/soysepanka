@@ -53,6 +53,9 @@ class OrganizationChart extends Controller
     public function index() {
 
         $boss_first = Employee::whereNull('jefe')->orWhere('jefe', '0')->orWhere('jefe', '')->orderBy('nombre','DESC')->get();
+
+        //dd($boss_first);
+
         $jobposition_first = JobPosition::whereNull('id_boss_position')->orWhere('id_boss_position', '0')->orWhere('id_boss_position', '')->orderBy('name','DESC')->get();
 
         $number_places = 0;
@@ -69,12 +72,13 @@ class OrganizationChart extends Controller
         //Método para la vista de Árbol
         $list = '';
 
+
         //dd($boss_first);
         if(count($boss_first) > 0){
-            $list = '<ul>';
+            $list = '<ul id="myUL">';
             foreach($boss_first as $boss){
-                $list .='<li><a href="#">'.$boss->nombre.' '.$boss->paterno.' '.$boss->materno.' '.'<br><strong>'.$boss->puesto.'</strong></a>';
-                $list .= $this->subBoss($boss->idempleado);
+                $list .='<li><span class="caret"></span><a href="#">'.$boss->nombre.' '.$boss->paterno.' '.$boss->materno.' '.'<br><strong>'.$boss->puesto.'</strong></a>';
+                $list .= $this->subBoss($boss->idempleado, 0);
                 $list .= '</li>';
             }
             $list .= '</ul>';
@@ -145,18 +149,25 @@ class OrganizationChart extends Controller
         return view('comunicacionInterna.organigrama', compact(['data']));
     }
 
-    private function subBoss($boss){
+    private function subBoss($boss, $nivel){
         $list2 = '';
 
         $subBos = Employee::where('jefe', $boss)->orderBy('division')->orderBy('nombre','ASC')->get();
-
+        $nivelcolor=['#002C49','#0064A6','#ECC100','#4FB9FF','#228ED1','#002C49','#0064A6','#ECC100','#4FB9FF','#228ED1'];
         if(count($subBos) > 0){
 
-            $list2 .= '<ul>';
+            $list2 .= '<ul class="nested">';
 
             foreach($subBos as $sub){
-                $list2 .='<li><a href="#">'.$sub->nombre.' '.$sub->paterno.' '.$sub->materno.' '.'<br><strong>'.$sub->puesto.'</strong></a>';
-                $list2 .= $this->subBoss($sub->idempleado);
+                $image = 'img/record/user.png';
+                $user = User::where('id_employee', $sub->id)->first();
+                $hobbies = 'N/A';
+                if($user){
+                    $image = is_null($user->picture)?'img/record/user.png':$user->url_path;
+                }
+                $list2 .='<li class="encont"><span class="caret"></span><a tabindex="0" class="label label-default badge" style="background:'.$nivelcolor[$nivel].' !important;color:white; margin-bottom:10px;" data-toggle="popover" data-trigger="focus" title="<div class=bg-yellow><strong>'.$sub->nombre. ' '.$sub->paterno. ' '.$sub->materno. ' '.'</strong></div>" data-content="<img class=img-orgChart src='.asset($image).'><div>'.(isset($sub->puesto)?$sub->puesto:'N/A').'</div><div>'.$sub->sucursal.'</div><div>'.$sub->correoempresa.'</div><strong>Teléfono: </strong>'.($sub->telefono?$sub->telefono:'N/A').'<br><strong>Celular: </strong>'.($sub->celular?$sub->celular:'N/A').'<br><strong>Pasatiempos:</strong><br>">'.$sub->nombre. ' '.$sub->paterno. ' '.$sub->materno. ' '.' - '.    (isset($sub->puesto)?$sub->puesto:'N/A').'</a>';
+                //$list2 .='<li><span class="caret"></span><a href="#">'.$sub->nombre.' '.$sub->paterno.' '.$sub->materno.' '.'<br><strong>'.$sub->puesto.'</strong></a>';
+                $list2 .= $this->subBoss($sub->idempleado, $nivel+1);
                 $list2 .= '</li>';
             }
 

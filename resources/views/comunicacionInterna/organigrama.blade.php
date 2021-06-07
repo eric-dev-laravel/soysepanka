@@ -35,9 +35,9 @@
 
                         <div class="tab-pane fade" id="tab_2">
                             <div class="row">
-                                <div style="height:500px;width:1000px;position:relative;">
+                                <div style="height:500px;width:100%;position:relative;">
                                     <div style="max-width:100%;overflow:auto;">
-                                        <div style="height:450px;width:2500px">
+                                        <div style="height:450px;width:100%">
                                             <div class="organigrama">
                                                 {!! $data['list'] !!}
                                             </div>
@@ -275,6 +275,19 @@
             $("#open").trigger("click");
         });
     });
+
+
+
+    //Test
+    var toggler = document.getElementsByClassName("caret");
+var i;
+
+for (i = 0; i < toggler.length; i++) {
+  toggler[i].addEventListener("click", function() {
+    this.parentElement.querySelector(".nested").classList.toggle("active");
+    this.classList.toggle("caret-down");
+  });
+}
 </script>
 @endsection
 @section('main-css')
@@ -521,6 +534,40 @@
             padding-top: 0px;
             padding-bottom: 0px;
         }
+
+
+
+
+
+        //Test
+        /* Style the caret/arrow */
+.caret {
+    cursor: pointer;
+    user-select: none; /* Prevent text selection */
+  }
+
+  /* Create the caret/arrow with a unicode, and style it */
+  .caret::before {
+    content: "\25B6";
+    color: black;
+    display: inline-block;
+    margin-right: 6px;
+  }
+
+  /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+  .caret-down::before {
+    transform: rotate(90deg);
+  }
+
+  /* Hide the nested list */
+  .nested {
+    display: none;
+  }
+
+  /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+  .active {
+    display: block;
+  }
     </style>
 @endsection
 
